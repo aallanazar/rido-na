@@ -1,26 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0f0f0f;
+  --foreground: #ededed;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-serif: "Cinzel", serif; 
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Custom RPG Styles */
+.rpg-panel {
+  background: url('https://img.freepik.com/free-photo/old-paper-texture_1194-6729.jpg?w=1380&t=st=1707421113~exp=1707421713~hmac=80396420e64906056586616616161616');
+  background-size: cover;
+  border: 4px solid #3e2723;
+  box-shadow: 0 0 10px rgba(0,0,0,0.8);
+}
+
+.rpg-text {
+  text-shadow: 2px 2px 0 #000;
 }
