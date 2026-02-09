@@ -4,9 +4,8 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Calculator, Atom, Ruler, Beaker, Languages,
-    Code, Monitor, History, Microscope, Landmark, Star
+    Code, Monitor, History, Microscope, Landmark, Star, FileSpreadsheet
 } from 'lucide-react';
-import { usePlatformStore } from '@/lib/store/usePlatformStore';
 import { useTranslation } from '@/lib/hooks/useTranslation';
 
 const subjects = [
@@ -28,11 +27,23 @@ const subjects = [
         id: 'coding',
         icon: Code,
         subItems: [
-            { id: 'js', type: 'code' },
-            { id: 'py', type: 'code' },
-            { id: 'ts', type: 'code' },
+            { id: 'python', type: 'coding-course' },
+            { id: 'java', type: 'coding-course' },
+            { id: 'csharp', type: 'coding-course' },
+            { id: 'c', type: 'coding-course' },
+            { id: 'cpp', type: 'coding-course' },
+            { id: 'go', type: 'coding-course' },
+            { id: 'javascript', type: 'coding-course' },
+            { id: 'typescript', type: 'coding-course' },
+            { id: 'css', type: 'coding-course' },
+            { id: 'react', type: 'coding-course' },
+            { id: 'react-native', type: 'coding-course' },
+            { id: 'sql', type: 'coding-course' },
+            { id: 'nosql', type: 'coding-course' },
+            { id: 'linux', type: 'coding-course' },
         ]
     },
+    { id: 'office', icon: FileSpreadsheet },
     { id: 'it', icon: Monitor },
     { id: 'history', icon: History },
     { id: 'biology', icon: Microscope },
@@ -41,7 +52,7 @@ const subjects = [
 ];
 
 export function BookMenu({ onSelect }: { onSelect?: (id: string) => void }) {
-    const { t, language } = useTranslation();
+    const { t } = useTranslation();
     const [isOpen, setIsOpen] = useState(false);
     const [expandedSubject, setExpandedSubject] = useState<string | null>(null);
 
@@ -139,13 +150,15 @@ export function BookMenu({ onSelect }: { onSelect?: (id: string) => void }) {
                                             onClick={() => {
                                                 if (expandedSubject === 'languages') {
                                                     onSelect?.(`languages/${sub.id}`);
+                                                } else if (expandedSubject === 'coding') {
+                                                    onSelect?.(`coding/${sub.id}`);
                                                 } else {
                                                     onSelect?.(`${expandedSubject}/${sub.id}`);
                                                 }
                                             }}
                                             className="w-full text-left p-4 rounded-lg bg-black/[0.02] dark:bg-white/[0.02] border border-black/5 dark:border-white/5 hover:bg-[#d4a373]/10 hover:border-[#d4a373]/30 transition-all font-sans"
                                         >
-                                            {t(`subjects.${sub.id}`)}
+                                            {expandedSubject === 'coding' ? t(`courses.${sub.id}`) : t(`subjects.${sub.id}`)}
                                         </button>
                                     ))}
                                 </div>
