@@ -39,17 +39,6 @@ export default function Player() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [setWeapon]);
 
-    // Shooting Input
-    useEffect(() => {
-        const handleMouseDown = () => {
-            if (currentWeapon === 'bow' && ammo > 0) {
-                shootArrow();
-            }
-        };
-        window.addEventListener('mousedown', handleMouseDown);
-        return () => window.removeEventListener('mousedown', handleMouseDown);
-    }, [currentWeapon, ammo]);
-
     const shootArrow = () => {
         if (!playerRef.current) return;
 
@@ -70,6 +59,17 @@ export default function Player() {
             velocity: velocity
         }]);
     };
+
+    // Shooting Input
+    useEffect(() => {
+        const handleMouseDown = () => {
+            if (currentWeapon === 'bow' && ammo > 0) {
+                shootArrow();
+            }
+        };
+        window.addEventListener('mousedown', handleMouseDown);
+        return () => window.removeEventListener('mousedown', handleMouseDown);
+    }, [currentWeapon, ammo, shootArrow]);
 
     const handleProjectileHit = (id: number) => {
         // Remove projectile after hit (simulate sticking or disappearing for now)

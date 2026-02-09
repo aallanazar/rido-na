@@ -1,30 +1,65 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;700&display=swap");
 
-:root {
-  --background: #0f0f0f;
-  --foreground: #ededed;
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-serif: 'Playfair Display', serif;
+  --font-handwriting: 'Caveat', cursive;
+
+  --color-paper-light: #FDFBF7;
+  --color-paper-dark: #1a1a1a;
+  --color-ink-light: #2c3e50;
+  --color-ink-dark: #e0e0e0;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-serif: "Cinzel", serif; 
+:root {
+  --background: var(--color-paper-light);
+  --foreground: var(--color-ink-light);
+  --accent: #d4a373;
+}
+
+.dark {
+  --background: var(--color-paper-dark);
+  --foreground: var(--color-ink-dark);
+  --accent: #a98467;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  transition: background-color 0.5s ease, color 0.5s ease;
+  overflow-x: hidden;
 }
 
-/* Custom RPG Styles */
-.rpg-panel {
-  background: url('https://img.freepik.com/free-photo/old-paper-texture_1194-6729.jpg?w=1380&t=st=1707421113~exp=1707421713~hmac=80396420e64906056586616616161616');
-  background-size: cover;
-  border: 4px solid #3e2723;
-  box-shadow: 0 0 10px rgba(0,0,0,0.8);
+/* Paper Texture Effect */
+.paper-texture {
+  position: relative;
 }
 
-.rpg-text {
-  text-shadow: 2px 2px 0 #000;
+.paper-texture::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.05;
+  pointer-events: none;
+  background-image: url("https://www.transparenttextures.com/patterns/notebook.png");
+}
+
+.dark .paper-texture::before {
+  opacity: 0.02;
+  filter: invert(1);
+}
+
+/* Notebook Lines */
+.notebook-lines {
+  background-image: linear-gradient(#e5e5e5 1px, transparent 1px);
+  background-size: 100% 2rem;
+}
+
+.dark .notebook-lines {
+  background-image: linear-gradient(#333 1px, transparent 1px);
 }
