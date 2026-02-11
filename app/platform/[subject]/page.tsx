@@ -1,22 +1,101 @@
 'use client';
 
-import React from 'react';
-import { useParams } from 'next/navigation';
+import React, { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import { Navbar } from '@/components/ui/Navbar';
 import { useTranslation } from '@/lib/hooks/useTranslation';
-import { BookOpen, AlertCircle } from 'lucide-react';
+import { BookOpen, AlertCircle, PenTool, Code as CodeIcon, ArrowLeft } from 'lucide-react';
+import { PracticeEditor } from '@/components/platform/PracticeEditor';
+import { CodePlayground } from '@/components/platform/CodePlayground';
 
 export default function SubjectPage() {
     const params = useParams();
+    const router = useRouter();
     // Ensure subject is a string
     const subjectId = Array.isArray(params.subject) ? params.subject[0] : params.subject;
     const { t } = useTranslation();
+    const [practiceMode, setPracticeMode] = useState<'selection' | 'writing' | 'coding'>('selection');
 
-    // Try to get translated name, fallback to capitalized ID
-    // We check if the translation returns the key (which usually means missing translation) 
-    // or just trust the translation hook to return the key if missing?
-    // The custom hook implementation is unknown, usually it returns key if missing.
-    // We can just try to use it.
+    // Handle "Practice" subject specifically
+    if (subjectId === 'practice') {
+        return (
+            <main className="min-h-screen bg-[#fdfbf7] dark:bg-[#0c0c0c] flex flex-col">
+                <Navbar />
+
+                <div className="flex-1 w-full max-w-7xl mx-auto px-4 pt-32 pb-12">
+
+                    {/* Header */}
+                    <div className="mb-8 flex items-center justify-between">
+                        <div>
+                            <h1 className="text-4xl md:text-5xl font-bold mb-4 font-serif text-zinc-900 dark:text-white">
+                                {t('ui.practiceMode')}
+                            </h1>
+                            <div className="h-1 w-24 bg-amber-500 rounded-full" />
+                        </div>
+
+                        {practiceMode !== 'selection' && (
+                            <button
+                                onClick={() => setPracticeMode('selection')}
+                                className="flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-zinc-800 border border-black/5 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                            >
+                                <ArrowLeft size={16} />
+                                <span className="text-sm font-medium">{t('ui.backToSelection')}</span>
+                            </button>
+                        )}
+                    </div>
+
+                    {/* Selection Mode */}
+                    {practiceMode === 'selection' && (
+                        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
+                            {/* Writing Card */}
+                            <button
+                                onClick={() => setPracticeMode('writing')}
+                                className="group relative overflow-hidden p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-amber-400 dark:hover:border-amber-400 transition-all hover:shadow-xl text-left flex flex-col items-center justify-center min-h-[300px]"
+                            >
+                                <div className="z-10 bg-amber-100 dark:bg-amber-900/30 p-6 rounded-full text-amber-600 dark:text-amber-500 mb-6 group-hover:scale-110 transition-transform">
+                                    <PenTool size={48} />
+                                </div>
+                                <h2 className="z-10 text-2xl font-bold mb-2">{t('ui.writing')}</h2>
+                                <p className="z-10 text-center opacity-60 max-w-xs text-sm">
+                                    Use the digital pen, pencil, marker, and eraser tools to write freely like on paper.
+                                </p>
+                            </button>
+
+                            {/* Coding Card */}
+                            <button
+                                onClick={() => setPracticeMode('coding')}
+                                className="group relative overflow-hidden p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-blue-400 dark:hover:border-blue-400 transition-all hover:shadow-xl text-left flex flex-col items-center justify-center min-h-[300px]"
+                            >
+                                <div className="z-10 bg-blue-100 dark:bg-blue-900/30 p-6 rounded-full text-blue-600 dark:text-blue-500 mb-6 group-hover:scale-110 transition-transform">
+                                    <CodeIcon size={48} />
+                                </div>
+                                <h2 className="z-10 text-2xl font-bold mb-2">{t('ui.coding')}</h2>
+                                <p className="z-10 text-center opacity-60 max-w-xs text-sm">
+                                    Write and experiment with code in a dedicated playground environment.
+                                </p>
+                            </button>
+                        </div>
+                    )}
+
+                    {/* Writing App */}
+                    {practiceMode === 'writing' && (
+                        <div className="w-full h-[calc(100vh-250px)] min-h-[600px]">
+                            <PracticeEditor moduleId="practice-free-write" />
+                        </div>
+                    )}
+
+                    {/* Coding App */}
+                    {practiceMode === 'coding' && (
+                        <div className="w-full">
+                            <CodePlayground title={t('ui.coding')} mode="code" initialCode="// Write your code here..." />
+                        </div>
+                    )}
+                </div>
+            </main>
+        );
+    }
+
+    // Default view for other subjects (placeholder)
     const translated = t(`subjects.${subjectId}`);
     const displayTitle = (translated && translated !== `subjects.${subjectId}`)
         ? translated
