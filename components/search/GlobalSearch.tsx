@@ -1,36 +1,25 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from '@/lib/hooks/useTranslation';
 import { SearchBox } from './SearchBox';
 
-const moduleTypes = ['theory', 'examples', 'practice', 'demo', 'video', 'steps', 'interactive', 'exercises', 'visuals', 'quiz', 'worksheets', 'homework', 'materials', 'notes'] as const;
-
 export function GlobalSearch() {
   const { t, language } = useTranslation();
+  const router = useRouter();
 
-  const subjectLabels = useMemo(() => {
-    const ids = ['math', 'physics', 'chemistry', 'biology', 'coding', 'office'] as const;
-    return Object.fromEntries(ids.map((id) => [id, t(`subjects.${id}`)])) as Record<string, string>;
-  }, [t]);
-
-  const moduleTypeLabels = useMemo(() => {
-    return Object.fromEntries(moduleTypes.map((k) => [k, t(`moduleTypes.${k}`)])) as Record<string, string>;
-  }, [t]);
+  const handleSearch = (query: string) => {
+    if (!query.trim()) return;
+    const encoded = encodeURIComponent(query.trim());
+    router.push(`/platform/search?q=${encoded}`);
+  };
 
   return (
     <SearchBox
       language={language}
-      placeholder={t('ui.globalSearchPlaceholder')}
-      emptyLabel={t('ui.noResults')}
-      showSubjectFilters
-      labels={{
-        all: t('ui.filterAll'),
-        school: t('ui.schoolLevel'),
-        university: t('ui.universityLevel'),
-        moduleTypes: moduleTypeLabels,
-        subjects: subjectLabels,
-      }}
+      placeholder={t('ui.globalSearchPlaceholder') || 'Search...'}
+      onSearch={handleSearch}
     />
   );
 }

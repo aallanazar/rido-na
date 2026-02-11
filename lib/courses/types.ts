@@ -53,6 +53,7 @@ export type CourseHomework = {
   id: string;
   title: LocalizedString;
   description: LocalizedString;
+  solution?: LocalizedString;
 };
 
 export type CourseModule = {

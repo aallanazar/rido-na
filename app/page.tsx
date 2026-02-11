@@ -1,29 +1,16 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Navbar } from '@/components/ui/Navbar';
-import { BookMenu } from '@/components/ui/Book/BookMenu';
-import { WritingTransition } from '@/components/ui/WritingTransition';
-import { useRouter } from 'next/navigation';
+import { SubjectGrid } from '@/components/ui/SubjectGrid';
 
 export default function Home() {
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const router = useRouter();
-
-  const handleSubjectSelect = (path: string) => {
-    setIsTransitioning(true);
-    // Simulate loading/writing time
-    setTimeout(() => {
-      router.push(`/platform/${path}`);
-    }, 1500);
-  };
-
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-4 md:p-24 overflow-hidden">
+    <main className="min-h-screen flex flex-col items-center justify-start p-4 md:p-24 overflow-hidden relative bg-[#fdfbf7] dark:bg-[#0c0c0c]">
       <Navbar />
 
-      <div className="w-full max-w-6xl z-10">
-        <BookMenu onSelect={handleSubjectSelect} />
+      <div className="w-full max-w-7xl z-10 pt-20">
+        <SubjectGrid />
       </div>
 
       {/* Decorative Elements */}
@@ -32,8 +19,6 @@ export default function Home() {
           <div className="w-1/2 h-0.5 bg-black dark:bg-white rotate-45" />
         </div>
       </div>
-
-      <WritingTransition isVisible={isTransitioning} />
     </main>
   );
 }

@@ -72,6 +72,9 @@ export const translations = {
             certificateFor: "{{course}} kursi uchun",
             downloadMaterials: "Materiallar (download)",
             ratingPlaceholder: "Baholash tizimi keyin qo‘shiladi.",
+            finish: "Tugatish",
+            solutionLabel: "Yechim",
+            solutionFallback: "Yechim tez orada qo‘shiladi",
         },
         moduleTypes: {
             theory: "Nazariya",
@@ -202,6 +205,9 @@ export const translations = {
             certificateFor: "für den Kurs {{course}}",
             downloadMaterials: "Download-Material",
             ratingPlaceholder: "Bewertungssystem wird später ergänzt.",
+            finish: "Fertig",
+            solutionLabel: "Lösung",
+            solutionFallback: "Lösung folgt bald",
         },
         moduleTypes: {
             theory: "Theorie",
@@ -332,6 +338,9 @@ export const translations = {
             certificateFor: "for the course {{course}}",
             downloadMaterials: "Download materials",
             ratingPlaceholder: "Grading system will be added later.",
+            finish: "Done",
+            solutionLabel: "Solution",
+            solutionFallback: "Solution coming soon",
         },
         moduleTypes: {
             theory: "Theory",

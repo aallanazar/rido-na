@@ -15,28 +15,30 @@ export type LocalizedString = Record<LanguageCode, string>;
 
 export type QuizQuestion =
   | {
-      id: string;
-      type: 'mcq';
-      prompt: LocalizedString;
-      choices: LocalizedString[];
-      correctIndex: number;
-      solution?: LocalizedString;
-      explanation?: LocalizedString;
-    }
+    id: string;
+    type: 'mcq';
+    prompt: LocalizedString;
+    choices: LocalizedString[];
+    correctIndex: number;
+    solution?: LocalizedString;
+    explanation?: LocalizedString;
+  }
   | {
-      id: string;
-      type: 'open';
-      prompt: LocalizedString;
-      correctAnswer: { type: 'number'; value: number; tolerance?: number } | { type: 'text'; value: string };
-      solution?: LocalizedString;
-      explanation?: LocalizedString;
-    };
+    id: string;
+    type: 'open';
+    prompt: LocalizedString;
+    correctAnswer: { type: 'number'; value: number; tolerance?: number } | { type: 'text'; value: string };
+    solution?: LocalizedString;
+    explanation?: LocalizedString;
+  };
 
 export type Worksheet = {
   id: string;
   title: LocalizedString;
   description?: LocalizedString;
   downloadUrl?: string;
+  solution?: LocalizedString;
+  explanation?: LocalizedString;
 };
 
 export type ModuleSection = {

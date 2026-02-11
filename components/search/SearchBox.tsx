@@ -1,67 +1,51 @@
 'use client';
 
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Search } from 'lucide-react';
 import type { LanguageCode } from '@/lib/curriculum/types';
-import type { SearchFilters } from '@/lib/search/types';
-import { buildSearchItems } from '@/lib/search/buildItems';
-import { runSearch } from '@/lib/search/query';
-import { SearchDropdown } from './SearchDropdown';
-import { SearchFiltersBar } from './SearchFiltersBar';
 
 export function SearchBox({
   language,
   placeholder,
-  emptyLabel,
-  scopeSubjectId,
-  showSubjectFilters,
-  labels,
   inputClassName,
+  onSearch,
 }: {
   language: LanguageCode;
   placeholder: string;
-  emptyLabel: string;
+  emptyLabel?: string;
   scopeSubjectId?: string;
   showSubjectFilters?: boolean;
-  labels: Parameters<typeof SearchFiltersBar>[0]['labels'];
+  labels?: any;
   inputClassName?: string;
+  onSearch?: (query: string) => void;
 }) {
-  const rootRef = useRef<HTMLDivElement | null>(null);
   const [query, setQuery] = useState('');
-  const [open, setOpen] = useState(false);
-  const [filters, setFilters] = useState<SearchFilters>(() =>
-    scopeSubjectId ? { subjectId: scopeSubjectId } : {}
-  );
 
-  useEffect(() => {
-    function onDocDown(e: MouseEvent) {
-      const el = rootRef.current;
-      if (!el) return;
-      if (e.target instanceof Node && el.contains(e.target)) return;
-      setOpen(false);
+  const handleSearch = () => {
+    if (query.trim() && onSearch) {
+      onSearch(query.trim());
     }
-    document.addEventListener('mousedown', onDocDown);
-    return () => document.removeEventListener('mousedown', onDocDown);
-  }, []);
+  };
 
-  const items = useMemo(() => buildSearchItems(language), [language]);
-  const effectiveFilters = useMemo<SearchFilters>(
-    () => ({ ...filters, subjectId: scopeSubjectId ?? filters.subjectId }),
-    [filters, scopeSubjectId]
-  );
-  const results = useMemo(() => runSearch(items, query, effectiveFilters), [items, query, effectiveFilters]);
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   return (
-    <div ref={rootRef} className="relative w-full">
+    <div className="relative w-full">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 opacity-50" />
+        <button
+          onClick={handleSearch}
+          className="absolute left-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+        >
+          <Search className="w-4 h-4 opacity-50" />
+        </button>
         <input
           value={query}
-          onChange={(e) => {
-            setQuery(e.target.value);
-            setOpen(true);
-          }}
-          onFocus={() => setOpen(true)}
+          onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
           placeholder={placeholder}
           className={
             inputClassName ??
@@ -69,24 +53,6 @@ export function SearchBox({
           }
         />
       </div>
-
-      <SearchFiltersBar
-        levelId={effectiveFilters.levelId}
-        subjectId={effectiveFilters.subjectId}
-        sectionType={effectiveFilters.sectionType}
-        onChange={(next) => setFilters(scopeSubjectId ? { ...next, subjectId: scopeSubjectId } : next)}
-        labels={labels}
-        showSubjects={showSubjectFilters}
-      />
-
-      {open && query.trim().length > 0 ? (
-        <SearchDropdown
-          query={query}
-          results={results}
-          emptyLabel={emptyLabel}
-          onPick={() => setOpen(false)}
-        />
-      ) : null}
     </div>
   );
 }

@@ -195,11 +195,9 @@ export default function CodingModulePage() {
               language={language}
               labels={{
                 title: t('ui.homeworks'),
-                upload: t('ui.upload'),
-                codeInput: t('ui.codeInput'),
-                placeholder: t('ui.placeholder'),
-                rating: t('ui.ratingPlaceholder'),
-                feedback: t('ui.teacherFeedback'),
+                finish: t('ui.finish'),
+                solution: t('ui.solutionLabel'),
+                solutionFallback: t('ui.solutionFallback'),
               }}
             />
           </section>
