@@ -6,6 +6,7 @@ import {
     Calculator, Atom, Beaker, Microscope, Code, FileSpreadsheet,
     BookOpen, PenTool, Brain, CircleHelp, Folder
 } from 'lucide-react';
+import { useTranslation } from '@/lib/hooks/useTranslation';
 
 const GRID_ITEMS = [
     { id: 'math', label: 'Matematika', icon: Calculator },
@@ -24,6 +25,7 @@ const GRID_ITEMS = [
 
 export function SubjectGrid() {
     const router = useRouter();
+    const { t } = useTranslation(); // Note: useTranslation isn't imported yet, I'll fix imports below.
 
     const handleSelect = (id: string) => {
         router.push(`/platform/${id}`);
@@ -32,23 +34,30 @@ export function SubjectGrid() {
     return (
         <div className="w-full max-w-6xl mx-auto p-6 mt-20">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {GRID_ITEMS.map((item) => (
-                    <button
-                        key={item.id}
-                        onClick={() => handleSelect(item.id)}
-                        className="flex flex-col items-center justify-center p-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm
+                {GRID_ITEMS.map((item) => {
+                    // Try subject translation first, then moduleType
+                    const label = t(`subjects.${item.id}`) !== `subjects.${item.id}`
+                        ? t(`subjects.${item.id}`)
+                        : (t(`moduleTypes.${item.id}`) !== `moduleTypes.${item.id}` ? t(`moduleTypes.${item.id}`) : item.label);
+
+                    return (
+                        <button
+                            key={item.id}
+                            onClick={() => handleSelect(item.id)}
+                            className="flex flex-col items-center justify-center p-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm
                        border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-sm
                        hover:scale-105 hover:shadow-md hover:border-amber-400/50 dark:hover:border-amber-400/50
                        transition-all duration-300 group"
-                    >
-                        <div className="mb-4 p-4 bg-amber-100/50 dark:bg-amber-900/20 rounded-full text-amber-700 dark:text-amber-500 group-hover:bg-amber-100 dark:group-hover:bg-amber-900/30 transition-colors">
-                            <item.icon size={32} strokeWidth={1.5} />
-                        </div>
-                        <h3 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100 font-sans">
-                            {item.label}
-                        </h3>
-                    </button>
-                ))}
+                        >
+                            <div className="mb-4 p-4 bg-amber-100/50 dark:bg-amber-900/20 rounded-full text-amber-700 dark:text-amber-500 group-hover:bg-amber-100 dark:group-hover:bg-amber-900/30 transition-colors">
+                                <item.icon size={32} strokeWidth={1.5} />
+                            </div>
+                            <h3 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100 font-sans">
+                                {label}
+                            </h3>
+                        </button>
+                    );
+                })}
             </div>
         </div>
     );

@@ -13,12 +13,6 @@ export default function Home() {
         <SubjectGrid />
       </div>
 
-      {/* Decorative Elements */}
-      <div className="fixed bottom-12 left-12 w-32 h-32 opacity-10 dark:opacity-5 pointer-events-none">
-        <div className="w-full h-full border-4 border-black dark:border-white rounded-full flex items-center justify-center">
-          <div className="w-1/2 h-0.5 bg-black dark:bg-white rotate-45" />
-        </div>
-      </div>
     </main>
   );
 }
