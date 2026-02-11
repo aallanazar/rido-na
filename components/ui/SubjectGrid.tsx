@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import {
     Calculator, Atom, Beaker, Microscope, Code, FileSpreadsheet,
-    BookOpen, PenTool, Brain, CircleHelp, Folder
+    BookOpen, PenTool, Brain, CircleHelp, Folder, Monitor
 } from 'lucide-react';
 import { useTranslation } from '@/lib/hooks/useTranslation';
 
@@ -15,6 +15,7 @@ const GRID_ITEMS = [
     { id: 'biology', label: 'Biologiya', icon: Microscope },
     { id: 'coding', label: 'Dasturlash', icon: Code },
     { id: 'office', label: 'Microsoft Office', icon: FileSpreadsheet },
+    { id: 'it', label: 'Informatik', icon: Monitor }, // Added IT
     // Module types / Extra subjects
     { id: 'theory', label: 'Nazariya', icon: BookOpen },
     { id: 'examples', label: 'Misollar', icon: PenTool },
