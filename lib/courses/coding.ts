@@ -1,6 +1,7 @@
 import type { LocalizedString } from '@/lib/curriculum/types';
 import type { Course, CodingCourseId, CourseFeature } from './types';
 import { ls, makeHomeworks, makeMaterials, makeQuiz10 } from './helpers';
+import { typescriptModules } from './content/typescriptData';
 
 type CodingCourseMeta = {
   id: CodingCourseId;
@@ -45,9 +46,9 @@ const codingCoursesMeta: CodingCourseMeta[] = [
     description: ls('Tiplangan JavaScript.', 'Getyptes JavaScript.', 'Typed JavaScript.'),
     features: ['code-editor'],
     topics: mkTopics(
-      ['Tiplar', 'Interfeyslar', 'Generiklar', 'Union/Intersection', 'Enum & Literal', 'Narrowing', 'Funksiyalar', 'Classlar', 'Type Guards', 'Utility Types', 'TS config', 'Async typing', 'React typing', 'Patterns', 'Final loyiha'],
-      ['Typen', 'Interfaces', 'Generics', 'Union/Intersection', 'Enums & Literals', 'Narrowing', 'Funktionen', 'Classes', 'Type Guards', 'Utility Types', 'TS-Config', 'Async-Typing', 'React-Typing', 'Patterns', 'Abschlussprojekt'],
-      ['Types', 'Interfaces', 'Generics', 'Union/Intersection', 'Enums & literals', 'Narrowing', 'Functions', 'Classes', 'Type guards', 'Utility types', 'TS config', 'Async typing', 'React typing', 'Patterns', 'Capstone project']
+      ['Kirish va Asoslar', 'Interfeyslar', 'Funksiyalar', 'Generiklar', 'Klasslar & OOP', 'Enumlar', 'Type Guards', 'Murakkab Tiplar', 'Utility Types', 'Modullar', 'Dekoratorlar', 'Async/Await', 'Patterns', 'React', 'Loyiha'],
+      ['Einführung', 'Interfaces', 'Funktionen', 'Generics', 'Klassen & OOP', 'Enums', 'Type Guards', 'Advanced Types', 'Utility Types', 'Module', 'Decorators', 'Async/Await', 'Patterns', 'React', 'Projekt'],
+      ['Introduction', 'Interfaces', 'Functions', 'Generics', 'Classes & OOP', 'Enums', 'Type Guards', 'Advanced Types', 'Utility Types', 'Modules', 'Decorators', 'Async/Await', 'Patterns', 'React', 'Project']
     ),
   },
   {
@@ -205,9 +206,25 @@ export function buildCodingCourse(courseId: CodingCourseId): Course {
   const modules = Array.from({ length: 15 }).map((_, i) => {
     const index = i + 1;
     const id = `m${index}`;
-    const title = ls(`Modul ${index}: ${uzTopics[i]}`, `Modul ${index}: ${deTopics[i]}`, `Module ${index}: ${enTopics[i]}`);
-
     const prefix = `${courseId}-${id}`;
+
+    // Special handling for TypeScript if available
+    let customModuleData = null;
+    if (courseId === 'typescript') {
+      customModuleData = typescriptModules[i];
+    }
+
+    const title = customModuleData
+      ? customModuleData.title
+      : ls(`Modul ${index}: ${uzTopics[i]}`, `Modul ${index}: ${deTopics[i]}`, `Module ${index}: ${enTopics[i]}`);
+
+    const desc = customModuleData
+      ? customModuleData.description
+      : ls(
+        `${meta.title.uz} — ${uzTopics[i]} bo‘yicha qisqa kirish.`,
+        `${meta.title.de} — Kurze Einführung zu ${deTopics[i]}.`,
+        `${meta.title.en} — Quick intro to ${enTopics[i]}.`
+      );
 
     const quiz = makeQuiz10({
       prefix,
@@ -230,15 +247,19 @@ export function buildCodingCourse(courseId: CodingCourseId): Course {
       ),
     });
 
+    const homeworks = customModuleData
+      ? customModuleData.homeworks.map((hw, hwi) => ({
+        id: `${prefix}-hw${hwi + 1}`,
+        title: hw.title,
+        description: hw.description,
+      }))
+      : makeHomeworks({ prefix, count: index % 3 === 0 ? 3 : 2 });
+
     return {
       index,
       id,
       title,
-      description: ls(
-        `${meta.title.uz} — ${uzTopics[i]} bo‘yicha qisqa kirish.`,
-        `${meta.title.de} — Kurze Einführung zu ${deTopics[i]}.`,
-        `${meta.title.en} — Quick intro to ${enTopics[i]}.`
-      ),
+      description: desc,
       sections: [
         { type: 'theory' as const, title: ls('Nazariya', 'Theorie-Erklärung', 'Theory'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
         { type: 'practice' as const, title: ls('Amaliy misollar', 'Praxisbeispiele', 'Practice examples'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
@@ -249,7 +270,7 @@ export function buildCodingCourse(courseId: CodingCourseId): Course {
       ],
       quizTitle: ls('Quiz (10 savol)', 'Quiz (10 Fragen)', 'Quiz (10 questions)'),
       quiz,
-      homeworks: makeHomeworks({ prefix, count: index % 3 === 0 ? 3 : 2 }),
+      homeworks,
       materials: makeMaterials({ prefix, count: 2 }),
     };
   });
