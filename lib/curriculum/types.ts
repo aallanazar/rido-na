@@ -9,7 +9,8 @@ export type ModuleSectionType =
   | 'exercises'
   | 'visuals'
   | 'quiz'
-  | 'worksheets';
+  | 'worksheets'
+  | 'practice';
 
 export type LocalizedString = Record<LanguageCode, string>;
 

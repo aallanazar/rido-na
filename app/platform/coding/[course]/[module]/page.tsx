@@ -14,6 +14,7 @@ import { TerminalSimulator } from '@/components/platform/TerminalSimulator';
 import { MaterialsBlock } from '@/components/platform/MaterialsBlock';
 import { usePlatformStore } from '@/lib/store/usePlatformStore';
 import { getLocalized } from '@/lib/curriculum';
+import { PracticeEditor } from '@/components/platform/PracticeEditor';
 
 function isCodingCourseId(value: string): value is CodingCourseId {
   return (
@@ -142,7 +143,13 @@ export default function CodingModulePage() {
               className="p-6 rounded-2xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/10"
             >
               <h2 className="text-2xl font-serif font-bold mb-3">{getLocalized(language, s.title)}</h2>
-              <p className="text-sm opacity-80 whitespace-pre-line">{getLocalized(language, s.content)}</p>
+              <p className="text-sm opacity-80 whitespace-pre-line mb-4">{getLocalized(language, s.content)}</p>
+
+              {s.type === 'practice' && (
+                <div className="mt-4">
+                  <PracticeEditor moduleId={`coding-${courseId}-${index}`} />
+                </div>
+              )}
             </section>
           ))}
 

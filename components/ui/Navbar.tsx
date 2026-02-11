@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePlatformStore, Language } from '@/lib/store/usePlatformStore';
+import { useTranslation } from '@/lib/hooks/useTranslation';
 import { Moon, Sun, Languages, MoreVertical, Settings, Github, User } from 'lucide-react';
 import { GlobalSearch } from '@/components/search/GlobalSearch';
 import { useState, useRef, useEffect } from 'react';
@@ -10,6 +11,7 @@ export function Navbar() {
     const { theme, toggleTheme, language, setLanguage } = usePlatformStore();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
+    const { t } = useTranslation();
 
     const languages: { code: Language; label: string }[] = [
         { code: 'uz', label: 'UZ' },
@@ -62,13 +64,13 @@ export function Navbar() {
                         <div className="px-4 py-3 border-b border-black/5 dark:border-white/5 mb-1">
                             <div className="flex items-center gap-2 font-semibold text-sm opacity-60 mb-1">
                                 <Settings size={14} />
-                                Einstellungen
+                                {t('ui.settings')}
                             </div>
                         </div>
 
                         {/* Language Switcher */}
                         <div className="px-3 py-2">
-                            <div className="text-xs font-semibold opacity-50 mb-2 px-1">Sprache / Language</div>
+                            <div className="text-xs font-semibold opacity-50 mb-2 px-1">{t('ui.languageLabel')}</div>
                             <div className="flex gap-1">
                                 {languages.map((lang) => (
                                     <button
@@ -90,7 +92,7 @@ export function Navbar() {
                             onClick={toggleTheme}
                             className="flex items-center justify-between w-full px-4 py-3 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors text-sm font-medium"
                         >
-                            <span>Erscheinungsbild</span>
+                            <span>{t('ui.appearance')}</span>
                             {theme === 'light' ? (
                                 <div className="flex items-center gap-2 opacity-70">
                                     <span className="text-xs">Light</span>

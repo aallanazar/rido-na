@@ -75,6 +75,9 @@ export const translations = {
             finish: "Tugatish",
             solutionLabel: "Yechim",
             solutionFallback: "Yechim tez orada qo‘shiladi",
+            settings: "Sozlamalar",
+            appearance: "Ko‘rinish",
+            languageLabel: "Til / Language",
         },
         moduleTypes: {
             theory: "Nazariya",
@@ -130,6 +133,18 @@ export const translations = {
             dialogue: "Muloqot",
             quiz: "Viktorina",
             level: "Daraja",
+        },
+        tools: {
+            pen: "Ruchka",
+            pencil: "Qalam",
+            marker: "Marker",
+            highlighter: "Ajratgich",
+            eraser: "O‘chirg‘ich",
+            undo: "Bekor qilish",
+            redo: "Qaytarish",
+            clear: "Tozalash",
+            textMode: "Matn rejimi",
+            penMode: "Yozish rejimi",
         }
     },
     de: {
@@ -208,6 +223,9 @@ export const translations = {
             finish: "Fertig",
             solutionLabel: "Lösung",
             solutionFallback: "Lösung folgt bald",
+            settings: "Einstellungen",
+            appearance: "Erscheinungsbild",
+            languageLabel: "Sprache / Language",
         },
         moduleTypes: {
             theory: "Theorie",
@@ -263,6 +281,18 @@ export const translations = {
             dialogue: "Dialog",
             quiz: "Quiz",
             level: "Stufe",
+        },
+        tools: {
+            pen: "Stift",
+            pencil: "Bleistift",
+            marker: "Marker",
+            highlighter: "Textmarker",
+            eraser: "Radierer",
+            undo: "Rückgängig",
+            redo: "Wiederholen",
+            clear: "Alles Löschen",
+            textMode: "Text-Modus",
+            penMode: "Stift-Modus",
         }
     },
     en: {
@@ -341,6 +371,9 @@ export const translations = {
             finish: "Done",
             solutionLabel: "Solution",
             solutionFallback: "Solution coming soon",
+            settings: "Settings",
+            appearance: "Appearance",
+            languageLabel: "Language / Sprache",
         },
         moduleTypes: {
             theory: "Theory",
@@ -396,6 +429,18 @@ export const translations = {
             dialogue: "Dialogue",
             quiz: "Quiz",
             level: "Level",
+        },
+        tools: {
+            pen: "Pen",
+            pencil: "Pencil",
+            marker: "Marker",
+            highlighter: "Highlighter",
+            eraser: "Eraser",
+            undo: "Undo",
+            redo: "Redo",
+            clear: "Clear All",
+            textMode: "Text Mode",
+            penMode: "Pen Mode",
         }
     }
 };
