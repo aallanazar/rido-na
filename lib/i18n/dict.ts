@@ -83,6 +83,18 @@ export const translations = {
             coding: "Dasturlash",
             chooseMode: "Rejimni tanlang",
             contentComingSoon: "Ushbu bo‘lim uchun materiallar tayyorlanmoqda.",
+            pageSetup: {
+                title: "Sahifa sozlamalari",
+                paper: "Qog‘oz turi",
+                color: "Sahifa rangi",
+                addPage: "Sahifa qo‘shish",
+                templates: {
+                    blank: "Bo‘sh",
+                    lined: "Chiziqli",
+                    grid: "Katak",
+                    dotted: "Nuqtali"
+                }
+            }
         },
         moduleTypes: {
             theory: "Nazariya",
@@ -236,6 +248,18 @@ export const translations = {
             coding: "Programmieren",
             chooseMode: "Modus wählen",
             contentComingSoon: "Materialien für diesen Bereich werden vorbereitet.",
+            pageSetup: {
+                title: "Seiteneinrichtung",
+                paper: "Papiervorlage",
+                color: "Seitenfarbe",
+                addPage: "Seite hinzufügen",
+                templates: {
+                    blank: "Leer",
+                    lined: "Liniert",
+                    grid: "Kariert",
+                    dotted: "Gepunktet"
+                }
+            }
         },
         moduleTypes: {
             theory: "Theorie",
@@ -389,6 +413,18 @@ export const translations = {
             coding: "Coding",
             chooseMode: "Choose Mode",
             contentComingSoon: "Materials for this section are being prepared.",
+            pageSetup: {
+                title: "Page Setup",
+                paper: "Paper Style",
+                color: "Page Color",
+                addPage: "Add Page",
+                templates: {
+                    blank: "Blank",
+                    lined: "Lined",
+                    grid: "Grid",
+                    dotted: "Dotted"
+                }
+            }
         },
         moduleTypes: {
             theory: "Theory",

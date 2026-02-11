@@ -2,21 +2,28 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from '@/lib/hooks/useTranslation';
-import { PenTool, Type, Eraser, Undo, Redo, Trash2, Highlighter, Pencil, Bold, Italic, Underline, List } from 'lucide-react';
+import { PenTool, Type, Eraser, Undo, Redo, Trash2, Highlighter, Pencil, Bold, Italic, Underline, List, LayoutTemplate, Palette, Plus } from 'lucide-react';
 
 interface PracticeEditorProps {
     moduleId: string;
 }
 
 type Tool = 'pen' | 'pencil' | 'marker' | 'eraser' | 'highlighter';
+type Template = 'blank' | 'lined' | 'grid' | 'dotted';
 
 export function PracticeEditor({ moduleId }: PracticeEditorProps) {
     const { t } = useTranslation();
     const [mode, setMode] = useState<'text' | 'pen'>('pen');
-    const [htmlValue, setHtmlValue] = useState<string>(''); // Changed from textValue
+    const [htmlValue, setHtmlValue] = useState<string>('');
     const [tool, setTool] = useState<Tool>('pen');
     const [strokeColor, setStrokeColor] = useState('#000000');
     const [strokeWidth, setStrokeWidth] = useState(2);
+
+    // Page Settings
+    const [pageHeight, setPageHeight] = useState(1000); // Initial A4-ish height
+    const [template, setTemplate] = useState<Template>('blank');
+    const [pageColor, setPageColor] = useState('#ffffff');
+
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const contextRef = useRef<CanvasRenderingContext2D | null>(null);
     const [isDrawing, setIsDrawing] = useState(false);
@@ -26,22 +33,35 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
     // Initial load/save
     useEffect(() => {
         const savedHtml = localStorage.getItem(`practice_html_${moduleId}`);
-        if (savedHtml) {
-            setHtmlValue(savedHtml);
-        }
+        if (savedHtml) setHtmlValue(savedHtml);
+
+        const savedHeight = localStorage.getItem(`practice_height_${moduleId}`);
+        if (savedHeight) setPageHeight(Number(savedHeight));
+
+        const savedTemplate = localStorage.getItem(`practice_template_${moduleId}`);
+        if (savedTemplate) setTemplate(savedTemplate as Template);
+
+        const savedColor = localStorage.getItem(`practice_color_${moduleId}`);
+        if (savedColor) setPageColor(savedColor);
+
         setTextInitialized(true);
     }, [moduleId]);
 
-    // Force update innerHTML once initialized to avoid overwriting or loops
+    // Save Page Config changes
+    useEffect(() => {
+        localStorage.setItem(`practice_height_${moduleId}`, String(pageHeight));
+        localStorage.setItem(`practice_template_${moduleId}`, template);
+        localStorage.setItem(`practice_color_${moduleId}`, pageColor);
+    }, [pageHeight, template, pageColor, moduleId]);
+
+    // Force update innerHTML once initialized
     useEffect(() => {
         if (textInitialized && textRef.current && textRef.current.innerHTML !== htmlValue) {
             if (htmlValue === '') {
                 textRef.current.innerHTML = '';
-            } else {
-                // Only set if significantly different to avoid cursor jumps, but simple for now
             }
         }
-    }, [textInitialized]); // Don't dep on htmlValue to avoid loop
+    }, [textInitialized]);
 
     const handleInput = () => {
         if (textRef.current) {
@@ -53,40 +73,76 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
 
     const execCmd = (command: string, value?: string) => {
         document.execCommand(command, false, value);
-        // Ensure focus remains
         if (textRef.current) textRef.current.focus();
     };
 
-    // Canvas Setup
+    // Canvas Setup & Resize Logic
     useEffect(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
 
-        // Higher density for sharper drawing
         const dpr = window.devicePixelRatio || 1;
-        const rect = canvas.getBoundingClientRect();
+        // Logic to preserve content on resize
+        // We use a temporary canvas to hold current image
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        if (tempCtx) tempCtx.drawImage(canvas, 0, 0);
 
-        canvas.width = rect.width * dpr;
-        canvas.height = rect.height * dpr;
+        // Resize
+        // We set the canvas styling width/height via CSS/Attributes to match pageHeight
+        // The container handles the width (100%), but height is dynamic
+        // Since we are inside a flex-1 container, we need to ensure the canvas matches the scrollable content height
+        // actually, we will set the canvas height explicitly based on pageHeight
+
+        // However, we rely on the parent div's width
+        const rect = canvas.parentElement?.getBoundingClientRect();
+        const width = rect?.width || 800;
+
+        canvas.width = width * dpr;
+        canvas.height = pageHeight * dpr;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${pageHeight}px`;
 
         const ctx = canvas.getContext('2d');
         if (ctx) {
             ctx.scale(dpr, dpr);
             ctx.lineCap = 'round';
             ctx.lineJoin = 'round';
-            contextRef.current = ctx;
-        }
+            contextRef.current = ctx; // Re-assign context
 
-        // Restore drawing if we had one saved (simple raw data url approach for MVP)
-        const savedDrawing = localStorage.getItem(`practice_drawing_${moduleId}`);
-        if (savedDrawing && ctx) {
-            const img = new Image();
-            img.src = savedDrawing;
-            img.onload = () => ctx.drawImage(img, 0, 0, rect.width, rect.height);
-        }
-    }, [moduleId, mode]); // Re-init when Mode changes to ensure correct sizing if hidden
+            // Restore drawing
+            // Strategy 1: Load from storage if this is init
+            // Strategy 2: Load from temp canvas if this is resize
 
-    // Update Context Styles
+            // Simple check: if temp canvas has content (not empty), use it. 
+            // BUT initial load also triggers this.
+            // Let's rely on storage for persistence.
+            // If resizing, we should save to storage first? 
+
+            const savedDrawing = localStorage.getItem(`practice_drawing_${moduleId}`);
+            if (savedDrawing) {
+                const img = new Image();
+                img.src = savedDrawing;
+                img.onload = () => {
+                    // If we just resized, the savedDrawing might be old size. 
+                    // drawImage will draw it at 0,0. 
+                    // If we are making it taller, it's fine.
+                    ctx.drawImage(img, 0, 0, width, img.height / dpr); // Keep aspect ratio logic simple?
+                    // Actually, img.src contains the full data url of previous state.
+                    // Just drawing it is enough.
+                    ctx.drawImage(img, 0, 0, width, (img.height / (img.width / width)));
+                    // Wait, dataURL has pixel density baked in? 
+                    // Usually dataURL is just an image.
+                    // simpler:
+                    ctx.drawImage(img, 0, 0, width, img.height * (width / img.width));
+                };
+            }
+        }
+    }, [pageHeight, moduleId, mode]); // Trigger on height change
+
+    // Context Styles Update
     useEffect(() => {
         if (!contextRef.current) return;
         const ctx = contextRef.current;
@@ -98,19 +154,18 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
             ctx.globalCompositeOperation = 'source-over';
             ctx.strokeStyle = strokeColor;
             ctx.lineWidth = strokeWidth;
-
             if (tool === 'highlighter' || tool === 'marker') {
                 ctx.globalAlpha = tool === 'highlighter' ? 0.3 : 0.7;
             } else {
                 ctx.globalAlpha = 1.0;
             }
         }
-    }, [tool, strokeColor, strokeWidth]);
+    }, [tool, strokeColor, strokeWidth, pageHeight]); // Re-apply on height change too since context resets
 
+    // ... (Drawing handlers: startDrawing, draw, stopDrawing - mostly same)
     const startDrawing = ({ nativeEvent }: React.MouseEvent | React.TouchEvent) => {
         if (!contextRef.current) return;
 
-        // Handle both mouse and touch coordinates
         let clientX, clientY;
         if ('touches' in nativeEvent) {
             const touch = nativeEvent.touches[0];
@@ -183,16 +238,9 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
                 const ctx = contextRef.current;
                 if (canvas && ctx) {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
-                    // Note: using scaled raw dims might be better to re-draw
-                    // Actually, if we clear, we should restore context properties? 
-                    // No, context properties (lineWidth, color) persist unless we reset specific ones.
-                    // But drawImage is unaffected by strokeStyle.
-                    // However, we should ensure composite operation is reset if needed? 
-                    // It should be fine as drawImage ignores it mostly or uses source-over default.
-                    // Let's force source-over for restoration just in case eraser was active.
                     const prevComposite = ctx.globalCompositeOperation;
                     ctx.globalCompositeOperation = 'source-over';
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height); // simplistic restore
                     ctx.globalCompositeOperation = prevComposite;
 
                     localStorage.setItem(`practice_drawing_${moduleId}`, history[newStep]);
@@ -233,31 +281,66 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
     useEffect(() => {
         const canvas = canvasRef.current;
         if (canvas && history.length === 0) {
-            // Save blank or loaded state
             const dataUrl = canvas.toDataURL();
             setHistory([dataUrl]);
             setHistoryStep(0);
         }
-    }, [moduleId, history.length]); // simple init, depend on history.length to ensure it runs only once initially
+    }, [moduleId, history.length]);
 
     const clearCanvas = () => {
         const canvas = canvasRef.current;
         if (canvas && contextRef.current) {
-            contextRef.current.clearRect(0, 0, canvas.width, canvas.height); // Note: using scaled raw dims might be better
-            // Actually clearRect uses logical units if transform is applied? No, context is scaled.
-            // Let's rely on reset:
+            contextRef.current.clearRect(0, 0, canvas.width, canvas.height);
             saveToHistory();
         }
+    };
+
+    // Add Page function
+    const addPage = () => {
+        // We save current state first to ensure no loss
+        if (canvasRef.current) {
+            const dataUrl = canvasRef.current.toDataURL();
+            localStorage.setItem(`practice_drawing_${moduleId}`, dataUrl);
+        }
+        setPageHeight(prev => prev + 1000); // Add another "page"
+    };
+
+    // Calculate background style
+    const getBackgroundStyle = () => {
+        const base = { backgroundColor: pageColor, minHeight: `${pageHeight}px` };
+        if (template === 'lined') {
+            return {
+                ...base,
+                backgroundImage: `linear-gradient(${pageColor} 95%, #00000020 95%)`,
+                backgroundSize: '100% 40px'
+            };
+        }
+        if (template === 'grid') {
+            return {
+                ...base,
+                backgroundImage: `linear-gradient(#00000010 1px, transparent 1px), linear-gradient(90deg, #00000010 1px, transparent 1px)`,
+                backgroundSize: '40px 40px'
+            };
+        }
+        if (template === 'dotted') {
+            return {
+                ...base,
+                backgroundImage: `radial-gradient(#00000020 1px, transparent 1px)`,
+                backgroundSize: '20px 20px'
+            };
+        }
+        return base;
     };
 
     return (
         <div className="flex flex-col md:flex-row gap-4 h-[600px] w-full border border-black/10 dark:border-white/10 rounded-2xl bg-white dark:bg-[#1a1a1a] overflow-hidden">
 
-            {/* Editor Area */}
-            <div className="flex-1 relative bg-white dark:bg-[#121212] flex flex-col">
-                {/* Text Toolbar - visible only in Text Mode */}
+            {/* Editor Scroll Area */}
+            <div className="flex-1 relative bg-zinc-100 dark:bg-[#121212] overflow-y-auto flex flex-col items-center p-4 md:p-8">
+
+                {/* Text Toolbar */}
                 {mode === 'text' && (
-                    <div className="flex items-center gap-2 p-2 px-4 border-b border-black/5 dark:border-white/5 bg-gray-50 dark:bg-black/20 z-10 relative">
+                    <div className="sticky top-0 z-50 flex items-center gap-2 p-2 px-4 mb-4 rounded-xl border border-black/5 dark:border-white/5 bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm">
                         <button onClick={() => execCmd('bold')} className="p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors" title="Bold">
                             <Bold size={16} />
                         </button>
@@ -274,31 +357,45 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
                     </div>
                 )}
 
-                {/* Text Content */}
-                {mode === 'text' && (
+                {/* Page Container */}
+                <div
+                    className="relative w-full max-w-4xl shadow-lg transition-all duration-300"
+                    style={getBackgroundStyle()}
+                >
+                    {/* Text Content */}
                     <div
                         ref={textRef}
-                        contentEditable
+                        contentEditable={mode === 'text'}
                         onInput={handleInput}
-                        className="w-full h-full p-8 resize-none focus:outline-none bg-transparent dark:text-white overflow-y-auto prose dark:prose-invert max-w-none"
+                        className={`w-full h-full p-8 md:p-16 resize-none focus:outline-none bg-transparent dark:text-black overflow-hidden prose max-w-none ${mode === 'text' ? 'cursor-text' : 'cursor-default'}`}
                         dangerouslySetInnerHTML={{ __html: htmlValue }}
-                        style={{ minHeight: '100%' }}
+                        style={{ minHeight: `${pageHeight}px`, color: '#000' }} // Force black text for contrast on paper
                         suppressContentEditableWarning
                     />
-                )}
 
-                <canvas
-                    ref={canvasRef}
-                    onMouseDown={startDrawing}
-                    onMouseMove={draw}
-                    onMouseUp={stopDrawing}
-                    onMouseLeave={stopDrawing}
-                    onTouchStart={startDrawing}
-                    onTouchMove={draw}
-                    onTouchEnd={stopDrawing}
-                    className={`absolute inset-0 w-full h-full touch-none cursor-crosshair ${mode === 'text' ? 'pointer-events-none opacity-50 z-0' : 'z-10'}`}
-                    style={mode === 'text' ? { pointerEvents: 'none' } : {}}
-                />
+                    {/* Canvas Layer */}
+                    <canvas
+                        ref={canvasRef}
+                        onMouseDown={startDrawing}
+                        onMouseMove={draw}
+                        onMouseUp={stopDrawing}
+                        onMouseLeave={stopDrawing}
+                        onTouchStart={startDrawing}
+                        onTouchMove={draw}
+                        onTouchEnd={stopDrawing}
+                        className={`absolute inset-0 w-full h-full touch-none cursor-crosshair ${mode === 'text' ? 'pointer-events-none opacity-50 z-0' : 'z-10'}`}
+                        style={mode === 'text' ? { pointerEvents: 'none' } : {}}
+                    />
+                </div>
+
+                {/* Add Page Button */}
+                <button
+                    onClick={addPage}
+                    className="mt-8 mb-4 hover:scale-110 transition-transform p-3 rounded-full bg-black/5 dark:bg-white/10 hover:bg-amber-500 hover:text-white dark:hover:bg-amber-500 text-black/40 dark:text-white/40"
+                    title={t('ui.pageSetup.addPage')}
+                >
+                    <Plus size={24} />
+                </button>
             </div>
 
             {/* Right Toolbar */}
@@ -320,6 +417,37 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
                     >
                         <PenTool size={20} />
                     </button>
+                    <div className="w-full h-px bg-black/5 dark:bg-white/5 my-1" />
+                    {/* Page Setup Toggles */}
+                    <div className="relative group">
+                        <button className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors text-black dark:text-white" title={t('ui.pageSetup.paper')}>
+                            <LayoutTemplate size={20} />
+                        </button>
+                        {/* Popup Menu for Template */}
+                        <div className="absolute left-full top-0 ml-2 p-2 bg-white dark:bg-zinc-800 rounded-xl shadow-xl border border-black/5 dark:border-white/5 hidden group-hover:flex flex-col gap-2 w-32 z-50">
+                            {(['blank', 'lined', 'grid', 'dotted'] as const).map(tm => (
+                                <button key={tm} onClick={() => setTemplate(tm)} className={`text-xs p-2 rounded text-left hover:bg-black/5 ${template === tm ? 'font-bold bg-amber-100 text-amber-800' : ''}`}>
+                                    {t(`ui.pageSetup.templates.${tm}`)}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="relative group">
+                        <button className="p-2 hover:bg-black/5 dark:hover:bg-white/5 rounded-lg transition-colors text-black dark:text-white" title={t('ui.pageSetup.color')}>
+                            <Palette size={20} />
+                        </button>
+                        {/* Popup Menu for Color */}
+                        <div className="absolute left-full top-0 ml-2 p-2 bg-white dark:bg-zinc-800 rounded-xl shadow-xl border border-black/5 dark:border-white/5 hidden group-hover:grid grid-cols-3 gap-2 w-32 z-50">
+                            {['#ffffff', '#fdfbf7', '#f0f4f8', '#fdf2f8', '#ecfdf5', '#fffbeb'].map(c => (
+                                <button
+                                    key={c}
+                                    onClick={() => setPageColor(c)}
+                                    className={`w-6 h-6 rounded-full border border-black/10 ${pageColor === c ? 'ring-2 ring-black' : ''}`}
+                                    style={{ backgroundColor: c }}
+                                />
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
                 {mode === 'pen' && (
@@ -331,7 +459,7 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
                             {[
                                 { id: 'pen', icon: PenTool, label: t('tools.pen') },
                                 { id: 'pencil', icon: Pencil, label: t('tools.pencil') },
-                                { id: 'marker', icon: Highlighter, label: t('tools.marker') }, // using highlighter icon for marker
+                                { id: 'marker', icon: Highlighter, label: t('tools.marker') },
                                 { id: 'highlighter', icon: Highlighter, label: t('tools.highlighter') },
                                 { id: 'eraser', icon: Eraser, label: t('tools.eraser') },
                             ].map((tol) => (
