@@ -46,33 +46,37 @@ export default function SubjectPage() {
 
                     {/* Selection Mode */}
                     {practiceMode === 'selection' && (
-                        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mt-12">
+                        <div className="flex flex-col gap-6 max-w-2xl mx-auto mt-12 w-full">
                             {/* Writing Card */}
                             <button
                                 onClick={() => setPracticeMode('writing')}
-                                className="group relative overflow-hidden p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-amber-400 dark:hover:border-amber-400 transition-all hover:shadow-xl text-left flex flex-col items-center justify-center min-h-[300px]"
+                                className="group relative overflow-hidden p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-amber-400 dark:hover:border-amber-400 transition-all hover:shadow-xl text-left flex flex-row items-center gap-6 w-full"
                             >
-                                <div className="z-10 bg-amber-100 dark:bg-amber-900/30 p-6 rounded-full text-amber-600 dark:text-amber-500 mb-6 group-hover:scale-110 transition-transform">
-                                    <PenTool size={48} />
+                                <div className="shrink-0 bg-amber-100 dark:bg-amber-900/30 p-4 rounded-full text-amber-600 dark:text-amber-500 group-hover:scale-110 transition-transform">
+                                    <PenTool size={32} />
                                 </div>
-                                <h2 className="z-10 text-2xl font-bold mb-2">{t('ui.writing')}</h2>
-                                <p className="z-10 text-center opacity-60 max-w-xs text-sm">
-                                    Use the digital pen, pencil, marker, and eraser tools to write freely like on paper.
-                                </p>
+                                <div>
+                                    <h2 className="text-2xl font-bold mb-1">{t('ui.writing')}</h2>
+                                    <p className="opacity-60 text-sm">
+                                        Write like in a Word document, with rich text and digital pen support.
+                                    </p>
+                                </div>
                             </button>
 
                             {/* Coding Card */}
                             <button
                                 onClick={() => setPracticeMode('coding')}
-                                className="group relative overflow-hidden p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-blue-400 dark:hover:border-blue-400 transition-all hover:shadow-xl text-left flex flex-col items-center justify-center min-h-[300px]"
+                                className="group relative overflow-hidden p-8 rounded-3xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:border-blue-400 dark:hover:border-blue-400 transition-all hover:shadow-xl text-left flex flex-row items-center gap-6 w-full"
                             >
-                                <div className="z-10 bg-blue-100 dark:bg-blue-900/30 p-6 rounded-full text-blue-600 dark:text-blue-500 mb-6 group-hover:scale-110 transition-transform">
-                                    <CodeIcon size={48} />
+                                <div className="shrink-0 bg-blue-100 dark:bg-blue-900/30 p-4 rounded-full text-blue-600 dark:text-blue-500 group-hover:scale-110 transition-transform">
+                                    <CodeIcon size={32} />
                                 </div>
-                                <h2 className="z-10 text-2xl font-bold mb-2">{t('ui.coding')}</h2>
-                                <p className="z-10 text-center opacity-60 max-w-xs text-sm">
-                                    Write and experiment with code in a dedicated playground environment.
-                                </p>
+                                <div>
+                                    <h2 className="text-2xl font-bold mb-1">{t('ui.coding')}</h2>
+                                    <p className="opacity-60 text-sm">
+                                        Write and experiment with code in a dedicated playground environment.
+                                    </p>
+                                </div>
                             </button>
                         </div>
                     )}

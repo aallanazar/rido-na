@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from '@/lib/hooks/useTranslation';
-import { PenTool, Type, Eraser, Undo, Redo, Trash2, Highlighter, Pencil } from 'lucide-react';
+import { PenTool, Type, Eraser, Undo, Redo, Trash2, Highlighter, Pencil, Bold, Italic, Underline, List } from 'lucide-react';
 
 interface PracticeEditorProps {
     moduleId: string;
@@ -13,23 +13,49 @@ type Tool = 'pen' | 'pencil' | 'marker' | 'eraser' | 'highlighter';
 export function PracticeEditor({ moduleId }: PracticeEditorProps) {
     const { t } = useTranslation();
     const [mode, setMode] = useState<'text' | 'pen'>('pen');
-    const [textValue, setTextValue] = useState<string>('');
+    const [htmlValue, setHtmlValue] = useState<string>(''); // Changed from textValue
     const [tool, setTool] = useState<Tool>('pen');
     const [strokeColor, setStrokeColor] = useState('#000000');
     const [strokeWidth, setStrokeWidth] = useState(2);
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const contextRef = useRef<CanvasRenderingContext2D | null>(null);
     const [isDrawing, setIsDrawing] = useState(false);
+    const textRef = useRef<HTMLDivElement>(null);
+    const [textInitialized, setTextInitialized] = useState(false);
 
-    // Initial load/save simulation for text
+    // Initial load/save
     useEffect(() => {
-        const savedText = localStorage.getItem(`practice_text_${moduleId}`);
-        if (savedText) setTextValue(savedText);
+        const savedHtml = localStorage.getItem(`practice_html_${moduleId}`);
+        if (savedHtml) {
+            setHtmlValue(savedHtml);
+        }
+        setTextInitialized(true);
     }, [moduleId]);
 
+    // Force update innerHTML once initialized to avoid overwriting or loops
     useEffect(() => {
-        localStorage.setItem(`practice_text_${moduleId}`, textValue);
-    }, [textValue, moduleId]);
+        if (textInitialized && textRef.current && textRef.current.innerHTML !== htmlValue) {
+            if (htmlValue === '') {
+                textRef.current.innerHTML = '';
+            } else {
+                // Only set if significantly different to avoid cursor jumps, but simple for now
+            }
+        }
+    }, [textInitialized]); // Don't dep on htmlValue to avoid loop
+
+    const handleInput = () => {
+        if (textRef.current) {
+            const val = textRef.current.innerHTML;
+            setHtmlValue(val);
+            localStorage.setItem(`practice_html_${moduleId}`, val);
+        }
+    };
+
+    const execCmd = (command: string, value?: string) => {
+        document.execCommand(command, false, value);
+        // Ensure focus remains
+        if (textRef.current) textRef.current.focus();
+    };
 
     // Canvas Setup
     useEffect(() => {
@@ -228,13 +254,36 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
         <div className="flex flex-col md:flex-row gap-4 h-[600px] w-full border border-black/10 dark:border-white/10 rounded-2xl bg-white dark:bg-[#1a1a1a] overflow-hidden">
 
             {/* Editor Area */}
-            <div className="flex-1 relative bg-white dark:bg-[#121212]">
+            <div className="flex-1 relative bg-white dark:bg-[#121212] flex flex-col">
+                {/* Text Toolbar - visible only in Text Mode */}
                 {mode === 'text' && (
-                    <textarea
-                        className="w-full h-full p-8 resize-none focus:outline-none bg-transparent dark:text-white"
-                        placeholder="Start typing..."
-                        value={textValue}
-                        onChange={(e) => setTextValue(e.target.value)}
+                    <div className="flex items-center gap-2 p-2 px-4 border-b border-black/5 dark:border-white/5 bg-gray-50 dark:bg-black/20 z-10 relative">
+                        <button onClick={() => execCmd('bold')} className="p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors" title="Bold">
+                            <Bold size={16} />
+                        </button>
+                        <button onClick={() => execCmd('italic')} className="p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors" title="Italic">
+                            <Italic size={16} />
+                        </button>
+                        <button onClick={() => execCmd('underline')} className="p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors" title="Underline">
+                            <Underline size={16} />
+                        </button>
+                        <div className="w-px h-4 bg-black/10 dark:bg-white/10 mx-1" />
+                        <button onClick={() => execCmd('insertUnorderedList')} className="p-1.5 hover:bg-black/5 dark:hover:bg-white/5 rounded transition-colors" title="Bullet List">
+                            <List size={16} />
+                        </button>
+                    </div>
+                )}
+
+                {/* Text Content */}
+                {mode === 'text' && (
+                    <div
+                        ref={textRef}
+                        contentEditable
+                        onInput={handleInput}
+                        className="w-full h-full p-8 resize-none focus:outline-none bg-transparent dark:text-white overflow-y-auto prose dark:prose-invert max-w-none"
+                        dangerouslySetInnerHTML={{ __html: htmlValue }}
+                        style={{ minHeight: '100%' }}
+                        suppressContentEditableWarning
                     />
                 )}
 
@@ -247,12 +296,13 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
                     onTouchStart={startDrawing}
                     onTouchMove={draw}
                     onTouchEnd={stopDrawing}
-                    className={`absolute inset-0 w-full h-full touch-none cursor-crosshair ${mode === 'text' ? 'pointer-events-none opacity-50' : ''}`}
+                    className={`absolute inset-0 w-full h-full touch-none cursor-crosshair ${mode === 'text' ? 'pointer-events-none opacity-50 z-0' : 'z-10'}`}
+                    style={mode === 'text' ? { pointerEvents: 'none' } : {}}
                 />
             </div>
 
             {/* Right Toolbar */}
-            <div className="w-full md:w-20 bg-gray-50 dark:bg-black/20 border-l border-black/5 dark:border-white/5 flex flex-row md:flex-col items-center py-4 gap-4 overflow-x-auto md:overflow-x-visible md:overflow-y-auto">
+            <div className="w-full md:w-20 bg-gray-50 dark:bg-black/20 border-l border-black/5 dark:border-white/5 flex flex-row md:flex-col items-center py-4 gap-4 overflow-x-auto md:overflow-x-visible md:overflow-y-auto shrink-0 z-20">
 
                 {/* Mode Switcher */}
                 <div className="flex flex-col gap-2 p-2 bg-white dark:bg-black/40 rounded-xl shadow-sm border border-black/5 dark:border-white/5">
