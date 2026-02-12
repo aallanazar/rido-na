@@ -58,7 +58,6 @@ export function GlobalSearch() {
   return (
     <div className="relative w-full" ref={containerRef}>
       <SearchBox
-        language={language}
         placeholder={t('ui.globalSearchPlaceholder') || 'Überall suchen...'}
         onSearch={handleSearch}
         onQueryChange={handleQueryChange}

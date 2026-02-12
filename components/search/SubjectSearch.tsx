@@ -21,7 +21,7 @@ export function SubjectSearch({ subjectId }: { subjectId: SubjectId }) {
         all: t('ui.filterAll'),
         school: t('ui.schoolLevel'),
         university: t('ui.universityLevel'),
-        moduleTypes: moduleTypeLabels,
+        ...moduleTypeLabels,
       }}
       inputClassName="w-full bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-[#d4a373]/50 transition-colors"
     />
