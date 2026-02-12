@@ -8,7 +8,7 @@ import { SearchBox } from './SearchBox';
 const moduleTypes = ['theory', 'examples', 'practice', 'demo', 'video', 'steps', 'interactive', 'exercises', 'visuals', 'quiz', 'worksheets', 'homework', 'materials', 'notes'] as const;
 
 export function SubjectSearch({ subjectId }: { subjectId: SubjectId }) {
-  const { t, language } = useTranslation();
+  const { t } = useTranslation();
 
   const moduleTypeLabels = useMemo(() => {
     return Object.fromEntries(moduleTypes.map((k) => [k, t(`moduleTypes.${k}`)])) as Record<string, string>;
@@ -16,10 +16,7 @@ export function SubjectSearch({ subjectId }: { subjectId: SubjectId }) {
 
   return (
     <SearchBox
-      language={language}
       placeholder={t('ui.searchPlaceholder')}
-      emptyLabel={t('ui.noResults')}
-      scopeSubjectId={subjectId}
       labels={{
         all: t('ui.filterAll'),
         school: t('ui.schoolLevel'),

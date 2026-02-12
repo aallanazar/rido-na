@@ -2,21 +2,18 @@
 
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
-import type { LanguageCode } from '@/lib/curriculum/types';
 
 export function SearchBox({
-  language,
   placeholder,
   inputClassName,
   onSearch,
   onQueryChange,
 }: {
-  language: LanguageCode;
   placeholder: string;
   emptyLabel?: string;
   scopeSubjectId?: string;
   showSubjectFilters?: boolean;
-  labels?: any;
+  labels?: Record<string, string>;
   inputClassName?: string;
   onSearch?: (query: string) => void;
   onQueryChange?: (query: string) => void;

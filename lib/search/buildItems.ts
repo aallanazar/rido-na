@@ -118,6 +118,7 @@ export function buildSearchItems(language: LanguageCode): SearchItem[] {
     const courseTitle = getLocalized(language, course.title);
     const courseDescription = getLocalized(language, course.description);
 
+    // Add course-level item
     items.push({
       id: `course:coding:${courseId}`,
       kind: 'course',
@@ -136,6 +137,15 @@ export function buildSearchItems(language: LanguageCode): SearchItem[] {
       const moduleDescription = getLocalized(language, m.description);
       const moduleHref = `/platform/coding/${courseId}/${m.index}`;
 
+      // Add all section content to haystack for better indexing
+      const sectionTexts = m.sections
+        .map(s => {
+          const sectionTitle = getLocalized(language, s.title);
+          const sectionContent = getLocalized(language, s.content);
+          return `${sectionTitle} ${sectionContent}`;
+        })
+        .join(' ');
+
       items.push({
         id: `codingModule:${courseId}:${m.index}`,
         kind: 'module',
@@ -148,7 +158,7 @@ export function buildSearchItems(language: LanguageCode): SearchItem[] {
         moduleId: String(m.index),
         moduleTitle,
         href: moduleHref,
-        haystack: `${codingSubjectTitle} ${courseTitle} ${moduleTitle} ${moduleDescription}`,
+        haystack: `${codingSubjectTitle} ${courseTitle} ${moduleTitle} ${moduleDescription} ${sectionTexts}`,
       });
 
       for (const s of m.sections) {

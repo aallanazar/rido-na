@@ -44,3 +44,8 @@ export function runSearch(items: SearchItem[], query: string, filters: SearchFil
   return results.slice(0, 12);
 }
 
+// Alias for backward compatibility
+export function queryItems(items: SearchItem[], query: string): SearchResult[] {
+  return runSearch(items, query);
+}
+
