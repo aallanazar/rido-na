@@ -149,6 +149,21 @@ export default function CodingCoursePage() {
               <div className="mt-1">{t('ui.totalPoints', { n: String(totalPoints) })}</div>
             </div>
 
+            {eligibleCertificate && (
+              <div className="mt-6 pt-5 border-t border-black/5 dark:border-white/10">
+                <div className="flex items-center gap-2 text-sm font-semibold mb-3">
+                  <Award size={16} className="opacity-70" />
+                  Finales Projekt
+                </div>
+                <Link
+                  href={`/platform/coding/${courseId}/final-project`}
+                  className="inline-flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+                >
+                  Projekt wählen
+                </Link>
+              </div>
+            )}
+
             <div className="mt-6 pt-5 border-t border-black/5 dark:border-white/10">
               <div className="flex items-center gap-2 text-sm font-semibold mb-3">
                 <Award size={16} className="opacity-70" />
