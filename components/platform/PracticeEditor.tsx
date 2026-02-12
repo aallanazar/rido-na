@@ -11,41 +11,46 @@ interface PracticeEditorProps {
 type Tool = 'pen' | 'pencil' | 'marker' | 'eraser' | 'highlighter';
 type Template = 'blank' | 'lined' | 'grid' | 'dotted';
 
+// Initialize functions to load from localStorage without calling setState in component
+const initHtmlValue = (): string => {
+    if (typeof window === 'undefined') return '';
+    return localStorage.getItem('practice_html_current') || '';
+};
+
+const initPageHeight = (): number => {
+    if (typeof window === 'undefined') return 1000;
+    const saved = localStorage.getItem('practice_height_current');
+    return saved ? Number(saved) : 1000;
+};
+
+const initTemplate = (): Template => {
+    if (typeof window === 'undefined') return 'blank';
+    const saved = localStorage.getItem('practice_template_current');
+    return (saved as Template) || 'blank';
+};
+
+const initPageColor = (): string => {
+    if (typeof window === 'undefined') return '#ffffff';
+    return localStorage.getItem('practice_color_current') || '#ffffff';
+};
+
 export function PracticeEditor({ moduleId }: PracticeEditorProps) {
     const { t } = useTranslation();
     const [mode, setMode] = useState<'text' | 'pen'>('pen');
-    const [htmlValue, setHtmlValue] = useState<string>('');
+    const [htmlValue, setHtmlValue] = useState<string>(initHtmlValue);
     const [tool, setTool] = useState<Tool>('pen');
     const [strokeColor, setStrokeColor] = useState('#000000');
     const [strokeWidth, setStrokeWidth] = useState(2);
 
-    // Page Settings
-    const [pageHeight, setPageHeight] = useState(1000); // Initial A4-ish height
-    const [template, setTemplate] = useState<Template>('blank');
-    const [pageColor, setPageColor] = useState('#ffffff');
+    // Page Settings - initialize from localStorage
+    const [pageHeight, setPageHeight] = useState<number>(initPageHeight);
+    const [template, setTemplate] = useState<Template>(initTemplate);
+    const [pageColor, setPageColor] = useState<string>(initPageColor);
 
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const contextRef = useRef<CanvasRenderingContext2D | null>(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const textRef = useRef<HTMLDivElement>(null);
-    const [textInitialized, setTextInitialized] = useState(false);
-
-    // Initial load/save
-    useEffect(() => {
-        const savedHtml = localStorage.getItem(`practice_html_${moduleId}`);
-        if (savedHtml) setHtmlValue(savedHtml);
-
-        const savedHeight = localStorage.getItem(`practice_height_${moduleId}`);
-        if (savedHeight) setPageHeight(Number(savedHeight));
-
-        const savedTemplate = localStorage.getItem(`practice_template_${moduleId}`);
-        if (savedTemplate) setTemplate(savedTemplate as Template);
-
-        const savedColor = localStorage.getItem(`practice_color_${moduleId}`);
-        if (savedColor) setPageColor(savedColor);
-
-        setTextInitialized(true);
-    }, [moduleId]);
 
     // Save Page Config changes
     useEffect(() => {
@@ -53,15 +58,6 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
         localStorage.setItem(`practice_template_${moduleId}`, template);
         localStorage.setItem(`practice_color_${moduleId}`, pageColor);
     }, [pageHeight, template, pageColor, moduleId]);
-
-    // Force update innerHTML once initialized
-    useEffect(() => {
-        if (textInitialized && textRef.current && textRef.current.innerHTML !== htmlValue) {
-            if (htmlValue === '') {
-                textRef.current.innerHTML = '';
-            }
-        }
-    }, [textInitialized]);
 
     const handleInput = () => {
         if (textRef.current) {
