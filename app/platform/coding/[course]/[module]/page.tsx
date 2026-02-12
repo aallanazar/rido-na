@@ -14,7 +14,6 @@ import { TerminalSimulator } from '@/components/platform/TerminalSimulator';
 import { MaterialsBlock } from '@/components/platform/MaterialsBlock';
 import { usePlatformStore } from '@/lib/store/usePlatformStore';
 import { getLocalized } from '@/lib/curriculum';
-import { PracticeEditor } from '@/components/platform/PracticeEditor';
 
 function isCodingCourseId(value: string): value is CodingCourseId {
   return (
@@ -147,7 +146,7 @@ export default function CodingModulePage() {
 
               {s.type === 'practice' && (
                 <div className="mt-4">
-                  <PracticeEditor moduleId={`coding-${courseId}-${index}`} />
+                  {/* PracticeEditor component removed as requested */}
                 </div>
               )}
             </section>
