@@ -38,9 +38,9 @@ export function SearchBox({
       <div className="relative">
         <button
           onClick={handleSearch}
-          className="absolute left-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+          className="absolute left-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-[var(--color-primary)]/10 dark:hover:bg-white/10 transition-colors text-[var(--color-primary)]"
         >
-          <Search className="w-4 h-4 opacity-50" />
+          <Search className="w-4 h-4 opacity-70" />
         </button>
         <input
           value={query}
@@ -49,7 +49,7 @@ export function SearchBox({
           placeholder={placeholder}
           className={
             inputClassName ??
-            'w-full bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-[#d4a373]/60 transition-colors'
+            'w-full bg-white/50 dark:bg-white/5 border border-[var(--color-primary)]/20 dark:border-white/10 rounded-full pl-10 pr-4 py-2 text-sm placeholder:opacity-60 focus:outline-none focus:border-[var(--color-primary)]/60 focus:ring-2 focus:ring-[var(--color-primary)]/20 dark:focus:ring-[var(--color-primary)]/30 transition-all duration-200'
           }
         />
       </div>

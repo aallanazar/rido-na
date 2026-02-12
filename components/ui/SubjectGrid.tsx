@@ -35,27 +35,43 @@ export function SubjectGrid() {
     return (
         <div className="w-full max-w-6xl mx-auto p-6 mt-20">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {GRID_ITEMS.map((item) => {
+                {GRID_ITEMS.map((item, index) => {
                     // Try subject translation first, then moduleType
                     const label = t(`subjects.${item.id}`) !== `subjects.${item.id}`
                         ? t(`subjects.${item.id}`)
                         : (t(`moduleTypes.${item.id}`) !== `moduleTypes.${item.id}` ? t(`moduleTypes.${item.id}`) : item.label);
 
+                    // Color rotation based on index
+                    const colors = [
+                        { bg: 'from-[var(--color-primary)]/10 to-[var(--color-primary)]/5', icon: 'text-[var(--color-primary)]', hover: 'hover:from-[var(--color-primary)]/20 hover:to-[var(--color-primary)]/10' },
+                        { bg: 'from-[var(--color-secondary)]/10 to-[var(--color-secondary)]/5', icon: 'text-[var(--color-secondary)]', hover: 'hover:from-[var(--color-secondary)]/20 hover:to-[var(--color-secondary)]/10' },
+                        { bg: 'from-[var(--color-success)]/10 to-[var(--color-success)]/5', icon: 'text-[var(--color-success)]', hover: 'hover:from-[var(--color-success)]/20 hover:to-[var(--color-success)]/10' },
+                        { bg: 'from-[var(--color-warning)]/10 to-[var(--color-warning)]/5', icon: 'text-[var(--color-warning)]', hover: 'hover:from-[var(--color-warning)]/20 hover:to-[var(--color-warning)]/10' },
+                    ];
+                    const colorSet = colors[index % colors.length];
+
                     return (
                         <button
                             key={item.id}
                             onClick={() => handleSelect(item.id)}
-                            className="flex flex-col items-center justify-center p-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm
-                       border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-sm
-                       hover:scale-105 hover:shadow-md hover:border-amber-400/50 dark:hover:border-amber-400/50
-                       transition-all duration-300 group"
+                            className={`flex flex-col items-center justify-center p-8 bg-gradient-to-br ${colorSet.bg} dark:${colorSet.bg.replace('10', '10').replace('5', '8')} backdrop-blur-sm
+                       border border-[var(--color-primary)]/10 dark:border-white/10 rounded-2xl shadow-md
+                       hover:scale-105 hover:shadow-lg hover:border-[var(--color-primary)]/30 dark:hover:border-white/20 ${colorSet.hover}
+                       transition-all duration-300 group overflow-hidden relative`}
                         >
-                            <div className="mb-4 p-4 bg-amber-100/50 dark:bg-amber-900/20 rounded-full text-amber-700 dark:text-amber-500 group-hover:bg-amber-100 dark:group-hover:bg-amber-900/30 transition-colors">
-                                <item.icon size={32} strokeWidth={1.5} />
+                            {/* Subtle background pattern */}
+                            <div className="absolute inset-0 opacity-[0.02] pointer-events-none" style={{
+                                backgroundImage: 'radial-gradient(circle at 50% 50%, white 0%, transparent 100%)'
+                            }} />
+                            
+                            <div className="relative z-10 flex flex-col items-center">
+                                <div className={`mb-4 p-4 bg-gradient-to-br ${colorSet.bg} dark:bg-gradient-to-br dark:${colorSet.bg.replace('10', '20').replace('5', '10')} rounded-full ${colorSet.icon} group-hover:scale-110 transition-transform duration-300`}>
+                                    <item.icon size={32} strokeWidth={1.5} />
+                                </div>
+                                <h3 className="text-lg font-semibold text-[var(--color-ink-light)] dark:text-[var(--color-ink-dark)] font-sans text-center">
+                                    {label}
+                                </h3>
                             </div>
-                            <h3 className="text-lg font-semibold text-zinc-800 dark:text-zinc-100 font-sans">
-                                {label}
-                            </h3>
                         </button>
                     );
                 })}

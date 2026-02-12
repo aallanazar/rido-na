@@ -18,16 +18,16 @@ export function WritingTransition({ isVisible }: WritingTransitionProps) {
                     exit={{ opacity: 0 }}
                     className="fixed inset-0 z-[100] flex items-center justify-center pointer-events-none"
                 >
-                    {/* Paper Flash */}
+                    {/* Paper Flash with gradient */}
                     <motion.div
                         initial={{ scaleY: 0 }}
                         animate={{ scaleY: 1 }}
                         exit={{ scaleY: 0 }}
-                        className="absolute inset-0 bg-[#fdfbf7] dark:bg-[#1a1a1a] origin-top h-full"
+                        className="absolute inset-0 bg-gradient-to-b from-[var(--color-paper-light)] to-[var(--color-neutral-50)] dark:from-[var(--color-paper-dark)] dark:to-[var(--color-neutral-900)] origin-top h-full"
                         transition={{ duration: 0.5, ease: "circInOut" }}
                     />
 
-                    {/* Pencil & Line */}
+                    {/* Pencil & Line with color scheme */}
                     <div className="relative flex items-center justify-center">
                         <motion.div
                             animate={{
@@ -36,15 +36,15 @@ export function WritingTransition({ isVisible }: WritingTransitionProps) {
                                 rotate: [20, 40, 20, 40, 30]
                             }}
                             transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                            className="text-[#2c3e50] dark:text-[#e0e0e0]"
+                            className="text-[var(--color-primary)]"
                         >
-                            <Pencil size={48} strokeWidth={1} />
+                            <Pencil size={48} strokeWidth={1.5} />
                         </motion.div>
 
                         <motion.div
                             initial={{ width: 0 }}
                             animate={{ width: 200 }}
-                            className="absolute top-1/2 left-1/2 -translate-x-1/2 h-0.5 bg-black/20 dark:bg-white/20 origin-left"
+                            className="absolute top-1/2 left-1/2 -translate-x-1/2 h-1 bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent origin-left shadow-lg"
                             transition={{ duration: 1, repeat: Infinity }}
                         />
                     </div>

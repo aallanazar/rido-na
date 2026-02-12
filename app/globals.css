@@ -1,39 +1,96 @@
 @import "tailwindcss";
 @variant dark (&:where(.dark, .dark *));
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;700&display=swap");
 
 @theme {
   --font-sans: 'Inter', sans-serif;
   --font-serif: 'Playfair Display', serif;
   --font-handwriting: 'Caveat', cursive;
 
+  /* Light Mode Colors */
   --color-paper-light: #FDFBF7;
   --color-paper-dark: #1a1a1a;
   --color-ink-light: #2c3e50;
   --color-ink-dark: #e0e0e0;
+  
+  /* Primary Colors */
+  --color-primary: #c17a4a;
+  --color-primary-light: #d4a373;
+  --color-primary-dark: #8b5a2b;
+  
+  /* Secondary Colors */
+  --color-secondary: #5a7c9e;
+  --color-secondary-light: #7a9cbf;
+  --color-secondary-dark: #3a5c7e;
+  
+  /* Neutral Colors */
+  --color-neutral-50: #f8f7f5;
+  --color-neutral-100: #f0ede8;
+  --color-neutral-200: #ddd5cc;
+  --color-neutral-800: #3d3933;
+  --color-neutral-900: #1a1815;
+  
+  /* Accent Colors */
+  --color-success: #6b9e7f;
+  --color-warning: #d9945f;
+  --color-error: #d46a6a;
+  --color-info: #6b9eb8;
 }
 
 :root {
   --background: var(--color-paper-light);
   --foreground: var(--color-ink-light);
-  --accent: #d4a373;
+  --accent: var(--color-primary-light);
+  --accent-dark: var(--color-primary);
+  --secondary: var(--color-secondary);
+  
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+  
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
 .dark {
   --background: var(--color-paper-dark);
   --foreground: var(--color-ink-dark);
-  --accent: #a98467;
+  --accent: var(--color-primary-light);
+  --accent-dark: var(--color-primary);
+  --secondary: var(--color-secondary-light);
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  transition: background-color 0.5s ease, color 0.5s ease;
+  transition: background-color var(--transition-slow) ease, color var(--transition-slow) ease;
   overflow-x: hidden;
 }
 
-/* Paper Texture Effect */
+/* Paper Texture Effect - Subtle */
 .paper-texture {
   position: relative;
 }
@@ -45,7 +102,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.05;
+  opacity: 0.03;
   pointer-events: none;
   background-image: url("https://www.transparenttextures.com/patterns/notebook.png");
 }
@@ -55,12 +112,35 @@ body {
   filter: invert(1);
 }
 
-/* Notebook Lines */
-.notebook-lines {
-  background-image: linear-gradient(#e5e5e5 1px, transparent 1px);
-  background-size: 100% 2rem;
+/* Global Button Styles */
+button {
+  transition: all var(--transition-base);
 }
 
-.dark .notebook-lines {
-  background-image: linear-gradient(#333 1px, transparent 1px);
+button:hover {
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Global Link Styles */
+a {
+  transition: color var(--transition-base);
+}
+
+a:hover {
+  opacity: 0.8;
+}
+
+/* Selection Colors */
+::selection {
+  background-color: var(--accent);
+  color: var(--background);
+}
+
+.dark ::selection {
+  background-color: var(--accent);
+  color: var(--background);
 }
