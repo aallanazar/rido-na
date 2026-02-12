@@ -23,6 +23,13 @@
   --color-secondary-light: #7a9cbf;
   --color-secondary-dark: #3a5c7e;
   
+  /* Modern Theme Colors */
+  --color-background-light: #f3f4f6;
+  --color-background-dark: #0f172a;
+  --color-surface-light: #ffffff;
+  --color-surface-dark: #1e293b;
+  --color-surface-dark-lighter: #334155;
+  
   /* Neutral Colors */
   --color-neutral-50: #f8f7f5;
   --color-neutral-100: #f0ede8;
