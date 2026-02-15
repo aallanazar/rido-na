@@ -153,20 +153,20 @@ export default function SubjectPage() {
                     <header className="mb-10">
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6">
                             <div>
-                                <div className="text-sm font-medium text-primary mb-1 tracking-wide uppercase">Year 10 Curriculum</div>
+                                <div className="text-sm font-medium text-blue-200 mb-1 tracking-wide uppercase">Year 10 Curriculum</div>
                                 <h1 className="text-4xl md:text-5xl font-bold tracking-tight">Mathematik</h1>
                             </div>
-                            <div className="bg-card p-4 rounded-xl border border-border flex items-center gap-4 min-w-[280px]">
+                            <div className="bg-slate-900/70 p-4 rounded-xl border border-blue-900/40 flex items-center gap-4 min-w-[280px]">
                                 <div className="flex-1">
                                     <div className="flex justify-between text-sm mb-2">
-                                        <span className="text-muted-foreground font-medium">Course Progress</span>
-                                        <span className="text-primary font-bold">{overallProgress}%</span>
+                                        <span className="text-slate-300 font-medium">Course Progress</span>
+                                        <span className="text-white font-bold">{overallProgress}%</span>
                                     </div>
-                                    <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
-                                        <div className="h-full bg-primary rounded-full" style={{ width: `${overallProgress}%` }} />
+                                    <div className="h-2 w-full bg-slate-700 rounded-full overflow-hidden">
+                                        <div className="h-full bg-blue-500 rounded-full" style={{ width: `${overallProgress}%` }} />
                                     </div>
                                 </div>
-                                <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                <div className="h-10 w-10 rounded-lg bg-blue-900/40 flex items-center justify-center text-blue-200">
                                     <Trophy size={18} />
                                 </div>
                             </div>
@@ -180,30 +180,30 @@ export default function SubjectPage() {
                                 <Link
                                     key={card.id}
                                     href={`/platform/math/${card.id}`}
-                                    className="bg-card rounded-2xl p-6 border border-border hover:shadow-lg hover:border-primary/30 transition-all duration-300 flex flex-col"
+                                    className="bg-slate-900/70 rounded-2xl p-6 border border-blue-900/30 hover:shadow-lg hover:border-blue-500/40 transition-all duration-300 flex flex-col"
                                 >
                                     <div className="flex justify-between items-start mb-6">
-                                        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                                        <div className="w-12 h-12 rounded-xl bg-blue-900/40 flex items-center justify-center text-blue-200">
                                             <Icon size={22} />
                                         </div>
-                                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-muted text-muted-foreground">{card.level}</span>
+                                        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-800 text-slate-300">{card.level}</span>
                                     </div>
                                     <h3 className="text-xl font-bold mb-1">{card.title}</h3>
-                                    <p className="text-muted-foreground text-sm mb-6">{card.subtitle}</p>
+                                    <p className="text-slate-300 text-sm mb-6">{card.subtitle}</p>
 
                                     <div className="mt-auto">
                                         <div className="mb-6">
-                                            <div className="flex justify-between text-xs text-muted-foreground mb-2">
+                                            <div className="flex justify-between text-xs text-slate-300 mb-2">
                                                 <span>Completed</span>
                                                 <span>{card.progress}%</span>
                                             </div>
-                                            <div className="h-2 w-full bg-muted rounded-full overflow-hidden">
-                                                <div className="h-full bg-primary rounded-full" style={{ width: `${card.progress}%` }} />
+                                            <div className="h-2 w-full bg-slate-700 rounded-full overflow-hidden">
+                                                <div className="h-full bg-blue-500 rounded-full" style={{ width: `${card.progress}%` }} />
                                             </div>
                                             <div className="mt-2 text-sm font-semibold">{card.lessons}</div>
                                         </div>
 
-                                        <div className="w-full py-3 rounded-lg border border-primary text-primary font-medium text-center flex items-center justify-center gap-2">
+                                        <div className="w-full py-3 rounded-lg border border-blue-500/60 text-white font-medium text-center flex items-center justify-center gap-2 hover:bg-blue-600/20 transition-colors">
                                             {card.action}
                                             {card.progress === 100 ? <RotateCcw size={16} /> : <Play size={16} />}
                                         </div>
@@ -214,13 +214,13 @@ export default function SubjectPage() {
                     </section>
 
                     <section className="mt-12">
-                        <div className="bg-primary text-primary-foreground rounded-2xl p-8">
-                            <span className="inline-block py-1 px-3 bg-white/20 rounded-lg text-xs font-medium mb-3">Daily Challenge</span>
+                        <div className="bg-slate-900/80 border border-blue-900/40 text-white rounded-2xl p-8">
+                            <span className="inline-block py-1 px-3 bg-blue-900/40 text-blue-100 rounded-lg text-xs font-medium mb-3">Daily Challenge</span>
                             <h3 className="text-2xl md:text-3xl font-bold mb-2">Mastering Quadratic Formulas</h3>
-                            <p className="text-primary-foreground/90 mb-6 max-w-xl">
+                            <p className="text-slate-300 mb-6 max-w-xl">
                                 Boost your algebra skills with today&apos;s quick fire challenge. 10 questions, 5 minutes.
                             </p>
-                            <button className="bg-white text-primary px-6 py-3 rounded-lg font-bold">Start Challenge</button>
+                            <button className="bg-white text-slate-900 px-6 py-3 rounded-lg font-bold">Start Challenge</button>
                         </div>
                     </section>
                 </div>

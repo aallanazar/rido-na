@@ -304,13 +304,13 @@ export default function SubjectModulePage() {
   }
 
   return (
-    <main className="bg-[#0f2e3a] text-foreground min-h-screen flex flex-col">
+    <main className="bg-[#0f2e3a] text-slate-100 min-h-screen flex flex-col">
       <Navbar />
 
-      <header className="sticky top-0 z-40 mt-20 bg-card/95 backdrop-blur border-b border-border">
+      <header className="sticky top-0 z-40 mt-20 bg-slate-900/95 backdrop-blur border-b border-blue-900/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <button onClick={() => router.push('/platform/math')} className="text-muted-foreground hover:text-primary transition-colors flex items-center">
+            <button onClick={() => router.push('/platform/math')} className="text-slate-400 hover:text-blue-300 transition-colors flex items-center">
               <ArrowLeft size={20} />
             </button>
             <div>
@@ -320,23 +320,23 @@ export default function SubjectModulePage() {
           </div>
 
           <div className="flex items-center gap-4 flex-1 max-w-md mx-8">
-            <div className="w-full bg-muted rounded-full h-2.5 overflow-hidden">
-              <div className="bg-primary h-2.5 rounded-full" style={{ width: `${moduleProgress}%` }} />
+            <div className="w-full bg-slate-700 rounded-full h-2.5 overflow-hidden">
+              <div className="bg-blue-500 h-2.5 rounded-full" style={{ width: `${moduleProgress}%` }} />
             </div>
-            <span className="text-sm font-medium text-muted-foreground min-w-[3ch]">{moduleProgress}%</span>
+            <span className="text-sm font-medium text-slate-300 min-w-[3ch]">{moduleProgress}%</span>
           </div>
 
           <div className="flex items-center gap-3">
             <button
               onClick={() => updateProgress(progressKey, 100)}
-              className="px-3 py-1.5 rounded-lg bg-primary text-white text-xs font-semibold hover:bg-primary/90 transition-colors"
+              className="px-3 py-1.5 rounded-lg bg-blue-600 text-white text-xs font-semibold hover:bg-blue-500 transition-colors"
             >
               Als abgeschlossen markieren
             </button>
-            <button className="p-2 text-muted-foreground hover:text-primary transition-colors">
+            <button className="p-2 text-slate-400 hover:text-blue-300 transition-colors">
               <Bookmark size={18} />
             </button>
-            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-sm">JS</div>
+            <div className="w-8 h-8 rounded-full bg-blue-900/40 flex items-center justify-center text-blue-200 font-bold text-sm">JS</div>
           </div>
         </div>
       </header>
@@ -345,16 +345,16 @@ export default function SubjectModulePage() {
         <div className="lg:col-span-7 space-y-8 pb-12">
           <section>
             <h2 className="text-3xl font-bold mb-4">Steigung & Y-Achsenabschnitt</h2>
-            <p className="text-muted-foreground leading-relaxed text-lg">
+            <p className="text-slate-300 leading-relaxed text-lg">
               In dieser Lektion lernen wir die fundamentalen Bausteine einer linearen Funktion kennen. Wir untersuchen,
               wie sich die Parameter auf den Graphen auswirken.
             </p>
           </section>
 
-          <section className="bg-card rounded-xl overflow-hidden border border-border">
+          <section className="bg-slate-900/70 rounded-xl overflow-hidden border border-blue-900/40">
             <div className="relative aspect-video bg-black/85 flex items-center justify-center">
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-              <button className="relative z-10 w-16 h-16 bg-primary rounded-full flex items-center justify-center text-white shadow-lg">
+              <button className="relative z-10 w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white shadow-lg">
                 <Play size={30} className="ml-1" />
               </button>
               <div className="absolute bottom-0 left-0 right-0 p-4">
@@ -363,28 +363,28 @@ export default function SubjectModulePage() {
                   <span>HD</span>
                 </div>
                 <div className="h-1 bg-white/20 rounded-full">
-                  <div className="h-full bg-primary w-1/3 rounded-full" />
+                  <div className="h-full bg-blue-500 w-1/3 rounded-full" />
                 </div>
               </div>
             </div>
-            <div className="p-4 flex items-center justify-between bg-muted/30">
+            <div className="p-4 flex items-center justify-between bg-slate-800/50">
               <div>
                 <h3 className="font-semibold">Video Kapitel</h3>
                 <div className="flex gap-2 mt-2 text-xs">
                   <span className="px-2 py-1 bg-card border border-border rounded">0:00 Intro</span>
-                  <span className="px-2 py-1 bg-primary text-white rounded">1:45 Steigung m</span>
+                  <span className="px-2 py-1 bg-blue-600 text-white rounded">1:45 Steigung m</span>
                   <span className="px-2 py-1 bg-card border border-border rounded">5:20 Beispiel 1</span>
                 </div>
               </div>
-              <button className="text-primary font-medium text-sm">Summary PDF</button>
+              <button className="text-blue-300 font-medium text-sm">Summary PDF</button>
             </div>
           </section>
         </div>
 
         <div className="lg:col-span-5 relative">
           <div className="sticky top-24 space-y-6">
-            <div className="bg-card rounded-xl border border-border overflow-hidden">
-              <div className="bg-primary p-4 flex items-center justify-between text-white">
+            <div className="bg-slate-900/70 rounded-xl border border-blue-900/40 overflow-hidden">
+              <div className="bg-blue-700 p-4 flex items-center justify-between text-white">
                 <h3 className="font-bold">Übungsaufgabe 1</h3>
                 <span className="text-xs bg-white/20 px-2 py-1 rounded font-medium">10 Punkte</span>
               </div>
@@ -402,7 +402,7 @@ export default function SubjectModulePage() {
                       setTipOpened((prev) => !prev);
                       setMinProgress(25);
                     }}
-                    className="text-sm text-primary font-medium flex items-center gap-1"
+                    className="text-sm text-blue-300 font-medium flex items-center gap-1"
                   >
                     <Lightbulb size={16} /> Tipp anzeigen
                   </button>
@@ -447,7 +447,7 @@ export default function SubjectModulePage() {
 
                 <button
                   onClick={() => updateProgress(progressKey, 100)}
-                  className="w-full bg-primary text-white font-semibold py-3 px-4 rounded-lg flex justify-center items-center gap-2"
+                    className="w-full bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg flex justify-center items-center gap-2"
                 >
                   Antwort prüfen
                   <CheckCircle2 size={16} />
@@ -455,12 +455,12 @@ export default function SubjectModulePage() {
               </div>
             </div>
 
-            <div className="bg-card border border-border rounded-xl p-4">
+            <div className="bg-slate-900/70 border border-blue-900/40 rounded-xl p-4">
               <h4 className="font-semibold mb-2">Notizen</h4>
               <textarea className="w-full bg-transparent border border-border rounded-lg p-3 text-sm resize-none h-24" placeholder="Schreibe dir hier wichtige Punkte auf..." />
             </div>
 
-            <div className="flex items-center justify-between bg-card p-4 rounded-xl border border-border">
+            <div className="flex items-center justify-between bg-slate-900/70 p-4 rounded-xl border border-blue-900/40">
               <div className="flex items-center gap-3">
                 <div className="bg-muted p-2 rounded-full">
                   <MessageCircleQuestion size={18} className="text-muted-foreground" />
