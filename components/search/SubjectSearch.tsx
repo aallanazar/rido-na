@@ -23,7 +23,7 @@ export function SubjectSearch({ subjectId }: { subjectId: SubjectId }) {
         university: t('ui.universityLevel'),
         ...moduleTypeLabels,
       }}
-      inputClassName="w-full bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-xl pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-[#d4a373]/50 transition-colors"
+      inputClassName="w-full bg-card border border-border rounded-xl pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-primary/50 transition-colors shadow-sm"
     />
   );
 }

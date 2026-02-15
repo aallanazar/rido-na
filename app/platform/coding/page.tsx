@@ -7,6 +7,9 @@ import { useTranslation } from '@/lib/hooks/useTranslation';
 import { Code2, Terminal, Database, Braces, Palette, Layers, Smartphone, ArrowLeft } from 'lucide-react';
 import type { CodingCourseId } from '@/lib/courses/types';
 import { getCodingCourseIds } from '@/lib/courses/coding';
+import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 
 const iconFor: Record<CodingCourseId, React.ComponentType<{ size?: number }>> = {
   python: Code2,
@@ -30,59 +33,82 @@ export default function CodingHome() {
   const ids = getCodingCourseIds();
 
   return (
-    <div className="flex flex-1 overflow-hidden">
-      <aside className="w-72 bg-surface-light dark:bg-surface-dark border-r border-border-light dark:border-border-dark hidden lg:flex flex-col overflow-y-auto">
-        <div className="p-6">
-          <h2 className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-4">Learning Roadmap</h2>
-          <div className="relative pl-4 border-l-2 border-gray-200 dark:border-gray-700 space-y-6">
-            <div className="relative group">
-              <div className="absolute -left-[21px] top-1 h-3 w-3 rounded-full bg-primary ring-4 ring-white dark:ring-surface-dark"></div>
-              <a className="block" href="#">
-                <h3 className="text-sm font-semibold text-primary">1. Einführung</h3>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Grundlagen der Programmierung</p>
-              </a>
+    <div className="flex flex-col min-h-screen bg-background">
+      <Navbar />
+      <div className="flex flex-1 pt-20 overflow-hidden">
+        {/* Sidebar Roadmap */}
+        <aside className="w-72 bg-card border-r border-border hidden lg:flex flex-col overflow-y-auto">
+          <div className="p-6">
+            <h2 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-6">Roadmap</h2>
+            <div className="relative pl-4 border-l-2 border-border space-y-8">
+              <div className="relative group">
+                <div className="absolute -left-5.25 top-1 h-3 w-3 rounded-full bg-primary ring-4 ring-background"></div>
+                <div>
+                  <h3 className="text-sm font-semibold text-primary">1. {t('ui.basics')}</h3>
+                  <p className="text-xs text-muted-foreground mt-1">{t('ui.foundations')}</p>
+                </div>
+              </div>
+              <div className="relative group">
+                <div className="absolute -left-5.25 top-1 h-3 w-3 rounded-full bg-border ring-4 ring-background group-hover:bg-primary transition-colors"></div>
+                <div>
+                  <h3 className="text-sm font-semibold text-foreground opacity-60">2. {t('ui.advanced')}</h3>
+                  <p className="text-xs text-muted-foreground mt-1">{t('ui.logicAndData')}</p>
+                </div>
+              </div>
             </div>
-            {/* Add more roadmap items here */}
           </div>
-        </div>
-      </aside>
-      <main className="flex-1 overflow-y-auto p-6 md:p-10">
-        <div className="max-w-6xl mx-auto">
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">{t('subjects.coding')}</h1>
-            <p className="text-gray-600 dark:text-gray-400">{t('ui.codingIntro')}</p>
-          </header>
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-            {ids.map((id) => {
-              const Icon = iconFor[id] ?? Code2;
-              return (
-                <Link
-                  key={id}
-                  href={`/platform/coding/${id}`}
-                  className="group block bg-surface-light dark:bg-surface-dark rounded-2xl p-6 border border-border-light dark:border-border-dark hover:border-primary/50 dark:hover:border-primary/50 hover:shadow-lg dark:hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
-                >
-                  <div className="flex items-start justify-between mb-6">
-                    <div className="p-3 bg-accent-blue rounded-xl text-blue-500 dark:text-blue-400">
-                      <Icon size={22} />
-                    </div>
-                    <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-medium rounded-full">Beliebt</span>
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors">{t(`courses.${id}`)}</h3>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 line-clamp-2">{t('ui.courseHas15Modules')}</p>
-                  <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
-                    <span className="text-xs text-gray-500 dark:text-gray-500 flex items-center gap-1">
-                      <span className="material-icons-outlined text-sm">schedule</span> 20h Kurs
-                    </span>
-                    <span className="text-xs text-gray-500 dark:text-gray-500 flex items-center gap-1">
-                      <span className="material-icons-outlined text-sm">bar_chart</span> Einfach
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
+        </aside>
+
+        {/* Main Grid */}
+        <main className="flex-1 overflow-y-auto p-8 md:p-12">
+          <div className="max-w-6xl mx-auto">
+            <header className="mb-12">
+              <h1 className="text-5xl font-serif font-bold text-foreground mb-4">{t('subjects.coding')}</h1>
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">{t('ui.codingIntro')}</p>
+            </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+              {ids.map((id) => {
+                const Icon = iconFor[id] ?? Code2;
+                return (
+                  <Card key={id} className="group hover:border-primary/50 hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col">
+                    <CardHeader className="p-6 pb-2">
+                      <div className="flex items-start justify-between">
+                        <div className="p-3 bg-primary/10 rounded-xl text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                          <Icon size={24} />
+                        </div>
+                        <Badge variant="secondary" className="bg-primary/5 text-primary text-[10px] uppercase font-bold tracking-widest border-none">
+                          {t('ui.popular')}
+                        </Badge>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="p-6 pt-2 flex-1">
+                      <h3 className="text-2xl font-serif font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                        {t(`courses.${id}`)}
+                      </h3>
+                      <p className="text-sm text-muted-foreground line-clamp-2 mb-6">
+                        {t('ui.courseHas15Modules')}
+                      </p>
+                      
+                      <div className="flex items-center justify-between pt-6 border-t border-border mt-auto">
+                        <span className="text-xs text-muted-foreground font-medium flex items-center gap-1.5">
+                          <div className="w-1.5 h-1.5 rounded-full bg-primary/40" />
+                          20h Kurs
+                        </span>
+                        <Button asChild variant="outline" size="sm" className="rounded-full px-4">
+                          <Link href={`/platform/coding/${id}`}>
+                            {t('ui.openModule')}
+                          </Link>
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 }

@@ -7,6 +7,9 @@ import { useTranslation } from '@/lib/hooks/useTranslation';
 import { buildOfficeCourse } from '@/lib/courses/office';
 import { FileText, Sheet, Presentation, Lock, Award } from 'lucide-react';
 import { usePlatformStore } from '@/lib/store/usePlatformStore';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 
 export default function OfficeHome() {
   const { t } = useTranslation();
@@ -22,35 +25,40 @@ export default function OfficeHome() {
   const eligibleCertificate = passed.length === 15 && passed.every(Boolean);
 
   return (
-    <main className="min-h-screen p-8 pt-28 bg-[#fdfbf7] dark:bg-[#1a1a1a] notebook-lines">
+    <main className="min-h-screen p-8 pt-28 bg-background">
       <Navbar />
       <div className="max-w-6xl mx-auto">
         <header className="mb-10">
           <h1 className="text-5xl font-serif font-bold">{t('subjects.office')}</h1>
-          <p className="mt-3 opacity-70">{t('ui.officeIntro')}</p>
+          <p className="mt-3 text-muted-foreground">{t('ui.officeIntro')}</p>
         </header>
 
-        <div className="p-7 rounded-3xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 mb-8">
-          <div className="flex flex-wrap items-center gap-3 text-[#d4a373]">
-            <FileText size={18} />
-            <Sheet size={18} />
-            <Presentation size={18} />
-            <span className="text-sm font-bold tracking-wider uppercase">{t('ui.officeModules')}</span>
-          </div>
-          <p className="mt-3 text-sm opacity-70">{t('ui.courseHas15Modules')}</p>
-          <div className="mt-4 flex flex-wrap items-center gap-3 text-xs opacity-70">
-            <span>{t('ui.minScoreToUnlock', { score: String(minScore) })}</span>
-            <span>·</span>
-            {eligibleCertificate ? (
-              <Link href="/platform/office/certificate" className="inline-flex items-center gap-2 font-semibold underline">
-                <Award size={14} />
-                {t('ui.openCertificate')}
-              </Link>
-            ) : (
-              <span>{t('ui.certificateLocked')}</span>
-            )}
-          </div>
-        </div>
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-3">
+              <FileText size={24} className="text-primary" />
+              <Sheet size={24} className="text-primary" />
+              <Presentation size={24} className="text-primary" />
+              <span className="text-sm font-bold tracking-wider uppercase">{t('ui.officeModules')}</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <p className="text-sm text-muted-foreground">{t('ui.courseHas15Modules')}</p>
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="outline">{t('ui.minScoreToUnlock', { score: String(minScore) })}</Badge>
+              {eligibleCertificate ? (
+                <Button asChild variant="outline" size="sm">
+                  <Link href="/platform/office/certificate" className="flex items-center gap-2">
+                    <Award size={14} />
+                    {t('ui.openCertificate')}
+                  </Link>
+                </Button>
+              ) : (
+                <Badge variant="secondary">{t('ui.certificateLocked')}</Badge>
+              )}
+            </div>
+          </CardContent>
+        </Card>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {course.modules.map((m) => {
@@ -61,32 +69,36 @@ export default function OfficeHome() {
             const pct = Math.max(0, Math.min(100, progress[pctKey] ?? 0));
 
             return locked ? (
-              <div
-                key={m.id}
-                className="p-6 rounded-2xl bg-white/60 dark:bg-white/[0.03] border border-black/5 dark:border-white/10 opacity-70"
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <div className="font-semibold">{t('ui.moduleNumber', { n: String(m.index) })}</div>
-                  <Lock size={16} className="opacity-60" />
-                </div>
-                <div className="mt-2 text-sm opacity-70">{t('ui.lockedUntilPass')}</div>
-              </div>
+              <Card key={m.id} className="opacity-60">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="font-semibold">{t('ui.moduleNumber', { n: String(m.index) })}</div>
+                    <Lock size={16} className="text-muted-foreground" />
+                  </div>
+                  <div className="mt-2 text-sm text-muted-foreground">{t('ui.lockedUntilPass')}</div>
+                </CardContent>
+              </Card>
             ) : (
-              <Link
+              <Button
                 key={m.id}
-                href={`/platform/office/${m.index}`}
-                className="p-6 rounded-2xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/10 shadow-sm hover:shadow-md transition-shadow block"
+                asChild
+                variant="outline"
+                className="h-auto flex flex-col items-start justify-start p-6"
               >
-                <div className="text-xs font-semibold opacity-60">
-                  {t('ui.moduleNumber', { n: String(m.index) })}
-                  {typeof score === 'number' ? ` · ${t('ui.points')}: ${score}/10` : ''}
-                </div>
-                <div className="font-bold mt-1">{t('ui.openModule')}</div>
-                <div className="text-sm opacity-70 mt-2">{t('ui.moduleIncludes')}</div>
-                <div className="mt-4 w-full h-1.5 bg-black/5 dark:bg-white/5 rounded-full overflow-hidden">
-                  <div className="h-full bg-[#d4a373]" style={{ width: `${pct}%` }} />
-                </div>
-              </Link>
+                <Link href={`/platform/office/${m.index}`}>
+                  <div className="w-full">
+                    <div className="text-xs font-semibold text-muted-foreground">
+                      {t('ui.moduleNumber', { n: String(m.index) })}
+                      {typeof score === 'number' ? ` · ${t('ui.points')}: ${score}/10` : ''}
+                    </div>
+                    <div className="font-bold mt-1">{t('ui.openModule')}</div>
+                    <div className="text-sm text-muted-foreground mt-2">{t('ui.moduleIncludes')}</div>
+                    <div className="mt-4 w-full h-1.5 bg-muted rounded-full overflow-hidden">
+                      <div className="h-full bg-primary transition-all" style={{ width: `${pct}%` }} />
+                    </div>
+                  </div>
+                </Link>
+              </Button>
             );
           })}
         </div>
