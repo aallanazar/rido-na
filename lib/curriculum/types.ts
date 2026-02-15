@@ -1,6 +1,6 @@
 export type LanguageCode = 'uz' | 'de' | 'en';
 
-export type SubjectId = 'math' | 'physics' | 'chemistry' | 'biology';
+export type SubjectId = 'math' | 'physics' | 'chemistry' | 'biology' | 'it';
 export type LevelId = 'school' | 'university';
 
 export type ModuleSectionType =

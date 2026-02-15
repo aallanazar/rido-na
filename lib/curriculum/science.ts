@@ -7,6 +7,7 @@ const scienceSubjectTitle: Record<SubjectId, LocalizedString> = {
   physics: ls('Fizika', 'Physik', 'Physics'),
   chemistry: ls('Kimyo', 'Chemie', 'Chemistry'),
   biology: ls('Biologiya', 'Biologie', 'Biology'),
+  it: ls('Kompyuter Asoslari', 'IT-Grundlagen', 'IT Fundamentals'),
 };
 
 export const scienceCurriculum: Curriculum = {
@@ -328,6 +329,116 @@ export const scienceCurriculum: Curriculum = {
         },
       },
     },
-  },
+    it: {
+      id: 'it',
+      title: scienceSubjectTitle.it,
+      levels: {
+        school: {
+          id: 'school',
+          title: ls('📗 Maktab darajasi', '📗 Schulniveau', '📗 School level'),
+          modules: [
+            {
+              id: 'hardware-basics',
+              title: ls('Raqamli qurilmalar', 'Rechneraufbau', 'Computer Hardware'),
+              description: ls('CPU, RAM, SSD va boshqa komponentlar.', 'CPU, RAM, SSD und andere Komponenten.', 'CPU, RAM, SSD and other components.'),
+              sections: [
+                { type: 'theory', title: ls('Nazariya', 'Theorie', 'Theory'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'examples', title: ls('Misollar', 'Beispiele', 'Examples'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'exercises', title: ls("Mashqlar", 'Übungsaufgaben', 'Exercises'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'visuals', title: ls('Diagrammalar', 'Diagramme', 'Diagrams'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+              ],
+              quizTitle: ls('Quiz: Aparatura', 'Quiz: Hardware', 'Quiz: Hardware'),
+              quiz: Array.from({ length: 10 }).map((_, i) => ({
+                id: `q${i + 1}`,
+                type: 'mcq' as const,
+                prompt: ls('Platzhalter-Frage', 'Platzhalter-Frage', 'Placeholder question'),
+                choices: [ls('A', 'A', 'A'), ls('B', 'B', 'B'), ls('C', 'C', 'C'), ls('D', 'D', 'D')],
+                correctIndex: 0,
+              })),
+              worksheets: [
+                { id: 'ws1', title: ls('Aufgabenblatt 1', 'Aufgabenblatt 1', 'Worksheet 1') },
+                { id: 'ws2', title: ls('Aufgabenblatt 2', 'Aufgabenblatt 2', 'Worksheet 2') },
+              ],
+            },
+            {
+              id: 'networks',
+              title: ls('Tarmoqlar', 'Netzwerke', 'Networks'),
+              description: ls('LAN, WAN va Internet asoslari.', 'LAN, WAN und Internet-Grundlagen.', 'LAN, WAN and Internet basics.'),
+              sections: [
+                { type: 'theory', title: ls('Nazariya', 'Theorie', 'Theory'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'examples', title: ls('Misollar', 'Beispiele', 'Examples'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'exercises', title: ls("Mashqlar", 'Übungsaufgaben', 'Exercises'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'visuals', title: ls('Diagrammalar', 'Diagramme', 'Diagrams'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+              ],
+              quizTitle: ls('Quiz: Tarmoq', 'Quiz: Netzwerk', 'Quiz: Networks'),
+              quiz: Array.from({ length: 10 }).map((_, i) => ({
+                id: `q${i + 1}`,
+                type: 'mcq' as const,
+                prompt: ls('Platzhalter-Frage', 'Platzhalter-Frage', 'Placeholder question'),
+                choices: [ls('A', 'A', 'A'), ls('B', 'B', 'B'), ls('C', 'C', 'C'), ls('D', 'D', 'D')],
+                correctIndex: 0,
+              })),
+              worksheets: [
+                { id: 'ws1', title: ls('Aufgabenblatt 1', 'Aufgabenblatt 1', 'Worksheet 1') },
+                { id: 'ws2', title: ls('Aufgabenblatt 2', 'Aufgabenblatt 2', 'Worksheet 2') },
+              ],
+            },
+            {
+              id: 'security',
+              title: ls('Xavfsizlik', 'Sicherheit', 'Security'),
+              description: ls('Kriptografiya, parollar va himoya.', 'Kryptografie, Passwörter und Schutz.', 'Encryption, passwords, and protection.'),
+              sections: [
+                { type: 'theory', title: ls('Nazariya', 'Theorie', 'Theory'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'examples', title: ls('Misollar', 'Beispiele', 'Examples'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'exercises', title: ls("Mashqlar", 'Übungsaufgaben', 'Exercises'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'visuals', title: ls('Diagrammalar', 'Diagramme', 'Diagrams'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+              ],
+              quizTitle: ls('Quiz: Xavfsizlik', 'Quiz: Sicherheit', 'Quiz: Security'),
+              quiz: Array.from({ length: 10 }).map((_, i) => ({
+                id: `q${i + 1}`,
+                type: 'mcq' as const,
+                prompt: ls('Platzhalter-Frage', 'Platzhalter-Frage', 'Placeholder question'),
+                choices: [ls('A', 'A', 'A'), ls('B', 'B', 'B'), ls('C', 'C', 'C'), ls('D', 'D', 'D')],
+                correctIndex: 0,
+              })),
+              worksheets: [
+                { id: 'ws1', title: ls('Aufgabenblatt 1', 'Aufgabenblatt 1', 'Worksheet 1') },
+                { id: 'ws2', title: ls('Aufgabenblatt 2', 'Aufgabenblatt 2', 'Worksheet 2') },
+              ],
+            },
+          ],
+        },
+        university: {
+          id: 'university',
+          title: ls('🎓 Universitet darajasi', '🎓 Universitätsniveau', '🎓 University level'),
+          modules: [
+            {
+              id: 'databases',
+              title: ls('Ma\'lumot bazalari', 'Datenbanken', 'Databases'),
+              description: ls('SQL va relational modellar.', 'SQL und relationale Modelle.', 'SQL and relational models.'),
+              sections: [
+                { type: 'theory', title: ls('Nazariya', 'Theorie', 'Theory'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'examples', title: ls('Misollar', 'Beispiele', 'Examples'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'exercises', title: ls("Mashqlar", 'Übungsaufgaben', 'Exercises'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+                { type: 'visuals', title: ls('Diagrammalar', 'Diagramme', 'Diagrams'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+              ],
+              quizTitle: ls('Quiz: Baza', 'Quiz: Datenbanken', 'Quiz: Databases'),
+              quiz: Array.from({ length: 10 }).map((_, i) => ({
+                id: `q${i + 1}`,
+                type: 'mcq' as const,
+                prompt: ls('Platzhalter-Frage', 'Platzhalter-Frage', 'Placeholder question'),
+                choices: [ls('A', 'A', 'A'), ls('B', 'B', 'B'), ls('C', 'C', 'C'), ls('D', 'D', 'D')],
+                correctIndex: 0,
+              })),
+              worksheets: [
+                { id: 'ws1', title: ls('Aufgabenblatt 1', 'Aufgabenblatt 1', 'Worksheet 1') },
+                { id: 'ws2', title: ls('Aufgabenblatt 2', 'Aufgabenblatt 2', 'Worksheet 2') },
+                { id: 'ws3', title: ls('Aufgabenblatt 3', 'Aufgabenblatt 3', 'Worksheet 3') },
+              ],
+            },
+          ],
+        },
+      },
+    },
 };
 
