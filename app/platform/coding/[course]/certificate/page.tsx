@@ -24,7 +24,7 @@ function isCodingCourseId(value: string): value is CodingCourseId {
     value === 'react-native' ||
     value === 'sql' ||
     value === 'nosql' ||
-    value === 'linux'
+    value === 'typst'
   );
 }
 

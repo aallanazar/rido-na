@@ -28,7 +28,7 @@ function isCodingCourseId(value: string): value is CodingCourseId {
     value === 'react-native' ||
     value === 'sql' ||
     value === 'nosql' ||
-    value === 'linux'
+    value === 'typst'
   );
 }
 
@@ -75,7 +75,7 @@ export default function CodingCoursePage() {
     return acc + (typeof s === 'number' ? s : 0);
   }, 0);
 
-  const eligibleCertificate = passed.length === 15 && passed.every(Boolean);
+  const eligibleCertificate = passed.length === course.modules.length && passed.every(Boolean);
 
   return (
     <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
@@ -102,7 +102,7 @@ export default function CodingCoursePage() {
                 {t(`courses.${courseId}`)}
               </h1>
               <p className="text-muted-foreground font-mono text-sm max-w-xl">
-                {t('ui.courseProgressLine', { done: String(completedCount), total: '15' })}
+                {t('ui.courseProgressLine', { done: String(completedCount), total: String(course.modules.length) })}
               </p>
             </div>
 

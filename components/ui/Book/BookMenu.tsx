@@ -40,7 +40,7 @@ const subjects = [
             { id: 'react-native', type: 'coding-course' },
             { id: 'sql', type: 'coding-course' },
             { id: 'nosql', type: 'coding-course' },
-            { id: 'linux', type: 'coding-course' },
+            { id: 'typst', type: 'coding-course' },
         ]
     },
     { id: 'office', icon: FileSpreadsheet },

@@ -10,7 +10,6 @@ import { buildCodingCourse } from '@/lib/courses/coding';
 import { QuizBlock } from '@/components/platform/QuizBlock';
 import { HomeworksBlock } from '@/components/platform/HomeworksBlock';
 import { CodePlayground } from '@/components/platform/CodePlayground';
-import { TerminalSimulator } from '@/components/platform/TerminalSimulator';
 import { MaterialsBlock } from '@/components/platform/MaterialsBlock';
 import { usePlatformStore } from '@/lib/store/usePlatformStore';
 import { getLocalized } from '@/lib/curriculum';
@@ -30,7 +29,7 @@ function isCodingCourseId(value: string): value is CodingCourseId {
     value === 'react-native' ||
     value === 'sql' ||
     value === 'nosql' ||
-    value === 'linux'
+    value === 'typst'
   );
 }
 
@@ -48,7 +47,7 @@ export default function CodingModulePage() {
 
   const moduleData = course ? course.modules.find((m) => m.index === index) ?? null : null;
 
-  if (!courseId || !course || !moduleData || !Number.isFinite(index) || index < 1 || index > 15) {
+  if (!courseId || !course || !moduleData || !Number.isFinite(index) || index < 1 || index > course.modules.length) {
     return (
       <main className="min-h-screen p-8 pt-28 bg-[#fdfbf7] dark:bg-[#1a1a1a] notebook-lines">
         <Navbar />
@@ -102,8 +101,6 @@ export default function CodingModulePage() {
   const pctKey = `courseModule:coding:${courseId}:${index}`;
 
   const isWeb = course.features.includes('live-preview') && (courseId === 'javascript' || courseId === 'css');
-  const isLinux = courseId === 'linux';
-
   return (
     <main className="min-h-screen p-8 pt-28 bg-[#fdfbf7] dark:bg-[#1a1a1a] notebook-lines">
       <Navbar />
@@ -151,8 +148,6 @@ export default function CodingModulePage() {
               )}
             </section>
           ))}
-
-          {isLinux ? <TerminalSimulator title={t('ui.terminalSimulator')} /> : null}
 
           {course.features.includes('code-editor') ? (
             <CodePlayground

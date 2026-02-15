@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Navbar } from '@/components/ui/Navbar';
 import { useTranslation } from '@/lib/hooks/useTranslation';
-import { Code2, Terminal, Database, Braces, Palette, Layers, Smartphone, ArrowLeft } from 'lucide-react';
+import { Code2, FileText, Database, Braces, Palette, Layers, Smartphone, ArrowLeft } from 'lucide-react';
 import type { CodingCourseId } from '@/lib/courses/types';
 import { getCodingCourseIds } from '@/lib/courses/coding';
 import { Card, CardHeader, CardContent } from '@/components/ui/card';
@@ -25,7 +25,7 @@ const iconFor: Record<CodingCourseId, React.ComponentType<{ size?: number }>> = 
   'react-native': Smartphone,
   sql: Database,
   nosql: Database,
-  linux: Terminal,
+  typst: FileText,
 };
 
 export default function CodingHome() {

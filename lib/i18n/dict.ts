@@ -140,7 +140,7 @@ export const translations = {
             "react-native": "React Native",
             sql: "SQL",
             nosql: "NoSQL",
-            linux: "Linux",
+            typst: "Typst",
         },
         languageCourse: {
             teachingIn: "O'qitish tili: O'zbekcha",
@@ -305,7 +305,7 @@ export const translations = {
             "react-native": "React Native",
             sql: "SQL",
             nosql: "NoSQL",
-            linux: "Linux (System & Terminal)",
+            typst: "Typst (Dokumente & Satz)",
         },
         languageCourse: {
             teachingIn: "Unterrichtssprache: Deutsch",
@@ -470,7 +470,7 @@ export const translations = {
             "react-native": "React Native",
             sql: "SQL",
             nosql: "NoSQL",
-            linux: "Linux (System & Terminal)",
+            typst: "Typst (Documents & Typesetting)",
         },
         languageCourse: {
             teachingIn: "Instruction Language: English",

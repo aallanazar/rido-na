@@ -16,7 +16,7 @@ export type CodingCourseId =
   | 'react-native'
   | 'sql'
   | 'nosql'
-  | 'linux';
+  | 'typst';
 
 export type OfficeCourseId = 'microsoft-office';
 
