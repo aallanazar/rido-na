@@ -26,7 +26,7 @@ export default function OfficeModulePage() {
 
   if (!moduleData || !Number.isFinite(index) || index < 1 || index > 15) {
     return (
-      <main className="min-h-screen p-8 pt-28 bg-background">
+      <main className="min-h-screen p-8 pt-28 bg-[#0f172a] text-slate-100">
         <Navbar />
         <div className="max-w-4xl mx-auto">
           <button
@@ -51,7 +51,7 @@ export default function OfficeModulePage() {
 
   if (locked) {
     return (
-      <main className="min-h-screen p-8 pt-28 bg-background">
+      <main className="min-h-screen p-8 pt-28 bg-[#0f172a] text-slate-100">
         <Navbar />
         <div className="max-w-4xl mx-auto">
           <button
@@ -78,7 +78,7 @@ export default function OfficeModulePage() {
   const pctKey = `courseModule:office:microsoft-office:${index}`;
 
   return (
-    <main className="min-h-screen bg-background flex flex-col">
+    <main className="min-h-screen bg-[#0f172a] text-slate-100 flex flex-col">
       <Navbar />
       
       {/* Top Bar */}
@@ -103,7 +103,7 @@ export default function OfficeModulePage() {
       </header>
 
       {/* Scrollable Content */}
-      <div className="flex-1 overflow-y-auto bg-background p-6 md:p-10">
+      <div className="flex-1 overflow-y-auto bg-[#0f172a] p-6 md:p-10">
         <div className="max-w-5xl mx-auto space-y-8">
           {/* Header & Intro */}
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">

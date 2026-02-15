@@ -25,9 +25,9 @@ export default function QuizDashboard() {
   ];
 
   return (
-    <main className="min-h-screen bg-background flex flex-col">
+    <main className="min-h-screen bg-[#102216] text-slate-100 flex flex-col">
       {/* Header */}
-      <header className="w-full border-b border-border bg-background/95 backdrop-blur-md sticky top-0 z-50">
+      <header className="w-full border-b border-border bg-[#102216]/95 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}

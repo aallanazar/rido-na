@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import {
     Calculator, Atom, Beaker, Microscope, Code, FileSpreadsheet,
-    BookOpen, PenTool, Brain, CircleHelp, Folder, Monitor
+    Brain, CircleHelp, Monitor
 } from 'lucide-react';
 import { useTranslation } from '@/lib/hooks/useTranslation';
 import { Button } from '@/components/ui/button';
@@ -17,11 +17,8 @@ const GRID_ITEMS = [
     { id: 'coding', label: 'Dasturlash', icon: Code },
     { id: 'office', label: 'Microsoft Office', icon: FileSpreadsheet },
     { id: 'it', label: 'Informatik', icon: Monitor },
-    { id: 'theory', label: 'Nazariya', icon: BookOpen },
-    { id: 'examples', label: 'Misollar', icon: PenTool },
     { id: 'practice', label: 'Amaliyot', icon: Brain },
     { id: 'quiz', label: 'Quiz', icon: CircleHelp },
-    { id: 'materials', label: 'Materiallar', icon: Folder },
 ];
 
 export function SubjectGrid() {

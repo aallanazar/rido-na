@@ -60,7 +60,7 @@ export default function SubjectModulePage() {
     const value = Math.max(0, Math.min(100, progress[key] ?? 75));
 
     return (
-      <main className="min-h-screen bg-background text-foreground">
+      <main className="min-h-screen bg-[#101822] text-foreground">
         <Navbar />
         <div className="max-w-7xl mx-auto pt-24 px-4 sm:px-6 lg:px-8 pb-10 space-y-8">
           <header className="rounded-xl border border-border bg-card p-4 flex items-center justify-between gap-4">
@@ -144,7 +144,7 @@ export default function SubjectModulePage() {
     const value = Math.max(0, Math.min(100, progress[key] ?? 40));
 
     return (
-      <main className="min-h-screen bg-background text-foreground">
+      <main className="min-h-screen bg-[#102215] text-foreground">
         <Navbar />
         <div className="max-w-[1400px] mx-auto pt-24 pb-12 px-6 space-y-8">
           <header className="rounded-2xl border border-border bg-card p-5 flex items-center justify-between">
@@ -220,7 +220,7 @@ export default function SubjectModulePage() {
     const value = Math.max(0, Math.min(100, progress[key] ?? 50));
 
     return (
-      <main className="min-h-screen bg-background text-foreground">
+      <main className="min-h-screen bg-[#102216] text-foreground">
         <Navbar />
         <div className="max-w-7xl mx-auto pt-24 px-6 lg:px-8 pb-8 grid grid-cols-1 xl:grid-cols-[1fr_260px] gap-6">
           <div className="space-y-6">
@@ -304,7 +304,7 @@ export default function SubjectModulePage() {
   }
 
   return (
-    <main className="bg-background text-foreground min-h-screen flex flex-col">
+    <main className="bg-[#0f2e3a] text-foreground min-h-screen flex flex-col">
       <Navbar />
 
       <header className="sticky top-0 z-40 mt-20 bg-card/95 backdrop-blur border-b border-border">

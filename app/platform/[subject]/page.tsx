@@ -147,7 +147,7 @@ export default function SubjectPage() {
         const overallProgress = Math.round(cards.reduce((sum, card) => sum + card.progress, 0) / cards.length);
 
         return (
-            <main className="min-h-screen bg-background text-foreground">
+            <main className="min-h-screen bg-[#0f2e3a] text-slate-100">
                 <Navbar />
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-12">
                     <header className="mb-10">
@@ -242,7 +242,7 @@ export default function SubjectPage() {
         const systemCharge = Math.round(cards.reduce((sum, item) => sum + item.progressValue, 0) / cards.length);
 
         return (
-            <main className="min-h-screen bg-background text-foreground">
+            <main className="min-h-screen bg-[#101822] text-foreground">
                 <Navbar />
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10 space-y-8">
                     <header className="rounded-xl border border-border bg-card p-5">
@@ -313,7 +313,7 @@ export default function SubjectPage() {
         });
 
         return (
-            <main className="min-h-screen bg-background text-foreground">
+            <main className="min-h-screen bg-[#102215] text-foreground">
                 <Navbar />
                 <div className="max-w-[1400px] mx-auto pt-24 pb-12 px-6 space-y-8">
                     <section>
@@ -388,7 +388,7 @@ export default function SubjectPage() {
         });
 
         return (
-            <main className="min-h-screen bg-background text-foreground">
+            <main className="min-h-screen bg-[#102216] text-foreground">
                 <Navbar />
                 <div className="max-w-7xl mx-auto pt-24 p-6 lg:p-8 space-y-6">
                     <div>
@@ -435,7 +435,7 @@ export default function SubjectPage() {
 
     if (subjectId === 'it') {
         return (
-            <main className="min-h-screen bg-background text-foreground">
+            <main className="min-h-screen bg-[#101622] text-foreground">
                 <Navbar />
                 <div className="max-w-7xl mx-auto pt-24 px-6 lg:px-8 pb-12">
                     {/* Header */}
