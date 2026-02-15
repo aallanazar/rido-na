@@ -144,69 +144,69 @@ export default function SubjectModulePage() {
     const value = Math.max(0, Math.min(100, progress[key] ?? 40));
 
     return (
-      <main className="min-h-screen bg-[#102215] text-foreground">
+      <main className="min-h-screen bg-[#102215] text-white">
         <Navbar />
         <div className="max-w-[1400px] mx-auto pt-24 pb-12 px-6 space-y-8">
-          <header className="rounded-2xl border border-border bg-card p-5 flex items-center justify-between">
+          <header className="rounded-2xl border border-emerald-500/25 bg-white/10 p-5 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <button onClick={() => router.push('/platform/biology')} className="text-muted-foreground hover:text-primary">
+              <button onClick={() => router.push('/platform/biology')} className="text-white/70 hover:text-emerald-300">
                 <ArrowLeft size={18} />
               </button>
               <div>
                 <h1 className="text-xl font-bold">Interactive Biology Visual Learning</h1>
-                <p className="text-xs text-muted-foreground">Module {moduleIndex}</p>
+                <p className="text-xs text-white/70">Module {moduleIndex}</p>
               </div>
             </div>
-            <button onClick={() => updateProgress(key, 100)} className="px-3 py-2 bg-primary text-white rounded-lg text-xs font-semibold">Mark complete</button>
+            <button onClick={() => updateProgress(key, 100)} className="px-3 py-2 bg-emerald-600 text-white rounded-lg text-xs font-semibold">Mark complete</button>
           </header>
 
           <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
             <div className="xl:col-span-2 space-y-8">
-              <div className="rounded-3xl border border-border bg-card p-6">
-                <span className="px-3 py-1 bg-primary/15 text-primary text-xs font-bold uppercase rounded-full">Interactive Theory</span>
+              <div className="rounded-3xl border border-emerald-500/25 bg-white/10 p-6">
+                <span className="px-3 py-1 bg-emerald-400/20 text-emerald-200 text-xs font-bold uppercase rounded-full">Interactive Theory</span>
                 <h2 className="text-3xl font-bold mt-3 mb-4">Plant Cell Structure</h2>
-                <div className="relative w-full h-[520px] rounded-2xl border border-border bg-muted/30 flex items-center justify-center">
-                  <Microscope size={56} className="text-primary" />
-                  <button onClick={() => updateProgress(key, Math.max(value, 70))} className="absolute top-4 right-4 w-10 h-10 rounded-full border border-border bg-card">+</button>
-                  <button onClick={() => updateProgress(key, Math.max(value, 85))} className="absolute bottom-4 right-4 px-3 py-1.5 rounded-full bg-primary text-white text-xs">View Full Report</button>
+                <div className="relative w-full h-[520px] rounded-2xl border border-emerald-500/20 bg-emerald-950/25 flex items-center justify-center">
+                  <Microscope size={56} className="text-emerald-300" />
+                  <button onClick={() => updateProgress(key, Math.max(value, 70))} className="absolute top-4 right-4 w-10 h-10 rounded-full border border-emerald-500/30 bg-white/10">+</button>
+                  <button onClick={() => updateProgress(key, Math.max(value, 85))} className="absolute bottom-4 right-4 px-3 py-1.5 rounded-full bg-emerald-600 text-white text-xs">View Full Report</button>
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="rounded-2xl border border-border bg-card p-6">
+                <div className="rounded-2xl border border-emerald-500/25 bg-white/10 p-6">
                   <h3 className="font-bold text-lg mb-3">Quick Facts</h3>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
+                  <ul className="space-y-2 text-sm text-white/80">
                     <li>Plant cells have a cell wall, unlike animal cells.</li>
                     <li>Chloroplasts enable photosynthesis.</li>
                     <li>Vacuoles can take up most of cell volume.</li>
                   </ul>
                 </div>
-                <div className="rounded-2xl border border-border bg-card p-6">
+                <div className="rounded-2xl border border-emerald-500/25 bg-white/10 p-6">
                   <h3 className="font-bold text-lg mb-2">Quiz Mode</h3>
-                  <p className="text-sm text-muted-foreground mb-4">Test your knowledge before moving on.</p>
-                  <button onClick={() => updateProgress(key, Math.max(value, 95))} className="w-full py-2.5 bg-primary text-white rounded-lg font-semibold">Start Quiz</button>
+                  <p className="text-sm text-white/75 mb-4">Test your knowledge before moving on.</p>
+                  <button onClick={() => updateProgress(key, Math.max(value, 95))} className="w-full py-2.5 bg-emerald-600 text-white rounded-lg font-semibold">Start Quiz</button>
                 </div>
               </div>
             </div>
 
             <div className="space-y-6">
-              <div className="rounded-3xl border border-border bg-card p-6 h-[400px]">
+              <div className="rounded-3xl border border-emerald-500/25 bg-white/10 p-6 h-[400px]">
                 <div className="flex justify-between items-start mb-3">
                   <div>
                     <h3 className="text-lg font-bold">3D Anatomy</h3>
-                    <p className="text-xs text-muted-foreground">Human Heart</p>
+                    <p className="text-xs text-white/70">Human Heart</p>
                   </div>
                 </div>
-                <div className="h-[300px] rounded-xl border border-border bg-muted/40 flex items-center justify-center">
-                  <Leaf size={36} className="text-primary" />
+                <div className="h-[300px] rounded-xl border border-emerald-500/20 bg-emerald-950/25 flex items-center justify-center">
+                  <Leaf size={36} className="text-emerald-300" />
                 </div>
               </div>
-              <div className="rounded-3xl border border-border bg-card p-6">
+              <div className="rounded-3xl border border-emerald-500/25 bg-white/10 p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-bold text-lg">Labeling Task</h3>
-                  <span className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded">2/5 Done</span>
+                  <span className="text-xs font-bold text-emerald-200 bg-emerald-400/20 px-2 py-1 rounded">2/5 Done</span>
                 </div>
-                <button onClick={() => updateProgress(key, Math.max(value, 90))} className="w-full mt-2 py-2 border border-border rounded-lg text-sm font-medium">Reset Task</button>
+                <button onClick={() => updateProgress(key, Math.max(value, 90))} className="w-full mt-2 py-2 border border-emerald-500/30 rounded-lg text-sm font-medium">Reset Task</button>
               </div>
             </div>
           </div>
@@ -220,65 +220,65 @@ export default function SubjectModulePage() {
     const value = Math.max(0, Math.min(100, progress[key] ?? 50));
 
     return (
-      <main className="min-h-screen bg-[#102216] text-foreground">
+      <main className="min-h-screen bg-[#101822] text-white">
         <Navbar />
         <div className="max-w-7xl mx-auto pt-24 px-6 lg:px-8 pb-8 grid grid-cols-1 xl:grid-cols-[1fr_260px] gap-6">
           <div className="space-y-6">
-            <header className="rounded-xl border border-border bg-card p-4 flex items-center justify-between">
+            <header className="rounded-xl border border-yellow-500/25 bg-slate-900/70 p-4 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <button onClick={() => router.push('/platform/chemistry')} className="text-muted-foreground hover:text-primary">
+                <button onClick={() => router.push('/platform/chemistry')} className="text-white/70 hover:text-yellow-300">
                   <ArrowLeft size={18} />
                 </button>
                 <div>
                   <h1 className="text-xl font-bold">Chemistry Laboratory Module</h1>
-                  <p className="text-xs text-muted-foreground">Lab Station Alpha // Module {moduleIndex}</p>
+                  <p className="text-xs text-white/70">Lab Station Alpha // Module {moduleIndex}</p>
                 </div>
               </div>
-              <button onClick={() => updateProgress(key, 100)} className="px-3 py-2 bg-primary text-white text-xs rounded-lg font-semibold">Mark complete</button>
+              <button onClick={() => updateProgress(key, 100)} className="px-3 py-2 bg-yellow-500 text-slate-900 text-xs rounded-lg font-semibold">Mark complete</button>
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {['Atomic Structure', 'Reactions', 'Bonds', 'Kinetics'].map((title, idx) => (
-                <div key={title} className="rounded-xl border border-border bg-card p-5">
-                  <div className="w-11 h-11 rounded-lg bg-primary/10 text-primary flex items-center justify-center mb-3"><FlaskConical size={20} /></div>
+                <div key={title} className="rounded-xl border border-yellow-500/25 bg-slate-900/70 p-5">
+                  <div className="w-11 h-11 rounded-lg bg-yellow-500/15 text-yellow-300 flex items-center justify-center mb-3"><FlaskConical size={20} /></div>
                   <h3 className="font-bold mb-1">{title}</h3>
-                  <p className="text-xs text-muted-foreground mb-3">Module block {idx + 1}</p>
-                  <div className="h-1.5 rounded-full bg-muted overflow-hidden"><div className="h-full bg-primary" style={{ width: `${Math.max(0, Math.min(100, value - idx * 10))}%` }} /></div>
+                  <p className="text-xs text-white/70 mb-3">Module block {idx + 1}</p>
+                  <div className="h-1.5 rounded-full bg-slate-700 overflow-hidden"><div className="h-full bg-yellow-400" style={{ width: `${Math.max(0, Math.min(100, value - idx * 10))}%` }} /></div>
                 </div>
               ))}
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2 rounded-xl border border-border bg-card p-5">
+              <div className="lg:col-span-2 rounded-xl border border-yellow-500/25 bg-slate-900/70 p-5">
                 <h3 className="font-bold mb-3">3D Molecular Viewer</h3>
-                <div className="h-72 rounded-lg border border-border bg-muted/40 flex items-center justify-center">
-                  <Atom className="text-primary" size={40} />
+                <div className="h-72 rounded-lg border border-yellow-500/20 bg-slate-950/40 flex items-center justify-center">
+                  <Atom className="text-yellow-300" size={40} />
                 </div>
                 <div className="flex gap-2 mt-3">
-                  <button className="px-3 py-1.5 rounded bg-muted border border-border text-sm">Rotate</button>
-                  <button className="px-3 py-1.5 rounded bg-muted border border-border text-sm">Zoom +</button>
-                  <button className="px-3 py-1.5 rounded bg-muted border border-border text-sm">Zoom -</button>
+                  <button className="px-3 py-1.5 rounded bg-slate-800 border border-yellow-500/20 text-sm">Rotate</button>
+                  <button className="px-3 py-1.5 rounded bg-slate-800 border border-yellow-500/20 text-sm">Zoom +</button>
+                  <button className="px-3 py-1.5 rounded bg-slate-800 border border-yellow-500/20 text-sm">Zoom -</button>
                 </div>
               </div>
-              <div className="rounded-xl border border-border bg-card p-5">
+              <div className="rounded-xl border border-yellow-500/25 bg-slate-900/70 p-5">
                 <h3 className="font-bold mb-3">Equation Balancer</h3>
-                <div className="text-center font-mono p-3 rounded border border-border bg-muted/30 mb-3">? H₂ + ? O₂ → ? H₂O</div>
+                <div className="text-center font-mono p-3 rounded border border-yellow-500/20 bg-slate-950/40 mb-3">? H₂ + ? O₂ → ? H₂O</div>
                 <div className="grid grid-cols-3 gap-2 mb-3">
-                  <input type="number" className="rounded border border-border p-2 bg-background" onChange={() => updateProgress(key, Math.max(value, 75))} />
-                  <input type="number" className="rounded border border-border p-2 bg-background" onChange={() => updateProgress(key, Math.max(value, 80))} />
-                  <input type="number" className="rounded border border-border p-2 bg-background" onChange={() => updateProgress(key, Math.max(value, 85))} />
+                  <input type="number" className="rounded border border-yellow-500/25 p-2 bg-slate-950/50" onChange={() => updateProgress(key, Math.max(value, 75))} />
+                  <input type="number" className="rounded border border-yellow-500/25 p-2 bg-slate-950/50" onChange={() => updateProgress(key, Math.max(value, 80))} />
+                  <input type="number" className="rounded border border-yellow-500/25 p-2 bg-slate-950/50" onChange={() => updateProgress(key, Math.max(value, 85))} />
                 </div>
-                <button onClick={() => updateProgress(key, 100)} className="w-full bg-primary text-white py-2 rounded text-sm font-semibold">Validate Results</button>
+                <button onClick={() => updateProgress(key, 100)} className="w-full bg-yellow-500 text-slate-900 py-2 rounded text-sm font-semibold">Validate Results</button>
               </div>
             </div>
           </div>
 
-          <aside className="rounded-xl border border-border bg-card p-5 space-y-4 h-fit">
-            <h3 className="text-xs uppercase tracking-widest text-primary font-bold">Safety Protocols</h3>
-            <div className="space-y-3 text-sm text-muted-foreground">
-              <div className="flex gap-2"><Shield size={14} className="mt-1 text-primary" />Flammable materials</div>
-              <div className="flex gap-2"><Shield size={14} className="mt-1 text-primary" />Toxic vapors control</div>
-              <div className="flex gap-2"><Shield size={14} className="mt-1 text-primary" />Eye protection required</div>
+          <aside className="rounded-xl border border-yellow-500/25 bg-slate-900/70 p-5 space-y-4 h-fit">
+            <h3 className="text-xs uppercase tracking-widest text-yellow-300 font-bold">Safety Protocols</h3>
+            <div className="space-y-3 text-sm text-white/75">
+              <div className="flex gap-2"><Shield size={14} className="mt-1 text-yellow-300" />Flammable materials</div>
+              <div className="flex gap-2"><Shield size={14} className="mt-1 text-yellow-300" />Toxic vapors control</div>
+              <div className="flex gap-2"><Shield size={14} className="mt-1 text-yellow-300" />Eye protection required</div>
             </div>
           </aside>
         </div>
