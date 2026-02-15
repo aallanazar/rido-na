@@ -2,13 +2,10 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Navbar } from '@/components/ui/Navbar';
-import { useTranslation } from '@/lib/hooks/useTranslation';
-import { usePlatformStore } from '@/lib/store/usePlatformStore';
+import Image from 'next/image';
 import {
   Search,
   Flame,
-  Settings,
   Award,
   Zap,
   Trophy,
@@ -20,14 +17,11 @@ import {
 } from 'lucide-react';
 
 export default function QuizDashboard() {
-  const { t } = useTranslation();
-  const { progress } = usePlatformStore();
-  const [sessionActive, setSessionActive] = useState(true);
   const [selectedAnswer, setSelectedAnswer] = useState(1);
 
   const topics = [
-    { id: 1, title: 'Intro to Python', difficulty: 'Easy', progress: 45, image: 'code' },
-    { id: 2, title: 'Advanced Geometry', difficulty: 'Medium', progress: 10, image: 'geometry' },
+    { id: 1, title: 'Intro to Python', difficulty: 'Easy', progress: 45 },
+    { id: 2, title: 'Advanced Geometry', difficulty: 'Medium', progress: 10 },
   ];
 
   return (
@@ -69,10 +63,12 @@ export default function QuizDashboard() {
                   <p className="text-sm font-bold text-foreground">Alex Chen</p>
                   <p className="text-xs text-primary">Level 5</p>
                 </div>
-                <img
+                <Image
                   className="h-10 w-10 rounded-full border-2 border-primary object-cover"
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQrAFWlZFiP5uFgjAzKllEhQp4HJnxbQwyyBpVqUDodGOJpOhYs6aE8NS2hWp-u4wEHKaWqAUSIsHgzAU4qj4mf3pA1VYxqxmeagmS88U1RsDfVaBSvrsRHRKvrN6ehDt3tck4xd50cgZIfFW8zayim-SmthktRCGn9kBYY9iO5b9dGvObaXygFAA8dQkOym2sbBZsggtyNZopTxTvEJiR0CKmIkGUsUgruTjXzJZ1t1kF6Z9Citi4_wrrniDtcNu5e52naHJhK_E"
                   alt="User Avatar"
+                  width={40}
+                  height={40}
                 />
               </div>
             </div>

@@ -203,7 +203,7 @@ export default function CodingCoursePage() {
                       {isActive && (
                         <div className="font-mono text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-black/30 p-2 rounded border border-slate-200 dark:border-white/10">
                           &gt; {t('ui.moduleNumber', { n: String(m.index) })}<br/>
-                          &gt; "Theory", "Examples"
+                          &gt; &quot;Theory&quot;, &quot;Examples&quot;
                         </div>
                       )}
                     </div>

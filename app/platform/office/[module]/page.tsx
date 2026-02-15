@@ -3,7 +3,7 @@
 import React, { useMemo, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Navbar } from '@/components/ui/Navbar';
-import { ArrowLeft, Lock, CheckCircle2, Download, Play, Volume2, Fullscreen, HelpOutline, Settings } from 'lucide-react';
+import { ArrowLeft, Lock, Download, Play, Volume2, Fullscreen, CircleHelp, Settings } from 'lucide-react';
 import { useTranslation } from '@/lib/hooks/useTranslation';
 import { buildOfficeCourse } from '@/lib/courses/office';
 import { QuizBlock } from '@/components/platform/QuizBlock';
@@ -92,7 +92,7 @@ export default function OfficeModulePage() {
         </nav>
         <div className="flex items-center gap-3">
           <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors">
-            <HelpOutline size={18} />
+            <CircleHelp size={18} />
             <span>Help</span>
           </button>
           <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors">

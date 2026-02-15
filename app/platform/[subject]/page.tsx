@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { Navbar } from '@/components/ui/Navbar';
 import { useTranslation } from '@/lib/hooks/useTranslation';
 import {
@@ -32,7 +32,6 @@ import { usePlatformStore } from '@/lib/store/usePlatformStore';
 
 export default function SubjectPage() {
     const params = useParams();
-    const router = useRouter();
     // Ensure subject is a string
     const subjectId = Array.isArray(params.subject) ? params.subject[0] : params.subject;
     const { t } = useTranslation();
@@ -219,7 +218,7 @@ export default function SubjectPage() {
                             <span className="inline-block py-1 px-3 bg-white/20 rounded-lg text-xs font-medium mb-3">Daily Challenge</span>
                             <h3 className="text-2xl md:text-3xl font-bold mb-2">Mastering Quadratic Formulas</h3>
                             <p className="text-primary-foreground/90 mb-6 max-w-xl">
-                                Boost your algebra skills with today's quick fire challenge. 10 questions, 5 minutes.
+                                Boost your algebra skills with today&apos;s quick fire challenge. 10 questions, 5 minutes.
                             </p>
                             <button className="bg-white text-primary px-6 py-3 rounded-lg font-bold">Start Challenge</button>
                         </div>
@@ -435,12 +434,6 @@ export default function SubjectPage() {
     }
 
     if (subjectId === 'it') {
-        const cards = [
-            { id: 1, title: 'Hardware', subtitle: 'CPU, RAM, SSD & Components', icon: Activity, progress: 85 },
-            { id: 2, title: 'Networks', subtitle: 'LAN, WAN & Internet', icon: Shield, progress: 45 },
-            { id: 3, title: 'Security', subtitle: 'Cryptography & Protection', icon: Shield, progress: 0 },
-        ];
-
         return (
             <main className="min-h-screen bg-background text-foreground">
                 <Navbar />

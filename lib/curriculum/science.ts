@@ -440,5 +440,6 @@ export const scienceCurriculum: Curriculum = {
         },
       },
     },
+  },
 };
 
