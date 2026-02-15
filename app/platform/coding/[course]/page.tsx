@@ -9,6 +9,9 @@ import { useTranslation } from '@/lib/hooks/useTranslation';
 import type { CodingCourseId } from '@/lib/courses/types';
 import { buildCodingCourse, getCodingCourseMeta } from '@/lib/courses/coding';
 import { usePlatformStore } from '@/lib/store/usePlatformStore';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 function isCodingCourseId(value: string): value is CodingCourseId {
   return (
@@ -42,16 +45,17 @@ export default function CodingCoursePage() {
 
   if (!courseId || !course || !meta) {
     return (
-      <main className="min-h-screen p-8 pt-28 bg-background-light dark:bg-background-dark">
+      <main className="min-h-screen p-8 pt-28 bg-background">
         <Navbar />
         <div className="max-w-4xl mx-auto">
-          <button
+          <Button
+            variant="ghost"
             onClick={() => router.push('/')}
-            className="flex items-center gap-2 mb-8 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+            className="flex items-center gap-2 mb-8 text-muted-foreground hover:text-foreground transition-colors"
           >
             <ArrowLeft size={20} />
             <span>{t('ui.backToSelection')}</span>
-          </button>
+          </Button>
         </div>
       </main>
     );
@@ -74,56 +78,57 @@ export default function CodingCoursePage() {
   const eligibleCertificate = passed.length === 15 && passed.every(Boolean);
 
   return (
-    <main className="min-h-screen bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200 transition-colors duration-300">
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-indigo-900/20 via-slate-900/0 to-slate-900/0 pointer-events-none z-0 dark:block hidden"></div>
+    <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,var(--tw-gradient-stops))] from-primary/10 via-background to-background pointer-events-none z-0 dark:block hidden"></div>
 
       <Navbar />
 
-      <div className="relative z-10 p-6 md:p-10">
+      <div className="relative z-10 p-6 md:p-10 pt-24">
         <div className="max-w-6xl mx-auto">
           {/* Back Button */}
-          <button
+          <Button
+            variant="ghost"
             onClick={() => router.push('/platform/coding')}
-            className="inline-flex items-center text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-primary transition-colors mb-6 group"
+            className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary transition-colors mb-6 group -ml-4"
           >
             <ArrowLeft size={18} className="mr-1 transform group-hover:-translate-x-1 transition-transform" />
             Back to Course Selection
-          </button>
+          </Button>
 
           {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
             <div>
-              <h1 className="text-4xl md:text-5xl font-serif font-bold text-slate-900 dark:text-white mb-2 tracking-tight">
+              <h1 className="text-4xl md:text-5xl font-serif font-bold text-foreground mb-2 tracking-tight">
                 {t(`courses.${courseId}`)}
               </h1>
-              <p className="text-slate-500 dark:text-slate-400 font-mono text-sm max-w-xl">
+              <p className="text-muted-foreground font-mono text-sm max-w-xl">
                 {t('ui.courseProgressLine', { done: String(completedCount), total: '15' })}
               </p>
             </div>
 
             {/* Stats Box */}
-            <div className="flex gap-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-4 rounded-xl shadow-sm min-w-[300px]">
-              <div className="flex-1 text-center border-r border-slate-200 dark:border-slate-700 pr-4">
-                <div className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
+            <div className="flex gap-4 bg-card border border-border p-4 rounded-xl shadow-sm min-w-75">
+              <div className="flex-1 text-center border-r border-border pr-4">
+                <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-1">
                   Modules
                 </div>
-                <div className="text-2xl font-bold text-slate-900 dark:text-white">
-                  {completedCount}<span className="text-slate-400 text-lg">/{course.modules.length}</span>
+                <div className="text-2xl font-bold text-foreground">
+                  {completedCount}<span className="text-muted-foreground text-lg">/{course.modules.length}</span>
                 </div>
-                <div className="w-full h-1 bg-slate-100 dark:bg-slate-800 rounded-full mt-2 overflow-hidden">
+                <div className="w-full h-1 bg-muted rounded-full mt-2 overflow-hidden">
                   <div
-                    className="h-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)]"
+                    className="h-full bg-primary shadow-[0_0_8px_rgba(var(--primary),0.6)]"
                     style={{ width: `${(completedCount / course.modules.length) * 100}%` }}
                   ></div>
                 </div>
               </div>
 
               <div className="flex-1 text-center pl-4">
-                <div className="text-xs font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">
+                <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-1">
                   Min. Score
                 </div>
-                <div className="text-2xl font-bold text-slate-900 dark:text-white">
-                  {minScore}<span className="text-slate-400 text-lg">/10</span>
+                <div className="text-2xl font-bold text-foreground">
+                  {minScore}<span className="text-muted-foreground text-lg">/10</span>
                 </div>
                 <div className="w-full h-1 bg-slate-100 dark:bg-slate-800 rounded-full mt-2 overflow-hidden">
                   <div className="h-full bg-emerald-500 w-[70%] shadow-[0_0_8px_rgba(16,185,129,0.6)]"></div>

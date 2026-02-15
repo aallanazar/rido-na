@@ -1,40 +1,109 @@
-# Rido NA
+# Ridona (Rido NA)
 
-Live Site: [https://rido-na.vercel.app/](https://rido-na.vercel.app/)
+![Ridona Banner](https://rido-na.vercel.app/og-image.png)
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Ridona is a highly interactive, modern learning platform designed to provide a "notebook" aesthetic for exploring complex subjects. It combines course materials, interactive coding playgrounds, and rich text learning tools into a unified, high-performance web experience.
 
-## Getting Started
+**Live Site:** [rido-na.vercel.app](https://rido-na.vercel.app/)
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Key Features
+
+- **Multi-Subject Learning Hub:** Dynamic curriculum for Math, Science, Languages, and more.
+- **Interactive Coding Lab:** Full-featured code playground with syntax highlighting and live execution support (Python, JavaScript, etc.).
+- **Rich Text Practice:** Professional-grade writing environment with rich text support and digital pen capabilities.
+- **Multilingual Support:** Full internalization (i18n) for German, English, and Uzbek strings.
+- **Intelligent Search:** Global command-palette style search to quickly jump between courses, modules, and platform features.
+- **Unified Brand Identity:** A customized "Notebook" theme (Paper background, Primary copper/tan tones) built on top of Tailwind CSS and shadcn/ui.
+- **Progress Tracking:** Automatic state persistence for quizzes, course modules, and user preferences.
+
+---
+
+## 🛠 Tech Stack
+
+- **Framework:** [Next.js 16 (App Router)](https://nextjs.org/) with Turbopack.
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) with a custom unified design system.
+- **State Management:** [Zustand](https://github.com/pmndrs/zustand) with persistence.
+- **Animations:** [Framer Motion](https://www.framer.com/motion/).
+- **Components:** [shadcn/ui](https://ui.shadcn.com/) Radix-based components.
+- **Icons:** [Lucide React](https://lucide.dev/).
+- **Testing:** [Playwright](https://playwright.dev/) for E2E, A11y, and Visual Regression.
+
+---
+
+## 📂 Project Structure
+
+```text
+app/
+├── platform/        # Dynamic routes for subjects and courses
+├── (coding)/        # Course-specific modules and projects
+├── notwendig/       # Specialized internal interactive environments
+└── globals.css      # Core brand tokens and CSS variable mappings
+
+components/
+├── platform/        # Complex context-aware components (Playgrounds, Canvas)
+├── ui/              # Reusable atomic shadcn/ui components
+└── providers/       # Theme and Store providers
+
+lib/
+├── store/           # Zustand state configurations
+├── i18n/            # Translation dictionaries (DE, EN, UZ)
+├── curriculum/      # Static data definitions for course content
+└── hooks/           # Shared logic (Translations, Input, etc.)
+
+tests/               # Comprehensive Playwright test suite
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠 Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Prerequisites
 
-## Learn More
+- Node.js 18+ 
+- npm / yarn / pnpm
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/aallanazar/rido-na.git
+   cd rido-na
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Open [http://localhost:3000](http://localhost:3000)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🧪 Testing
+
+The project includes a robust testing suite covering navigation, interactions, and responsiveness.
+
+```bash
+# Run all tests
+npx playwright test
+
+# Run tests in UI mode
+npx playwright test --ui
+```
+
+---
+
+## 📜 License
+
+This project is private and intended for educational purposes. All rights reserved.
+
+---
+
+Created with ❤️ by the Ridona Team.

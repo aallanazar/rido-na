@@ -45,7 +45,7 @@ export function SearchBox({
       <div className={`relative transition-all duration-300 ${isFocused ? 'scale-105 origin-center' : 'scale-100'}`}>
         <button
           onClick={handleSearch}
-          className="absolute left-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-[var(--color-primary)]/10 dark:hover:bg-white/10 transition-all duration-200 text-[var(--color-primary)] hover:scale-110"
+          className="absolute left-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-primary/10 transition-all duration-200 text-primary hover:scale-110"
         >
           <Search className="w-5 h-5 opacity-70" />
         </button>
@@ -58,7 +58,7 @@ export function SearchBox({
           placeholder={placeholder}
           className={
             inputClassName ??
-            'w-full bg-white/50 dark:bg-white/5 border border-[var(--color-primary)]/20 dark:border-white/10 rounded-full pl-11 pr-4 py-2.5 text-sm placeholder:opacity-60 hover:bg-white/60 dark:hover:bg-white/8 hover:border-[var(--color-primary)]/40 dark:hover:border-white/15 focus:outline-none focus:bg-white/70 dark:focus:bg-white/10 focus:border-[var(--color-primary)]/60 focus:ring-2 focus:ring-[var(--color-primary)]/30 dark:focus:ring-[var(--color-primary)]/40 transition-all duration-200'
+            'w-full bg-muted border border-border rounded-full pl-11 pr-4 py-2.5 text-sm placeholder:text-muted-foreground/60 hover:bg-muted/80 hover:border-primary/40 focus:outline-none focus:bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all duration-200 shadow-inner'
           }
         />
       </div>

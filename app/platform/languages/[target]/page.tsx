@@ -6,6 +6,8 @@ import { Navbar } from '@/components/ui/Navbar';
 import { ArrowLeft } from 'lucide-react';
 import { useTranslation } from '@/lib/hooks/useTranslation';
 import { languageCourses } from '@/lib/i18n/courses';
+import { Button } from '@/components/ui/button';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
 export default function LanguageCoursePage() {
   const params = useParams();
@@ -20,48 +22,59 @@ export default function LanguageCoursePage() {
   }, [target, language]);
 
   return (
-    <main className="min-h-screen p-8 pt-28 bg-[#fdfbf7] dark:bg-[#1a1a1a] notebook-lines">
+    <main className="min-h-screen p-8 pt-28 bg-background">
       <Navbar />
 
       <div className="max-w-4xl mx-auto">
-        <button
+        <Button
+          variant="ghost"
           onClick={() => router.push('/')}
-          className="flex items-center gap-2 mb-8 text-black/50 dark:text-white/50 hover:text-black dark:hover:text-white transition-colors"
+          className="flex items-center gap-2 mb-8 text-muted-foreground hover:text-foreground transition-colors -ml-4"
         >
           <ArrowLeft size={20} />
           <span>{t('ui.backToSelection')}</span>
-        </button>
+        </Button>
 
         {!course ? (
-          <div className="p-8 rounded-3xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/10">
-            <p className="opacity-70">{t('ui.comingSoon')}</p>
-          </div>
+          <Card className="p-8">
+            <p className="text-muted-foreground">{t('ui.comingSoon')}</p>
+          </Card>
         ) : (
           <>
-            <header className="mb-10">
-              <h1 className="text-5xl font-serif font-bold mb-3">{course.title}</h1>
-              <p className="opacity-70">{course.description}</p>
+            <header className="mb-12">
+              <h1 className="text-6xl font-serif font-bold mb-4 tracking-tight">{course.title}</h1>
+              <p className="text-lg text-muted-foreground leading-relaxed">{course.description}</p>
             </header>
 
-            <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 rounded-2xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/10">
-                <h2 className="text-xl font-serif font-bold mb-4">{t('languageCourse.vocabulary')}</h2>
-                <ul className="space-y-3">
-                  {course.vocabulary.map((v) => (
-                    <li key={v.word} className="text-sm">
-                      <div className="font-semibold">{v.word}</div>
-                      <div className="opacity-70">{v.translation}</div>
-                      <div className="text-xs opacity-60">{v.pronunciation}</div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+            <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-2xl font-serif">{t('languageCourse.vocabulary')}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ul className="space-y-4">
+                    {course.vocabulary.map((v) => (
+                      <li key={v.word} className="pb-4 border-b border-border last:border-0 last:pb-0">
+                        <div className="font-bold text-lg">{v.word}</div>
+                        <div className="text-primary italic">{v.translation}</div>
+                        <div className="text-xs text-muted-foreground mt-1">{v.pronunciation}</div>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
 
-              <div className="p-6 rounded-2xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/10">
-                <h2 className="text-xl font-serif font-bold mb-4">{t('languageCourse.grammar')}</h2>
-                <div className="font-semibold mb-2">{course.grammar.title}</div>
-                <p className="text-sm opacity-80 whitespace-pre-line">{course.grammar.content}</p>
-              </div>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-2xl font-serif">{t('languageCourse.grammar')}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="font-bold mb-3 text-lg">{course.grammar.title}</div>
+                  <div className="bg-muted/30 p-4 rounded-lg text-sm leading-relaxed prose prose-sm dark:prose-invert">
+                    {course.grammar.content}
+                  </div>
+                </CardContent>
+              </Card>
             </section>
           </>
         )}

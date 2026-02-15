@@ -213,7 +213,7 @@ export default function CodingModulePage() {
             <textarea
               value={notes[notesKey] ?? ''}
               onChange={(e) => setNote(notesKey, e.target.value)}
-              className="w-full min-h-[160px] rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-2 text-sm focus:outline-none focus:border-[#d4a373]/60"
+              className="w-full min-h-40 rounded-xl border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-2 text-sm focus:outline-none focus:border-[#d4a373]/60"
               placeholder={t('ui.notesPlaceholder')}
             />
           </section>

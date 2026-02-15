@@ -329,7 +329,7 @@ export function PracticeEditor({ moduleId }: PracticeEditorProps) {
     };
 
     return (
-        <div className="flex flex-col md:flex-row gap-4 h-[600px] w-full border border-black/10 dark:border-white/10 rounded-2xl bg-white dark:bg-[#1a1a1a] overflow-hidden">
+        <div className="flex flex-col md:flex-row gap-4 h-150 w-full border border-black/10 dark:border-white/10 rounded-2xl bg-white dark:bg-[#1a1a1a] overflow-hidden">
 
             {/* Editor Scroll Area */}
             <div className="flex-1 relative bg-zinc-100 dark:bg-[#121212] overflow-y-auto flex flex-col items-center p-4 md:p-8">

@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 
 type FsNode = { type: 'dir'; children: Record<string, FsNode> } | { type: 'file'; content: string; mode?: string };
 
@@ -173,37 +175,40 @@ export function TerminalSimulator({
   }
 
   return (
-    <div className="p-6 rounded-2xl bg-white dark:bg-white/5 border border-black/5 dark:border-white/10">
-      <div className="flex items-center justify-between gap-4 mb-4">
-        <h3 className="text-xl font-serif font-bold">{title}</h3>
-        <div className="text-xs font-semibold opacity-60">Terminal</div>
-      </div>
+    <Card>
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <CardTitle>{title}</CardTitle>
+          <span className="text-xs font-semibold text-muted-foreground">Terminal</span>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-3">
+        <div className="rounded-md border border-border bg-black text-white/80 p-4 min-h-60 max-h-90 overflow-auto font-mono text-xs">
+          {history.map((line, idx) => (
+            <div key={idx} className="whitespace-pre-wrap">
+              {line}
+            </div>
+          ))}
+        </div>
 
-      <div className="rounded-xl border border-black/10 dark:border-white/10 bg-black text-white p-4 min-h-[240px] max-h-[360px] overflow-auto font-mono text-xs">
-        {history.map((line, idx) => (
-          <div key={idx} className="whitespace-pre-wrap">
-            {line}
-          </div>
-        ))}
-      </div>
-
-      <form
-        className="mt-3 flex items-center gap-2"
-        onSubmit={(e) => {
-          e.preventDefault();
-          run(input);
-          setInput('');
-        }}
-      >
-        <span className="text-xs opacity-60">{prompt}</span>
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="flex-1 rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-white/5 px-3 py-2 text-sm font-mono focus:outline-none focus:border-[#d4a373]/60"
-          placeholder="command…"
-        />
-      </form>
-    </div>
+        <form
+          className="flex items-center gap-2"
+          onSubmit={(e) => {
+            e.preventDefault();
+            run(input);
+            setInput('');
+          }}
+        >
+          <span className="text-xs text-muted-foreground font-mono shrink-0">{prompt}</span>
+          <Input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="command…"
+            className="font-mono text-sm"
+          />
+        </form>
+      </CardContent>
+    </Card>
   );
 }
 
