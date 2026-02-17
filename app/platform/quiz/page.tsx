@@ -77,18 +77,18 @@ export default function QuizDashboard() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
-        {/* Left Column: Content */}
-        <div className="lg:col-span-8 flex flex-col gap-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+        {/* Content - Centered */}
+        <div className="flex flex-col gap-8 items-center">
           {/* Recommended Topics */}
-          <section>
+          <section className="w-full">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold">Recommended Topics</h2>
               <Link href="#" className="text-primary hover:text-foreground transition-colors text-sm font-medium">
                 View All
               </Link>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
               {topics.map((topic) => (
                 <div
                   key={topic.id}
@@ -120,12 +120,12 @@ export default function QuizDashboard() {
           </section>
 
           {/* Active Quiz Session */}
-          <section>
+          <section className="w-full">
             <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
               <span className="w-2 h-8 bg-primary rounded-sm"></span>
               Current Session
             </h2>
-            <div className="bg-card rounded-xl p-8 border border-primary/20 shadow-2xl relative overflow-hidden">
+            <div className="bg-card rounded-xl p-8 border border-primary/20 shadow-2xl relative overflow-hidden max-w-2xl">
               {/* Progress & Timer */}
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
                 <div className="flex-1">
@@ -216,10 +216,10 @@ export default function QuizDashboard() {
           </section>
         </div>
 
-        {/* Right Sidebar */}
-        <aside className="lg:col-span-4 space-y-8">
+        {/* Right Sidebar - Now centered below */}
+        <aside className="w-full max-w-2xl mx-auto space-y-8 mt-12">
           {/* Level System */}
-          <div className="bg-card rounded-xl p-6 border border-border shadow-lg">
+          <div className="bg-card rounded-xl p-6 border border-border shadow-lg w-full max-w-2xl">
             <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
               <Award size={20} className="text-primary" />
               Current Level
@@ -260,7 +260,7 @@ export default function QuizDashboard() {
           </div>
 
           {/* Leaderboard */}
-          <div className="bg-card rounded-xl p-6 border border-border shadow-lg">
+          <div className="bg-card rounded-xl p-6 border border-border shadow-lg w-full max-w-2xl">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-bold text-foreground">Rangliste</h3>
               <span className="text-xs bg-muted px-2 py-1 rounded text-muted-foreground">Weekly</span>
@@ -294,7 +294,7 @@ export default function QuizDashboard() {
           </div>
 
           {/* Badges */}
-          <div className="bg-card rounded-xl p-6 border border-border shadow-lg">
+          <div className="bg-card rounded-xl p-6 border border-border shadow-lg w-full max-w-2xl">
             <h3 className="text-lg font-bold mb-4 flex items-center justify-between">
               <span>Abzeichen</span>
               <span className="text-xs text-primary cursor-pointer hover:underline">View All</span>
