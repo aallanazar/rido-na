@@ -40,13 +40,13 @@ test.describe('Page Navigation and Layout', () => {
     const html = page.locator('html');
     const classAttr = await html.getAttribute('class');
     // Light mode doesn't have 'dark' class typically
-    expect(classAttr).not.toContain('dark');
+    expect(classAttr ?? '').not.toContain('dark');
   });
 
   test('should have proper meta tags', async ({ page }) => {
     await page.goto('/');
     const viewport = page.locator('meta[name="viewport"]');
-    await expect(viewport).toBeVisible();
+    await expect(viewport).toHaveCount(1);
   });
 
   test('should load root layout without errors', async ({ page }) => {
