@@ -9,7 +9,7 @@ test.describe('Responsive Design', () => {
       await page.goto(pageUrl);
       await page.waitForLoadState('networkidle');
 
-      const content = page.locator('main, body');
+      const content = page.locator('main, body').first();
       await expect(content).toBeVisible();
 
       // Check no horizontal overflow
@@ -23,7 +23,7 @@ test.describe('Responsive Design', () => {
       await page.goto(pageUrl);
       await page.waitForLoadState('networkidle');
 
-      const content = page.locator('main, body');
+      const content = page.locator('main, body').first();
       await expect(content).toBeVisible();
     });
 
@@ -32,7 +32,7 @@ test.describe('Responsive Design', () => {
       await page.goto(pageUrl);
       await page.waitForLoadState('networkidle');
 
-      const content = page.locator('main, body');
+      const content = page.locator('main, body').first();
       await expect(content).toBeVisible();
     });
   });

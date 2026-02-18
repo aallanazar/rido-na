@@ -4,28 +4,28 @@ test.describe('Page Navigation and Layout', () => {
   test('should load home page', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/.*/, { timeout: 10000 });
-    const content = page.locator('main, body');
+    const content = page.locator('main, body').first();
     await expect(content).toBeVisible();
   });
 
   test('should navigate to platform/coding', async ({ page }) => {
     await page.goto('/platform/coding');
     await page.waitForLoadState('networkidle');
-    const content = page.locator('main, body');
+    const content = page.locator('main, body').first();
     await expect(content).toBeVisible();
   });
 
   test('should navigate to notwendig game', async ({ page }) => {
     await page.goto('/notwendig');
     await page.waitForLoadState('networkidle');
-    const content = page.locator('main, body');
+    const content = page.locator('main, body').first();
     await expect(content).toBeVisible();
   });
 
   test('should navigate to platform/office', async ({ page }) => {
     await page.goto('/platform/office');
     await page.waitForLoadState('networkidle');
-    const content = page.locator('main, body');
+    const content = page.locator('main, body').first();
     await expect(content).toBeVisible();
   });
 

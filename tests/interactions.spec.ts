@@ -34,17 +34,17 @@ test.describe('Advanced Component Interactions', () => {
     
     // Start with desktop
     await TestUtils.setDesktopViewport(page);
-    let mainContent = page.locator('main, body');
+    let mainContent = page.locator('main, body').first();
     await expect(mainContent).toBeVisible();
 
     // Switch to mobile
     await TestUtils.setMobileViewport(page);
-    mainContent = page.locator('main, body');
+    mainContent = page.locator('main, body').first();
     await expect(mainContent).toBeVisible();
 
     // Back to tablet
     await TestUtils.setTabletViewport(page);
-    mainContent = page.locator('main, body');
+    mainContent = page.locator('main, body').first();
     await expect(mainContent).toBeVisible();
   });
 
