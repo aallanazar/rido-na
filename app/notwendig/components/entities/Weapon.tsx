@@ -1,7 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
-
 export type WeaponType = 'bow' | 'sword' | 'knife';
 
 interface WeaponProps {

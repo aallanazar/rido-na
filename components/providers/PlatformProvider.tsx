@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { usePlatformStore } from '@/lib/store/usePlatformStore';
 
 export function PlatformProvider({ children }: { children: React.ReactNode }) {
-    const { theme, language } = usePlatformStore();
+    const { theme } = usePlatformStore();
 
     useEffect(() => {
         const root = window.document.documentElement;

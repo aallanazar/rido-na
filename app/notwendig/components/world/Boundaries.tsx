@@ -1,7 +1,5 @@
 'use client';
 
-import { useThree } from '@react-three/fiber';
-
 const MAP_SIZE = 7000;
 const HALF_SIZE = MAP_SIZE / 2;
 

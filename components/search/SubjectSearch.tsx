@@ -15,15 +15,17 @@ export function SubjectSearch({ subjectId }: { subjectId: SubjectId }) {
   }, [t]);
 
   return (
-    <SearchBox
-      placeholder={t('ui.searchPlaceholder')}
-      labels={{
-        all: t('ui.filterAll'),
-        school: t('ui.schoolLevel'),
-        university: t('ui.universityLevel'),
-        ...moduleTypeLabels,
-      }}
-      inputClassName="w-full bg-card border border-border rounded-xl pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-primary/50 transition-colors shadow-sm"
-    />
+    <div data-subject-id={subjectId}>
+      <SearchBox
+        placeholder={t('ui.searchPlaceholder')}
+        labels={{
+          all: t('ui.filterAll'),
+          school: t('ui.schoolLevel'),
+          university: t('ui.universityLevel'),
+          ...moduleTypeLabels,
+        }}
+        inputClassName="w-full bg-card border border-border rounded-xl pl-10 pr-4 py-2 text-sm focus:outline-none focus:border-primary/50 transition-colors shadow-sm"
+      />
+    </div>
   );
 }

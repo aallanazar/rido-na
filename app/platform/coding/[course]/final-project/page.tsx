@@ -3,7 +3,7 @@
 import React from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Navbar } from '@/components/ui/Navbar';
-import { ArrowLeft, Zap } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useTranslation } from '@/lib/hooks/useTranslation';
 import type { CodingCourseId } from '@/lib/courses/types';
 

@@ -32,7 +32,7 @@ export function HomeworksBlock({
   };
 
   return (
-    <Card>
+    <Card data-homeworks-key={homeworksKey}>
       <CardHeader>
         <CardTitle>{labels.title}</CardTitle>
       </CardHeader>

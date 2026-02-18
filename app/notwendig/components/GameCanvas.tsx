@@ -1,7 +1,7 @@
 'use client';
 
 import { Canvas } from '@react-three/fiber';
-import { Sky, Environment } from '@react-three/drei';
+import { Sky } from '@react-three/drei';
 import { Suspense } from 'react';
 import Terrain from './world/Terrain';
 import Boundaries from './world/Boundaries';

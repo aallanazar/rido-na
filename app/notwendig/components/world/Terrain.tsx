@@ -1,8 +1,5 @@
 'use client';
 
-import { useTexture } from '@react-three/drei';
-import { RepeatWrapping } from 'three';
-
 // 7km x 7km map
 const TERRAIN_SIZE = 7000;
 

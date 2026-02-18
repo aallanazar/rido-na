@@ -21,7 +21,6 @@ test.describe('Advanced Component Interactions', () => {
     await page.goto('/');
     
     // Find and use search
-    const searchBox = page.locator('input[type="search"], input[placeholder*="search" i]').first();
     if (await TestUtils.isVisible(page, 'input[type="search"]')) {
       await TestUtils.fillInput(page, 'input[type="search"]', 'javascript');
       await page.waitForTimeout(500); // Wait for debounce

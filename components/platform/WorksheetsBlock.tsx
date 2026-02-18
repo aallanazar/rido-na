@@ -32,7 +32,7 @@ export function WorksheetsBlock({
   };
 
   return (
-    <Card>
+    <Card data-worksheets-key={worksheetsKey}>
       <CardHeader>
         <CardTitle>{labels.title}</CardTitle>
       </CardHeader>

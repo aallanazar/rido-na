@@ -1,7 +1,7 @@
 'use client';
 
 import { useFrame, useThree } from '@react-three/fiber';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { Vector3, Group } from 'three';
 import useInput from '../../hooks/useInput';
 import CharacterVisuals, { TeamColor } from './CharacterVisuals';
@@ -16,7 +16,7 @@ const PLAYER_TEAM: TeamColor = 'red';
 export default function Player() {
     const { camera } = useThree();
     const playerRef = useRef<Group>(null);
-    const { forward, backward, left, right, shift, jump } = useInput();
+    const { forward, backward, left, right, shift } = useInput();
 
     // Store
     const { currentWeapon, setWeapon, ammo, decreaseAmmo } = useGameStore();
@@ -39,7 +39,7 @@ export default function Player() {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [setWeapon]);
 
-    const shootArrow = () => {
+    const shootArrow = useCallback(() => {
         if (!playerRef.current) return;
 
         decreaseAmmo();
@@ -58,7 +58,7 @@ export default function Player() {
             position: spawnPos,
             velocity: velocity
         }]);
-    };
+    }, [decreaseAmmo]);
 
     // Shooting Input
     useEffect(() => {

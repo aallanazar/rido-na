@@ -4,14 +4,12 @@ import React, { useMemo } from 'react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { Navbar } from '@/components/ui/Navbar';
-import { ArrowLeft, Lock, CheckCircle2, Award, ChevronRight, Zap } from 'lucide-react';
+import { ArrowLeft, Lock, Award, ChevronRight, Zap } from 'lucide-react';
 import { useTranslation } from '@/lib/hooks/useTranslation';
 import type { CodingCourseId } from '@/lib/courses/types';
 import { buildCodingCourse, getCodingCourseMeta } from '@/lib/courses/coding';
 import { usePlatformStore } from '@/lib/store/usePlatformStore';
 import { Button } from '@/components/ui/button';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
 
 function isCodingCourseId(value: string): value is CodingCourseId {
   return (
@@ -69,12 +67,6 @@ export default function CodingCoursePage() {
   });
 
   const completedCount = passed.filter(Boolean).length;
-  const totalPoints = course.modules.reduce((acc, m) => {
-    const key = `quiz:coding:${courseId}:${m.index}`;
-    const s = quiz[key]?.score;
-    return acc + (typeof s === 'number' ? s : 0);
-  }, 0);
-
   const eligibleCertificate = passed.length === course.modules.length && passed.every(Boolean);
 
   return (
@@ -139,15 +131,11 @@ export default function CodingCoursePage() {
 
           {/* Modules Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-12">
-            {course.modules.map((m, idx) => {
+            {course.modules.map((m) => {
               const locked = m.index > 1 && !passed[m.index - 2];
-              const quizKey = `quiz:coding:${courseId}:${m.index}`;
-              const score = quiz[quizKey]?.score;
               const pctKey = `courseModule:coding:${courseId}:${m.index}`;
               const pct = Math.max(0, Math.min(100, progress[pctKey] ?? 0));
               const isActive = m.index === 1 || (m.index > 1 && passed[m.index - 2]);
-              const isComplete = typeof score === 'number' && score >= minScore;
-
               if (locked) {
                 return (
                   <div
