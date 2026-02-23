@@ -7,9 +7,6 @@ import { SubjectGrid } from '@/components/ui/SubjectGrid';
 export default function Home() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-start p-4 md:p-24 overflow-hidden relative bg-background">
-      {/* Decorative gradient elements */}
-      <div className="absolute top-0 right-0 w-160 h-160 bg-primary/10 rounded-full blur-[120px] pointer-events-none animate-pulse" />
-      <div className="absolute bottom-0 left-0 w-160 h-160 bg-secondary/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow" />
 
       <Navbar />
 
