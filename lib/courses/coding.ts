@@ -609,6 +609,7 @@ export function buildCodingCourse(courseId: CodingCourseId): Course {
         'Dieses Modul kombiniert Theorie und Praxis.',
         'This module combines theory and practice.'
       ),
+      topic: { uz: uzTopics[i], de: deTopics[i], en: enTopics[i] },
     });
 
     // Deep content for Python modules 1-3
