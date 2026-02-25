@@ -2,6 +2,7 @@
 
 import React, { useEffect } from 'react';
 import { usePlatformStore } from '@/lib/store/usePlatformStore';
+import { AuthProvider } from '@/components/providers/AuthProvider';
 
 export function PlatformProvider({ children }: { children: React.ReactNode }) {
     const { theme } = usePlatformStore();
@@ -17,7 +18,9 @@ export function PlatformProvider({ children }: { children: React.ReactNode }) {
 
     return (
         <div className={`min-h-screen paper-texture ${theme}`}>
-            {children}
+            <AuthProvider>
+                {children}
+            </AuthProvider>
         </div>
     );
 }
