@@ -1,6 +1,7 @@
 import type { LocalizedString } from '@/lib/curriculum/types';
 import type { Course, CodingCourseId, CourseFeature, CourseModule } from './types';
 import { ls, makeHomeworks, makeMaterials, makeQuiz10 } from './helpers';
+import { pythonDeepContent } from './content/python';
 
 type CodingCourseMeta = {
   id: CodingCourseId;
@@ -610,59 +611,73 @@ export function buildCodingCourse(courseId: CodingCourseId): Course {
       ),
     });
 
+    // Deep content for Python modules 1-3
+    const deepModule = courseId === 'python' ? pythonDeepContent.find(d => d.moduleIndex === index) : undefined;
+
+    const deepSections = deepModule ? [
+      { type: 'theory' as const, title: ls('Nazariya — Dars 1', 'Theorie — Lektion 1', 'Theory — Lesson 1'), content: deepModule.lessons[0].theory },
+      { type: 'practice' as const, title: ls('Amaliyot — Dars 1', 'Praxis — Lektion 1', 'Practice — Lesson 1'), content: deepModule.lessons[0].practice },
+      { type: 'steps' as const, title: ls('Qadam-baqadam — Dars 1', 'Schritt-für-Schritt — Lektion 1', 'Step-by-step — Lesson 1'), content: deepModule.lessons[0].steps },
+      { type: 'theory' as const, title: ls('Nazariya — Dars 2', 'Theorie — Lektion 2', 'Theory — Lesson 2'), content: deepModule.lessons[1].theory },
+      { type: 'practice' as const, title: ls('Amaliyot — Dars 2', 'Praxis — Lektion 2', 'Practice — Lesson 2'), content: deepModule.lessons[1].practice },
+      { type: 'steps' as const, title: ls('Qadam-baqadam — Dars 2', 'Schritt-für-Schritt — Lektion 2', 'Step-by-step — Lesson 2'), content: deepModule.lessons[1].steps },
+    ] : null;
+
+    const genericSections = [
+      {
+        type: 'theory' as const, title: ls('Nazariya', 'Theorie-Erklärung', 'Theory'), content: ls(
+          `${meta.title.uz} — ${uzTopics[i]}: Bu bo'limda asosiy tushunchalar, ta'riflar va qoidalar batafsil tushuntiriladi. Har bir yangi tushuncha oddiy misollar bilan mustahkamlanadi. Maqsad — mavzuning nazariy asoslarini puxta o'rganish.`,
+          `${meta.title.de} — ${deTopics[i]}: In diesem Abschnitt werden die grundlegenden Konzepte, Definitionen und Regeln ausführlich erklärt. Jedes neue Konzept wird mit einfachen Beispielen gefestigt. Ziel: solides Verständnis der theoretischen Grundlagen.`,
+          `${meta.title.en} — ${enTopics[i]}: This section explains the core concepts, definitions, and rules in detail. Each new concept is reinforced with simple examples. Goal: solid understanding of the theoretical foundations.`
+        )
+      },
+      {
+        type: 'practice' as const, title: ls('Amaliy misollar', 'Praxisbeispiele', 'Practice examples'), content: ls(
+          `Quyidagi amaliy misollarni o'rganing:\n1) ${uzTopics[i]} bo'yicha oddiy misol — boshlang'ich daraja.\n2) ${uzTopics[i]} — o'rta daraja, real loyihada qo'llash.\n3) ${uzTopics[i]} — murakkabroq misol, xatolarni bartaraf etish bilan.\nHar bir misolni o'zingiz yozib ko'ring.`,
+          `Arbeiten Sie folgende Praxisbeispiele durch:\n1) ${deTopics[i]} — einfaches Beispiel, Einstiegsniveau.\n2) ${deTopics[i]} — mittleres Niveau, Anwendung in realen Projekten.\n3) ${deTopics[i]} — komplexeres Beispiel mit Fehlerbehandlung.\nSchreiben Sie jedes Beispiel selbst.`,
+          `Work through the following practice examples:\n1) ${enTopics[i]} — simple example, beginner level.\n2) ${enTopics[i]} — intermediate level, applied in real projects.\n3) ${enTopics[i]} — more complex example with error handling.\nWrite each example yourself.`
+        )
+      },
+      {
+        type: 'demo' as const, title: ls("Demo", 'Code-/System-Demos', 'Code/system demos'), content: ls(
+          `Live demo: ${uzTopics[i]} mavzusida ishchi kod yozamiz. Har bir qadam izohlanadi. Natijani konsolda yoki brauzerda ko'ramiz.`,
+          `Live-Demo: Wir schreiben funktionierenden Code zum Thema ${deTopics[i]}. Jeder Schritt wird kommentiert. Das Ergebnis wird in der Konsole oder im Browser angezeigt.`,
+          `Live demo: We write working code on the topic of ${enTopics[i]}. Each step is commented. The result is shown in the console or browser.`
+        )
+      },
+      {
+        type: 'video' as const, title: ls('Video', 'Video-Bereich', 'Video area'), content: ls(
+          `Video darslik: ${meta.title.uz} — ${uzTopics[i]}. Darsda nazariya va amaliyot birlashtirilgan. Davomiyligi: taxminan 15-20 daqiqa.`,
+          `Video-Lektion: ${meta.title.de} — ${deTopics[i]}. Theorie und Praxis werden kombiniert. Dauer: ca. 15–20 Minuten.`,
+          `Video lesson: ${meta.title.en} — ${enTopics[i]}. Theory and practice are combined. Duration: approximately 15–20 minutes.`
+        )
+      },
+      {
+        type: 'steps' as const, title: ls('Qadam-baqadam', 'Schritt-für-Schritt', 'Step-by-step'), content: ls(
+          `1) Muhitni tayyorlang va loyihani oching.\n2) ${uzTopics[i]} bo'yicha asosiy kodni yozing.\n3) Kodni ishga tushiring va natijani tekshiring.\n4) Xatolarni toping va tuzating.\n5) Kodni optimallashtiring va yakuniy versiyani saqlang.`,
+          `1) Entwicklungsumgebung vorbereiten und Projekt öffnen.\n2) Grundlegenden Code zum Thema ${deTopics[i]} schreiben.\n3) Code ausführen und Ergebnis prüfen.\n4) Fehler finden und beheben.\n5) Code optimieren und finale Version speichern.`,
+          `1) Prepare your environment and open the project.\n2) Write the basic code for ${enTopics[i]}.\n3) Run the code and check the result.\n4) Find and fix errors.\n5) Optimize the code and save the final version.`
+        )
+      },
+      {
+        type: 'interactive' as const, title: ls('Interaktiv vazifalar', 'Interaktive Aufgaben', 'Interactive tasks'), content: ls(
+          `Interaktiv mashq: ${uzTopics[i]} bo'yicha berilgan kodni to'ldiring yoki xatolarni toping. Maqsad — mustaqil kodlash ko'nikmasini rivojlantirish.`,
+          `Interaktive Übung: Vervollständigen Sie den gegebenen Code zum Thema ${deTopics[i]} oder finden Sie die Fehler. Ziel: eigenständige Programmierfähigkeiten entwickeln.`,
+          `Interactive exercise: Complete the given code on ${enTopics[i]} or find the errors. Goal: develop independent coding skills.`
+        )
+      },
+    ];
+
     return {
       index,
       id,
       title,
       description: ls(
-        `${meta.title.uz} — ${uzTopics[i]} bo‘yicha qisqa kirish.`,
+        `${meta.title.uz} — ${uzTopics[i]} bo'yicha qisqa kirish.`,
         `${meta.title.de} — Kurze Einführung zu ${deTopics[i]}.`,
         `${meta.title.en} — Quick intro to ${enTopics[i]}.`
       ),
-      sections: [
-        {
-          type: 'theory' as const, title: ls('Nazariya', 'Theorie-Erklärung', 'Theory'), content: ls(
-            `${meta.title.uz} — ${uzTopics[i]}: Bu bo'limda asosiy tushunchalar, ta'riflar va qoidalar batafsil tushuntiriladi. Har bir yangi tushuncha oddiy misollar bilan mustahkamlanadi. Maqsad — mavzuning nazariy asoslarini puxta o'rganish.`,
-            `${meta.title.de} — ${deTopics[i]}: In diesem Abschnitt werden die grundlegenden Konzepte, Definitionen und Regeln ausführlich erklärt. Jedes neue Konzept wird mit einfachen Beispielen gefestigt. Ziel: solides Verständnis der theoretischen Grundlagen.`,
-            `${meta.title.en} — ${enTopics[i]}: This section explains the core concepts, definitions, and rules in detail. Each new concept is reinforced with simple examples. Goal: solid understanding of the theoretical foundations.`
-          )
-        },
-        {
-          type: 'practice' as const, title: ls('Amaliy misollar', 'Praxisbeispiele', 'Practice examples'), content: ls(
-            `Quyidagi amaliy misollarni o'rganing:\n1) ${uzTopics[i]} bo'yicha oddiy misol — boshlang'ich daraja.\n2) ${uzTopics[i]} — o'rta daraja, real loyihada qo'llash.\n3) ${uzTopics[i]} — murakkabroq misol, xatolarni bartaraf etish bilan.\nHar bir misolni o'zingiz yozib ko'ring.`,
-            `Arbeiten Sie folgende Praxisbeispiele durch:\n1) ${deTopics[i]} — einfaches Beispiel, Einstiegsniveau.\n2) ${deTopics[i]} — mittleres Niveau, Anwendung in realen Projekten.\n3) ${deTopics[i]} — komplexeres Beispiel mit Fehlerbehandlung.\nSchreiben Sie jedes Beispiel selbst.`,
-            `Work through the following practice examples:\n1) ${enTopics[i]} — simple example, beginner level.\n2) ${enTopics[i]} — intermediate level, applied in real projects.\n3) ${enTopics[i]} — more complex example with error handling.\nWrite each example yourself.`
-          )
-        },
-        {
-          type: 'demo' as const, title: ls("Demo", 'Code-/System-Demos', 'Code/system demos'), content: ls(
-            `Live demo: ${uzTopics[i]} mavzusida ishchi kod yozamiz. Har bir qadam izohlanadi. Natijani konsolda yoki brauzerda ko'ramiz.`,
-            `Live-Demo: Wir schreiben funktionierenden Code zum Thema ${deTopics[i]}. Jeder Schritt wird kommentiert. Das Ergebnis wird in der Konsole oder im Browser angezeigt.`,
-            `Live demo: We write working code on the topic of ${enTopics[i]}. Each step is commented. The result is shown in the console or browser.`
-          )
-        },
-        {
-          type: 'video' as const, title: ls('Video', 'Video-Bereich', 'Video area'), content: ls(
-            `Video darslik: ${meta.title.uz} — ${uzTopics[i]}. Darsda nazariya va amaliyot birlashtirilgan. Davomiyligi: taxminan 15-20 daqiqa.`,
-            `Video-Lektion: ${meta.title.de} — ${deTopics[i]}. Theorie und Praxis werden kombiniert. Dauer: ca. 15–20 Minuten.`,
-            `Video lesson: ${meta.title.en} — ${enTopics[i]}. Theory and practice are combined. Duration: approximately 15–20 minutes.`
-          )
-        },
-        {
-          type: 'steps' as const, title: ls('Qadam-baqadam', 'Schritt-für-Schritt', 'Step-by-step'), content: ls(
-            `1) Muhitni tayyorlang va loyihani oching.\n2) ${uzTopics[i]} bo'yicha asosiy kodni yozing.\n3) Kodni ishga tushiring va natijani tekshiring.\n4) Xatolarni toping va tuzating.\n5) Kodni optimallashtiring va yakuniy versiyani saqlang.`,
-            `1) Entwicklungsumgebung vorbereiten und Projekt öffnen.\n2) Grundlegenden Code zum Thema ${deTopics[i]} schreiben.\n3) Code ausführen und Ergebnis prüfen.\n4) Fehler finden und beheben.\n5) Code optimieren und finale Version speichern.`,
-            `1) Prepare your environment and open the project.\n2) Write the basic code for ${enTopics[i]}.\n3) Run the code and check the result.\n4) Find and fix errors.\n5) Optimize the code and save the final version.`
-          )
-        },
-        {
-          type: 'interactive' as const, title: ls('Interaktiv vazifalar', 'Interaktive Aufgaben', 'Interactive tasks'), content: ls(
-            `Interaktiv mashq: ${uzTopics[i]} bo'yicha berilgan kodni to'ldiring yoki xatolarni toping. Maqsad — mustaqil kodlash ko'nikmasini rivojlantirish.`,
-            `Interaktive Übung: Vervollständigen Sie den gegebenen Code zum Thema ${deTopics[i]} oder finden Sie die Fehler. Ziel: eigenständige Programmierfähigkeiten entwickeln.`,
-            `Interactive exercise: Complete the given code on ${enTopics[i]} or find the errors. Goal: develop independent coding skills.`
-          )
-        },
-      ],
+      sections: deepSections ?? genericSections,
       quizTitle: ls('Quiz (10 savol)', 'Quiz (10 Fragen)', 'Quiz (10 questions)'),
       quiz,
       homeworks: [
