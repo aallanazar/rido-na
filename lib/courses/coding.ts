@@ -620,17 +620,100 @@ export function buildCodingCourse(courseId: CodingCourseId): Course {
         `${meta.title.en} — Quick intro to ${enTopics[i]}.`
       ),
       sections: [
-        { type: 'theory' as const, title: ls('Nazariya', 'Theorie-Erklärung', 'Theory'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
-        { type: 'practice' as const, title: ls('Amaliy misollar', 'Praxisbeispiele', 'Practice examples'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
-        { type: 'demo' as const, title: ls("Demo", 'Code-/System-Demos', 'Code/system demos'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
-        { type: 'video' as const, title: ls('Video', 'Video-Bereich', 'Video area'), content: ls('Video joyi (keyin qo‘shiladi).', 'Video-Platzhalter (wird später ergänzt).', 'Video placeholder (added later).') },
-        { type: 'steps' as const, title: ls('Qadam-baqadam', 'Schritt-für-Schritt', 'Step-by-step'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
-        { type: 'interactive' as const, title: ls('Interaktiv vazifalar', 'Interaktive Aufgaben', 'Interactive tasks'), content: ls('Tez orada...', 'Wird ergänzt…', 'To be added…') },
+        {
+          type: 'theory' as const, title: ls('Nazariya', 'Theorie-Erklärung', 'Theory'), content: ls(
+            `${meta.title.uz} — ${uzTopics[i]}: Bu bo'limda asosiy tushunchalar, ta'riflar va qoidalar batafsil tushuntiriladi. Har bir yangi tushuncha oddiy misollar bilan mustahkamlanadi. Maqsad — mavzuning nazariy asoslarini puxta o'rganish.`,
+            `${meta.title.de} — ${deTopics[i]}: In diesem Abschnitt werden die grundlegenden Konzepte, Definitionen und Regeln ausführlich erklärt. Jedes neue Konzept wird mit einfachen Beispielen gefestigt. Ziel: solides Verständnis der theoretischen Grundlagen.`,
+            `${meta.title.en} — ${enTopics[i]}: This section explains the core concepts, definitions, and rules in detail. Each new concept is reinforced with simple examples. Goal: solid understanding of the theoretical foundations.`
+          )
+        },
+        {
+          type: 'practice' as const, title: ls('Amaliy misollar', 'Praxisbeispiele', 'Practice examples'), content: ls(
+            `Quyidagi amaliy misollarni o'rganing:\n1) ${uzTopics[i]} bo'yicha oddiy misol — boshlang'ich daraja.\n2) ${uzTopics[i]} — o'rta daraja, real loyihada qo'llash.\n3) ${uzTopics[i]} — murakkabroq misol, xatolarni bartaraf etish bilan.\nHar bir misolni o'zingiz yozib ko'ring.`,
+            `Arbeiten Sie folgende Praxisbeispiele durch:\n1) ${deTopics[i]} — einfaches Beispiel, Einstiegsniveau.\n2) ${deTopics[i]} — mittleres Niveau, Anwendung in realen Projekten.\n3) ${deTopics[i]} — komplexeres Beispiel mit Fehlerbehandlung.\nSchreiben Sie jedes Beispiel selbst.`,
+            `Work through the following practice examples:\n1) ${enTopics[i]} — simple example, beginner level.\n2) ${enTopics[i]} — intermediate level, applied in real projects.\n3) ${enTopics[i]} — more complex example with error handling.\nWrite each example yourself.`
+          )
+        },
+        {
+          type: 'demo' as const, title: ls("Demo", 'Code-/System-Demos', 'Code/system demos'), content: ls(
+            `Live demo: ${uzTopics[i]} mavzusida ishchi kod yozamiz. Har bir qadam izohlanadi. Natijani konsolda yoki brauzerda ko'ramiz.`,
+            `Live-Demo: Wir schreiben funktionierenden Code zum Thema ${deTopics[i]}. Jeder Schritt wird kommentiert. Das Ergebnis wird in der Konsole oder im Browser angezeigt.`,
+            `Live demo: We write working code on the topic of ${enTopics[i]}. Each step is commented. The result is shown in the console or browser.`
+          )
+        },
+        {
+          type: 'video' as const, title: ls('Video', 'Video-Bereich', 'Video area'), content: ls(
+            `Video darslik: ${meta.title.uz} — ${uzTopics[i]}. Darsda nazariya va amaliyot birlashtirilgan. Davomiyligi: taxminan 15-20 daqiqa.`,
+            `Video-Lektion: ${meta.title.de} — ${deTopics[i]}. Theorie und Praxis werden kombiniert. Dauer: ca. 15–20 Minuten.`,
+            `Video lesson: ${meta.title.en} — ${enTopics[i]}. Theory and practice are combined. Duration: approximately 15–20 minutes.`
+          )
+        },
+        {
+          type: 'steps' as const, title: ls('Qadam-baqadam', 'Schritt-für-Schritt', 'Step-by-step'), content: ls(
+            `1) Muhitni tayyorlang va loyihani oching.\n2) ${uzTopics[i]} bo'yicha asosiy kodni yozing.\n3) Kodni ishga tushiring va natijani tekshiring.\n4) Xatolarni toping va tuzating.\n5) Kodni optimallashtiring va yakuniy versiyani saqlang.`,
+            `1) Entwicklungsumgebung vorbereiten und Projekt öffnen.\n2) Grundlegenden Code zum Thema ${deTopics[i]} schreiben.\n3) Code ausführen und Ergebnis prüfen.\n4) Fehler finden und beheben.\n5) Code optimieren und finale Version speichern.`,
+            `1) Prepare your environment and open the project.\n2) Write the basic code for ${enTopics[i]}.\n3) Run the code and check the result.\n4) Find and fix errors.\n5) Optimize the code and save the final version.`
+          )
+        },
+        {
+          type: 'interactive' as const, title: ls('Interaktiv vazifalar', 'Interaktive Aufgaben', 'Interactive tasks'), content: ls(
+            `Interaktiv mashq: ${uzTopics[i]} bo'yicha berilgan kodni to'ldiring yoki xatolarni toping. Maqsad — mustaqil kodlash ko'nikmasini rivojlantirish.`,
+            `Interaktive Übung: Vervollständigen Sie den gegebenen Code zum Thema ${deTopics[i]} oder finden Sie die Fehler. Ziel: eigenständige Programmierfähigkeiten entwickeln.`,
+            `Interactive exercise: Complete the given code on ${enTopics[i]} or find the errors. Goal: develop independent coding skills.`
+          )
+        },
       ],
       quizTitle: ls('Quiz (10 savol)', 'Quiz (10 Fragen)', 'Quiz (10 questions)'),
       quiz,
-      homeworks: makeHomeworks({ prefix, count: index % 3 === 0 ? 3 : 2 }),
-      materials: makeMaterials({ prefix, count: 2 }),
+      homeworks: [
+        {
+          id: `${prefix}-hw1`,
+          title: ls(`Uy vazifasi 1: ${uzTopics[i]}`, `Hausaufgabe 1: ${deTopics[i]}`, `Homework 1: ${enTopics[i]}`),
+          description: ls(
+            `${uzTopics[i]} mavzusi bo'yicha mustaqil loyiha yozing. Barcha asosiy tushunchalarni qo'llang.`,
+            `Schreiben Sie ein eigenständiges Projekt zum Thema ${deTopics[i]}. Wenden Sie alle Kernkonzepte an.`,
+            `Write an independent project on ${enTopics[i]}. Apply all core concepts.`
+          ),
+        },
+        {
+          id: `${prefix}-hw2`,
+          title: ls(`Uy vazifasi 2: ${uzTopics[i]} amaliyot`, `Hausaufgabe 2: ${deTopics[i]} Praxis`, `Homework 2: ${enTopics[i]} practice`),
+          description: ls(
+            `${uzTopics[i]} bo'yicha 3 ta mashq bajaring va yechimlarni hujjatlang.`,
+            `Lösen Sie 3 Übungen zu ${deTopics[i]} und dokumentieren Sie Ihre Lösungen.`,
+            `Complete 3 exercises on ${enTopics[i]} and document your solutions.`
+          ),
+        },
+        ...(index % 3 === 0 ? [{
+          id: `${prefix}-hw3`,
+          title: ls(`Uy vazifasi 3: ${uzTopics[i]} tahlil`, `Hausaufgabe 3: ${deTopics[i]} Analyse`, `Homework 3: ${enTopics[i]} analysis`),
+          description: ls(
+            `${uzTopics[i]} mavzusida mavjud kodni tahlil qiling va yaxshilash takliflarini yozing.`,
+            `Analysieren Sie bestehenden Code zum Thema ${deTopics[i]} und schlagen Sie Verbesserungen vor.`,
+            `Analyze existing code on ${enTopics[i]} and write improvement suggestions.`
+          ),
+        }] : []),
+      ],
+      materials: [
+        {
+          id: `${prefix}-mat1`,
+          title: ls(`${uzTopics[i]} — Qo'llanma`, `${deTopics[i]} — Leitfaden`, `${enTopics[i]} — Guide`),
+          description: ls(
+            `${meta.title.uz}: ${uzTopics[i]} bo'yicha to'liq qo'llanma va ma'lumotnoma.`,
+            `${meta.title.de}: Vollständiger Leitfaden und Referenz zu ${deTopics[i]}.`,
+            `${meta.title.en}: Complete guide and reference for ${enTopics[i]}.`
+          ),
+        },
+        {
+          id: `${prefix}-mat2`,
+          title: ls(`${uzTopics[i]} — Mashqlar to'plami`, `${deTopics[i]} — Aufgabensammlung`, `${enTopics[i]} — Exercise collection`),
+          description: ls(
+            `${uzTopics[i]} bo'yicha qo'shimcha mashqlar va yechimlar.`,
+            `Ergänzende Übungen und Lösungen zu ${deTopics[i]}.`,
+            `Additional exercises and solutions for ${enTopics[i]}.`
+          ),
+        },
+      ],
     };
   });
 
